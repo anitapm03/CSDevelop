@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!--Paleta de rojos-->
+    <color name="rojo">#E82323</color>
+    <color name="negro">#181D27</color>
+    <color name="gris">#79807B</color>
+    <color name="verdeSpoti">#81b71a</color>
+
+    <!--Paleta de verdes-->
+    <color name="verdeFosforito">#51FF00</color>
+    <color name="verdeOscuro">#0F6632</color>
+    <color name="verdeMuyOscuro">#2E6644</color>
+    <color name="verdeAqua">#69EA9D</color>
+    <color name="verdeClaro">#22E66F</color>
+    <color name="verde">#1BB357</color>
+
+    <!--Paleta de marrones-->
+    <color name="marronOscuro">#805A2B</color>
+    <color name="marronClaro">#FFD6A3</color>
+    <color name="marronAmarillo">#FFB357</color>
+    <color name="marronGris">#806B52</color>
+    <color name="marronMedio">#D19247</color>
+
+</resources>

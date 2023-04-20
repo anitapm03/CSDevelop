@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- formato de menu, con sus iconos y los nombres-->
+    <item
+        android:id="@+id/inicio"
+        android:title="Inicio"
+        android:icon="@drawable/ic_menu_conciertos"
+        />
+    <item
+        android:id="@+id/social"
+        android:title="Social"
+        android:icon="@drawable/ic_menu_social"
+        />
+    <item
+        android:id="@+id/fab"
+        android:title=""
+        android:enabled="false"/>
+    <item
+        android:id="@+id/buscar"
+        android:title="Buscar"
+        android:icon="@drawable/ic_menu_buscar"
+        />
+    <item
+        android:id="@+id/perfil"
+        android:title="Perfil"
+        android:icon="@drawable/ic_menu_perfil"
+        />
+</menu>

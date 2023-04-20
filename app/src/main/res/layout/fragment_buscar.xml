@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+este código describe una vista de búsqueda en Android que muestra una lista
+de búsquedas recientes y permite al usuario ingresar una nueva búsqueda.
+-->
+<!-- El elemento raíz es un LinearLayout con orientación vertical que ocupa todo
+ el espacio de la pantalla -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+<!--Dentro de este LinearLayout, hay otro que contiene una imagen (ImageView)
+ y un campo de texto (EditText). Esta sección se utiliza para ingresar la búsqueda
+ que se va a realizar en la vista de búsqueda. -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="302dp"
+            android:layout_height="64dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/lupa" />
+
+        <!-- layout_weight: para distribuir el espacio disponible entre los elementos -->
+        <EditText
+            android:id="@+id/message_input"
+            android:layout_width="542dp"
+            android:layout_height="63dp"
+            android:layout_weight="1"
+            android:hint="Buscar..."
+            android:textSize="22sp" />
+
+    </LinearLayout>
+<!-- Luego, hay otro LinearLayout que ocupa un espacio vertical de 212dp.
+ Este LinearLayout contiene una serie de elementos de búsqueda reciente,
+ cada uno de los cuales se representa mediante un LinearLayout que contiene
+ una imagen (ImageView) y un TextView que muestra el nombre de la búsqueda reciente.-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="212dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="9dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="399dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Búsquedas recientes"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView0011"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/imageView010"
+                android:layout_width="35dp"
+                android:layout_height="34dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/lupa2" />
+
+            <TextView
+                android:id="@+id/textView010"
+                android:layout_width="292dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Concierto Melendi"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView00111"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/imageView0010"
+                android:layout_width="35dp"
+                android:layout_height="34dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/lupa2" />
+
+            <TextView
+                android:id="@+id/textView1000"
+                android:layout_width="292dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Concierto Fito y Fitipaldi"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="35dp"
+                android:layout_height="34dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/lupa2" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="292dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Concierto Canto del Loco"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
