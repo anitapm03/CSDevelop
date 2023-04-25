@@ -12,13 +12,16 @@ import com.example.csdevelop.fragments.BuscarFragment;
 import com.example.csdevelop.fragments.GruposFragment;
 import com.example.csdevelop.fragments.InicioFragment;
 import com.example.csdevelop.fragments.PerfilFragment;
+import com.example.csdevelop.fragments.PruebaFragment;
 import com.example.csdevelop.fragments.SocialFragment;
 import com.example.csdevelop.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     FloatingActionButton btnGrupos;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,17 +29,22 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //prueba de analytics
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         //intent de inicio de sesion recibido
         Intent isR= getIntent();
         btnGrupos=findViewById(R.id.btnGrupos);
 
-        replaceFragment(new InicioFragment());
+        //replaceFragment(new InicioFragment());
+        replaceFragment(new PruebaFragment());
         binding.bottomNavigation.setBackground(null);
 
         binding.bottomNavigation.setOnItemSelectedListener(item ->{
             switch (item.getItemId()){
                 case R.id.inicio:
-                    replaceFragment(new InicioFragment());
+                    //replaceFragment(new InicioFragment());
+                    replaceFragment(new PruebaFragment());
                     break;
                 case R.id.buscar:
                     replaceFragment(new BuscarFragment());
