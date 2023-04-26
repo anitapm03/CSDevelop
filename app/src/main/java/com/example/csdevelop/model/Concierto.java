@@ -1,19 +1,22 @@
 package com.example.csdevelop.model;
 
-public class Concierto {
-    String enlace, fecha, hora, idArtista, idSala, nombre;
+import java.io.Serializable;
+
+public class Concierto implements Serializable {
+    String enlace, fecha, hora, idArtista, idSala, nombre, imagen;
 
     //constructor
     public Concierto(){}
 
     //constructor completo
-    public Concierto(String enlace, String fecha, String hora, String idArtista, String idSala, String nombre) {
+    public Concierto(String enlace, String fecha, String hora, String idArtista, String idSala, String nombre, String imagen) {
         this.enlace = enlace;
         this.fecha = fecha;
         this.hora = hora;
         this.idArtista = idArtista;
         this.idSala = idSala;
         this.nombre = nombre;
+        this.imagen = imagen;
     }
 
     //getters y setters
@@ -63,5 +66,13 @@ public class Concierto {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }
