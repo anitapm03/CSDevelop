@@ -24,13 +24,19 @@
 
             <TextView
                 android:id="@+id/title_text"
-                android:layout_width="match_parent"
+                android:layout_width="322dp"
                 android:layout_height="match_parent"
                 android:paddingStart="16dp"
                 android:text="Perfil"
                 android:textColor="#fff"
                 android:textSize="22sp"
                 android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/logout"
+                android:layout_width="43dp"
+                android:layout_height="31dp"
+                android:drawableEnd="@drawable/ic_logout" />
 
         </LinearLayout>
 <!--A continuación, hay otro LinearLayout con varias vistas.

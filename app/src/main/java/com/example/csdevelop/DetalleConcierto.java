@@ -27,7 +27,7 @@ public class DetalleConcierto extends AppCompatActivity {
         fechaEvento=findViewById(R.id.fechaEvento);
         horaEvento=findViewById(R.id.horaEvento);
         entradas=findViewById(R.id.enlace);
-        volver=findViewById(R.id.volver);
+        volver=findViewById(R.id.logout);
         fotoEvento=findViewById(R.id.fotoEvento);
 
         //recogemos el evento

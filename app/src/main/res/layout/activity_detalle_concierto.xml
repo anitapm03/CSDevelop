@@ -24,7 +24,7 @@
             android:padding="16dp">
 
             <Button
-                android:id="@+id/volver"
+                android:id="@+id/logout"
                 android:layout_width="43dp"
                 android:layout_height="31dp"
                 android:drawableEnd="@drawable/ic_volver" />
