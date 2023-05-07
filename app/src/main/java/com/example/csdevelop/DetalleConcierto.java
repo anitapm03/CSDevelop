@@ -42,8 +42,8 @@ public class DetalleConcierto extends AppCompatActivity {
 
         //insertamos la imagen
         Glide.with(this)
-                        .load(foto)
-                                .into(fotoEvento);
+                .load(foto)
+                .into(fotoEvento);
 
         //boton que redirige a entradas
         entradas.setOnClickListener(new View.OnClickListener() {

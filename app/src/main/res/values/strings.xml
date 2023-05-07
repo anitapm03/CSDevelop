@@ -11,4 +11,6 @@
     <string name="invalid_mail">E-mail incorrecto</string>
     <string name="invalid_password">Contraseña no, valida. Min 8 dígitos.</string>
     <string name="invalid_username">Nombre de usuario no válido</string>
+    <string name="invalid_passwordLogin">Introduzca una contraseña</string>
+    <string name="invalid_usernameLogin">Introduzca un email</string>
 </resources>

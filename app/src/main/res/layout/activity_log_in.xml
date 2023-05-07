@@ -62,8 +62,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtInputUsuario"
@@ -71,8 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Usuario"
-            app:startIconDrawable="@drawable/ic_menu_perfil"
-            >
+            app:startIconDrawable="@drawable/ic_menu_perfil">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtMail"
@@ -80,8 +78,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/san_francisco"
                 android:inputType="textEmailAddress"
-                android:textSize="15sp"
-                />
+                android:textSize="15sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -99,6 +96,13 @@
                 android:fontFamily="@font/san_francisco"
                 android:inputType="textPassword"
                 android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/alertaLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="17sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>

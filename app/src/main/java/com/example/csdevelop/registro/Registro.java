@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,13 +15,14 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.csdevelop.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,17 +31,17 @@ public class Registro extends AppCompatActivity {
     Button btnVolver,btnRG;
     TextInputEditText edtMail, edtPassword, edtUsuario, edtPasswordC;
     FirebaseAuth firebaseAuth;
+    FirebaseFirestore firestore;
+    TextView alerta;
     AwesomeValidation awesomeValidation;
-    //DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
-        //para los datos del usuario
-        //databaseReference= FirebaseDatabase.getInstance().getReference();
-
+        firestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
+
         // estilo basico de validacion
         awesomeValidation= new AwesomeValidation(ValidationStyle.BASIC);
         awesomeValidation.addValidation(this,R.id.txtInputMail, Patterns.EMAIL_ADDRESS,R.string.invalid_mail);
@@ -55,6 +57,7 @@ public class Registro extends AppCompatActivity {
         edtUsuario =findViewById(R.id.edtUsuario);
         btnVolver=findViewById(R.id.btnVolver);
         btnRG=findViewById(R.id.btnRG);
+        alerta = findViewById(R.id.alertaRegistro);
 
         btnRG.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,47 +65,12 @@ public class Registro extends AppCompatActivity {
                 String email = edtMail.getText().toString();
                 String pasw = edtPassword.getText().toString();
                 String paswC = edtPasswordC.getText().toString();
-                String user = edtUsuario.getText().toString();
+                String nombreUsuario = edtUsuario.getText().toString();
 
                 if(awesomeValidation.validate() && pasw.equals(paswC)){
-                    firebaseAuth.createUserWithEmailAndPassword(email,pasw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
-                                /*creamos la estructura del ojb usuario
-                                Map<String, Object> map= new HashMap<>();
-                                map.put("name", user);
-                                map.put("email", email);
-                                map.put("password",pasw);*/
-
-                                //intsertamos datos en realtime database
-                                String id = firebaseAuth.getCurrentUser().getUid();
-                                /*databaseReference.child("Users").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task2) {
-                                        if(task2.isSuccessful()){
-                                            Toast.makeText(Registro.this, "éxito", Toast.LENGTH_SHORT).show();
-
-
-                                        }else{
-                                            String errorCode=((FirebaseAuthException)task2.getException()).getErrorCode();
-                                            dameToastdeerror(errorCode);
-                                        }
-                                    }
-                                });*/
-
-                                //Toast.makeText(Registro.this, "éxito", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }else{
-                                String errorCode=((FirebaseAuthException)task.getException()).getErrorCode();
-                                dameToastdeerror(errorCode);
-                            }
-                        }
-                    });
-
-                }else{
-                    Toast.makeText(Registro.this, "ERROR, comprueba que los campos son correctos", Toast.LENGTH_SHORT).show();
+                    registrarUsuario(email, nombreUsuario, pasw);
                 }
+
             }
         });
 
@@ -114,7 +82,49 @@ public class Registro extends AppCompatActivity {
         });
     }
 
-    private void dameToastdeerror(String error) {
+    private void registrarUsuario(String email, String nombreUsuario, String pasw) {
+        firebaseAuth.createUserWithEmailAndPassword(email,pasw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    String id = firebaseAuth.getCurrentUser().getUid();
+                    Map<String, Object> map= new HashMap<>();
+                    map.put("nombre", nombreUsuario);
+                    map.put("id", id);
+                    map.put("email", email);
+                    map.put("contraseña",pasw);
+
+                    firestore.collection("usuarios").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            finish();
+                            Toast.makeText(Registro.this, "usuario registrado con éxito", Toast.LENGTH_LONG).show();
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(Registro.this, "Error al guardar", Toast.LENGTH_LONG).show();
+
+                        }
+                    });
+                }else{
+                    String errorCode=((FirebaseAuthException)task.getException()).getErrorCode();
+                    dameToastDeError(errorCode);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(Registro.this, "Error al registar", Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+    }
+
+
+    private void dameToastDeError(String error) {
 
         switch (error) {
 

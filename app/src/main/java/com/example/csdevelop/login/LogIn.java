@@ -2,13 +2,14 @@ package com.example.csdevelop.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
@@ -26,7 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class LogIn extends AppCompatActivity {
     Button btnIS, btnR;
     TextInputEditText edtMail, edtPassword;
-
+    TextView alerta;
     AwesomeValidation awesomeValidation;
     FirebaseAuth firebaseAuth;
 
@@ -48,14 +49,16 @@ public class LogIn extends AppCompatActivity {
 
         // estilo basico de validacion
         awesomeValidation= new AwesomeValidation(ValidationStyle.BASIC);
-        awesomeValidation.addValidation(this,R.id.txtInputMail, Patterns.EMAIL_ADDRESS,R.string.invalid_mail);
-        awesomeValidation.addValidation(this,R.id.txtInputPassword, ".{8,}",R.string.invalid_password);
-        awesomeValidation.addValidation(this,R.id.txtInputUsuario, ".{3,}",R.string.invalid_username );
+        //awesomeValidation.addValidation(this,R.id.txtInputMail, Patterns.EMAIL_ADDRESS,R.string.invalid_mail);
+        awesomeValidation.addValidation(this,R.id.txtInputUsuario, ".{1,}",R.string.invalid_usernameLogin);
+        awesomeValidation.addValidation(this,R.id.txtInputPassword, ".{1,}",R.string.invalid_passwordLogin);
+
 
         edtMail=findViewById(R.id.edtMail);
         edtPassword=findViewById(R.id.edtPassword);
         btnIS=findViewById(R.id.btnRG);
         btnR=findViewById(R.id.btnR);
+        alerta = findViewById(R.id.alertaLogin);
 
         btnIS.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +79,7 @@ public class LogIn extends AppCompatActivity {
 
                             }else{
                                 String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
-                                dameToastdeerror(errorCode);
+                                dameToastdeError(errorCode);
                             }
                         }
                     });
@@ -104,7 +107,7 @@ public class LogIn extends AppCompatActivity {
     }
 
 
-    private void dameToastdeerror(String error) {
+    private void dameToastdeError(String error) {
 
         switch (error) {
 
@@ -121,14 +124,18 @@ public class LogIn extends AppCompatActivity {
                 break;
 
             case "ERROR_INVALID_EMAIL":
-                Toast.makeText(LogIn.this, "La dirección de correo electrónico está mal formateada.", Toast.LENGTH_LONG).show();
-                edtMail.setError("La dirección de correo electrónico está mal formateada.");
+                alerta.setText("Email inválido");
+                alerta.setTextColor(ContextCompat.getColor(this,R.color.rojo));
+                //Toast.makeText(LogIn.this, "La dirección de correo electrónico está mal formateada.", Toast.LENGTH_LONG).show();
+                //edtMail.setError("La dirección de correo electrónico está mal formateada.");
                 edtMail.requestFocus();
                 break;
 
             case "ERROR_WRONG_PASSWORD":
-                Toast.makeText(LogIn.this, "La contraseña no es válida o el usuario no tiene contraseña.", Toast.LENGTH_LONG).show();
-                edtPassword.setError("la contraseña es incorrecta ");
+                alerta.setText("Contraseña incorrecta");
+                alerta.setTextColor(ContextCompat.getColor(this,R.color.rojo));
+                //Toast.makeText(LogIn.this, "La contraseña no es válida o el usuario no tiene contraseña.", Toast.LENGTH_LONG).show();
+                //edtPassword.setError("la contraseña es incorrecta ");
                 edtPassword.requestFocus();
                 edtPassword.setText("");
                 break;
@@ -139,16 +146,6 @@ public class LogIn extends AppCompatActivity {
 
             case "ERROR_REQUIRES_RECENT_LOGIN":
                 Toast.makeText(LogIn.this,"Esta operación es sensible y requiere autenticación reciente. Inicie sesión nuevamente antes de volver a intentar esta solicitud.", Toast.LENGTH_LONG).show();
-                break;
-
-            case "ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL":
-                Toast.makeText(LogIn.this, "Ya existe una cuenta con la misma dirección de correo electrónico pero diferentes credenciales de inicio de sesión. Inicie sesión con un proveedor asociado a esta dirección de correo electrónico.", Toast.LENGTH_LONG).show();
-                break;
-
-            case "ERROR_EMAIL_ALREADY_IN_USE":
-                Toast.makeText(LogIn.this, "La dirección de correo electrónico ya está siendo utilizada por otra cuenta..   ", Toast.LENGTH_LONG).show();
-                edtMail.setError("La dirección de correo electrónico ya está siendo utilizada por otra cuenta.");
-                edtMail.requestFocus();
                 break;
 
             case "ERROR_CREDENTIAL_ALREADY_IN_USE":
@@ -164,7 +161,9 @@ public class LogIn extends AppCompatActivity {
                 break;
 
             case "ERROR_USER_NOT_FOUND":
-                Toast.makeText(LogIn.this, "No hay ningún registro de usuario que corresponda a este identificador. Es posible que se haya eliminado al usuario.", Toast.LENGTH_LONG).show();
+                alerta.setText("No hay ninguna cuenta asociada a este usuario");
+                alerta.setTextColor(ContextCompat.getColor(this,R.color.rojo));
+                //Toast.makeText(LogIn.this, "No hay ningún registro de usuario que corresponda a este identificador. Es posible que se haya eliminado al usuario.", Toast.LENGTH_LONG).show();
                 break;
 
             case "ERROR_INVALID_USER_TOKEN":

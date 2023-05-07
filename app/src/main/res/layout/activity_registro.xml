@@ -120,6 +120,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:hint="Confirmar contraseña"
             app:startIconDrawable="@drawable/ic_password">
 
@@ -130,6 +131,12 @@
                 android:fontFamily="@font/san_francisco"
                 android:inputType="textPassword"
                 android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/alertaRegistro"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
