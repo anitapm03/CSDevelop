@@ -1,5 +1,6 @@
 package com.example.csdevelop.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -90,6 +91,27 @@ public class PruebaFragment extends Fragment {
         Intent intent = new Intent(getContext(), DetalleConcierto.class);
         intent.putExtra("concierto", concierto);
         startActivity(intent );
+
+        if (fragmentListener!= null){
+            fragmentListener.onFragmentFinish();
+        }
+
+    }
+
+    //para que termine el activity y no explote
+    private FragmentListener fragmentListener;
+    public interface FragmentListener{
+        void onFragmentFinish();
+    }
+
+    public void onAttach(Context context){
+        super.onAttach(context);
+        try{
+            fragmentListener = (FragmentListener) context;
+
+        } catch (ClassCastException e){
+            throw new ClassCastException(context.toString() + " debe implementar Fragment Listener");
+        }
     }
 }
 

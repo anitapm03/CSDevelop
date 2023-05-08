@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetalleConcierto">
+    tools:context=".DetalleConcierto"
+    >
 
     <LinearLayout
         android:id="@+id/layoutPrincipal"
@@ -46,7 +47,9 @@
             android:id="@+id/informacionDetalle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:background="@color/black">
 
             <ImageView
                 android:id="@+id/fotoEvento"
@@ -59,17 +62,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="nombre evento"
-                android:textColor="@color/black"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/horaEvento"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="hora evento"
-                android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:textSize="40sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -77,15 +71,71 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="fecha evento"
-                android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:textSize="30sp"
                 android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/enlace"
+            <TextView
+                android:id="@+id/horaEvento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Enlace" />
+                android:text="hora evento"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/nombreSala"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="aqui va el nombre de la sala"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/direccionSala"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="aqui direccion o mapa de la sala"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/enlace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2.5dp"
+                    android:layout_marginRight="2.5dp"
+                    android:backgroundTint="@color/white"
+                    android:text="Entradas"
+                    android:textColor="@color/black" />
+
+                <Button
+                    android:id="@+id/unirse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2.5dp"
+                    android:layout_marginRight="2.5dp"
+                    android:backgroundTint="@color/white"
+                    android:text="Unirme al grupo"
+                    android:textColor="@color/black" />
+
+                <Button
+                    android:id="@+id/favorito"
+                    android:layout_width="53dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2.5dp"
+                    android:layout_marginRight="2.5dp"
+                    android:backgroundTint="@color/white"
+                    android:drawableLeft="@drawable/ic_no_fav"
+                    android:drawableTint="@color/black" />
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 

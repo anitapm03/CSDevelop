@@ -18,7 +18,7 @@ import com.example.csdevelop.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PruebaFragment.FragmentListener {
     ActivityMainBinding binding;
     FloatingActionButton btnGrupos;
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -72,5 +72,10 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onFragmentFinish() {
+        finish();
     }
 }
