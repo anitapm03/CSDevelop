@@ -63,10 +63,13 @@
         android:layout_alignParentBottom="true"
         android:background="@color/black">
 
+
+
         <EditText
             android:id="@+id/eText"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
             android:layout_centerVertical="true"
             android:hint="Escribe algo!"
             android:textColorHint="@color/white"
@@ -74,6 +77,15 @@
             >
 
         </EditText>
+
+        <ImageButton
+            android:id="@+id/addImagen"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/ic_enviar_foto"
+            android:layout_alignParentStart="true"
+            >
+        </ImageButton>
 
         <ImageButton
             android:id="@+id/enviarMensaje"

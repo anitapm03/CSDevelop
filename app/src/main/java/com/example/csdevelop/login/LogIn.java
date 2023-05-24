@@ -15,6 +15,7 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.csdevelop.MainActivity;
 import com.example.csdevelop.R;
+import com.example.csdevelop.chat.ChatActivity;
 import com.example.csdevelop.registro.Registro;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -95,7 +96,7 @@ public class LogIn extends AppCompatActivity {
     }
 
     public void iniciarSesion(){
-        Intent is =new Intent(this, MainActivity.class);
+        Intent is =new Intent(this, ChatActivity.class);
         //para no ejecutar actividades innecesarias
         is.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(is);

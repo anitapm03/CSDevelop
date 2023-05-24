@@ -1,10 +1,30 @@
-package com.example.csdevelop.chat;
+package com.example.csdevelop.adapter;
 
-public class Chats {
-    //basurero de codigo
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
-    /*
-    public class MensajesAdapter extends RecyclerView.Adapter<HolderMensaje> {
+import androidx.annotation.NonNull;
+//import androidx.paging.PageFetcherSnapshotState;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.example.csdevelop.R;
+import com.example.csdevelop.chat.Mensaje;
+import com.example.csdevelop.chat.MensajeRecibir;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.microedition.khronos.opengles.GL;
+
+public class MensajesAdapter extends RecyclerView.Adapter<HolderMensaje> {
 
     //constantes para saber si el mensaje es mio o de otro
     public static final int MENSAJE_OTROS=1;
@@ -54,7 +74,7 @@ public class Chats {
             Date d = new Date(codigoHora);
             SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
 
-            holder.getHoraMensajeEnviado().setText(sdf.format(d));
+            holder.getHoraMensaje().setText(sdf.format(d));
             holder.getRecibeMensaje().setText(listMensaje.get(position).getUsuarioEnvia());
 
         } else {
@@ -104,6 +124,4 @@ public class Chats {
             return MENSAJE_OTROS;
         }
     }
-}
-     */
 }

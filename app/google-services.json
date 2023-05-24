@@ -1,13 +1,14 @@
 {
   "project_info": {
     "project_number": "217138412096",
+    "firebase_url": "https://bdconciertossolo-a66c3-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "bdconciertossolo-a66c3",
     "storage_bucket": "bdconciertossolo-a66c3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:217138412096:android:a83805ed5e68f5d0003da5",
+        "mobilesdk_app_id": "1:217138412096:android:a6624c6711daf157003da5",
         "android_client_info": {
           "package_name": "com.example.csdevelop"
         }
