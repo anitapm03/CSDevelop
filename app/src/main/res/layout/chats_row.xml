@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:layout_marginBottom="5dp"
+    android:backgroundTint="@color/black"
+    app:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:id="@+id/row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#000000"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/fotoConciertoRow"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/white"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+
+            <TextView
+                android:id="@+id/nombreConciertoRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="nombre"
+                android:textColor="@color/white"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/san_francisco"/>
+
+            <TextView
+                android:id="@+id/ultimoUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ultimoUsuario"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/ultimoMensaje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ultimoMensaje"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

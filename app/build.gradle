@@ -86,4 +86,7 @@ dependencies {
 
     //validaciones de correo y contraseĂ±a
     implementation 'com.basgeekball:awesome-validation:4.2'
+
+    //imagenes redondas
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }
