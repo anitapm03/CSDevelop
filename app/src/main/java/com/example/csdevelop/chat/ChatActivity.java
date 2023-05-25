@@ -41,14 +41,14 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+//import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatActivity extends AppCompatActivity {
 
     //ID CHAT GLOBAL
     String id_chat_global;
 
-    CircleImageView fotoConciertoChat;
+   // CircleImageView fotoConciertoChat;
     EditText eText;
     TextView nombreEventoChat;
     Button volver;
@@ -76,7 +76,7 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         volver=findViewById(R.id.volver);
-        fotoConciertoChat=findViewById(R.id.fotoConciertoChat);
+        //fotoConciertoChat=findViewById(R.id.fotoConciertoChat);
         eText=findViewById(R.id.eText);
         nombreEventoChat=findViewById(R.id.nombreEventoChat);
         enviarMensaje=findViewById(R.id.enviarMensaje);

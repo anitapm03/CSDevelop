@@ -142,7 +142,7 @@ public class Registro extends AppCompatActivity {
 
             case "ERROR_INVALID_EMAIL":
                 Toast.makeText(Registro.this, "La dirección de correo electrónico está mal formateada.", Toast.LENGTH_LONG).show();
-                edtMail.setError("La dirección de correo electrónico está mal formateada.");
+                edtMail.setError("La dirección de correo electrónico es incorrecta.");
                 edtMail.requestFocus();
                 break;
 
