@@ -22,7 +22,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.csdevelop.MainActivity;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.csdevelop.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,42 +47,45 @@ import java.util.Map;
 
 public class MiPerfil extends AppCompatActivity {
 
-    Button btonActualizar, btonSalir, btnCambiarFoto, btnCambiarContra, btnGuardarContra;
+    Button btonActualizar,btonVolver, btnCambiarFoto, btnCambiarContra, btnGuardarContra, btnEliminar, btnCancelar, btnGaleria;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseAuth mAuth;
+    FirebaseUser currentUser;
     StorageReference storageReference;
+    DocumentReference userRef;
     Dialog dialogSubirFoto;
     final int CODIGO_RESPUESTA_GALERIA = 3;
     Uri uri;
     ImageView imgFotoPerfil1, imgFotoPerfil2;
-    Button btnEliminar, btnCancelar, btnGaleria;
-    TextView txtPassAntigua, txtPassNueva;
-    String email, password;
+    TextView txtPassActual, txtPassNueva, txtConfirmarPassNueva, txtAlerta, txtAlerta2;
+    String email, password, userId;
 
+    AwesomeValidation awesomeValidation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mi_perfil);
 
         final EditText txtNombre = findViewById(R.id.edtUsuario);
-        //final EditText txtpassAntigua = findViewById(R.id.edtPassword);
-        //final EditText txtpassNueva = findViewById(R.id.edtPasswordC);
-
 
         btonActualizar = findViewById(R.id.btonActualizar);
-        btonSalir = findViewById(R.id.btonSalir);
+        btonVolver = findViewById(R.id.btonVolver);
         btnCambiarFoto = findViewById(R.id.btonEditarFoto);
         imgFotoPerfil1 = findViewById(R.id.imgFotoPerfil2);
         btnCambiarContra = findViewById(R.id.btonCambiarContrasena);
-        txtPassAntigua = findViewById(R.id.edtContrasenaAntigua);
+        txtPassActual = findViewById(R.id.edtContrasenaAntigua);
         txtPassNueva = findViewById(R.id.edtContrasenaNueva);
+        txtConfirmarPassNueva = findViewById(R.id.edtContrasenaNueva2);
         btnGuardarContra = findViewById(R.id.btonGuardarContrasena);
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        txtAlerta = findViewById(R.id.alerta);
+        txtAlerta2 = findViewById(R.id.alerta2);
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
 
 
-        String userId = currentUser.getUid();
-        DocumentReference userRef = db.collection("usuarios").document(userId);
+        userId = currentUser.getUid();
+        userRef = db.collection("usuarios").document(userId);
         storageReference = FirebaseStorage.getInstance().getReference();
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -107,19 +111,36 @@ public class MiPerfil extends AppCompatActivity {
         });
 
 
+        btonVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+
+            }
+        });
 
         btonActualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    DocumentReference userRef = db.collection("usuarios").document(userId);
                     userRef.update("nombre",txtNombre.getText().toString());
+                    txtAlerta2.setText("Nombre de usuario actualizado");
+                    String colorHex = "#0F8128";
+                    int colorInt = Color.parseColor(colorHex);
+                    txtAlerta2.setTextColor(colorInt);
             }
 
         });
 
+        txtPassActual.setVisibility(View.GONE);
+        txtPassNueva.setVisibility(View.GONE);
+        txtConfirmarPassNueva.setVisibility(View.GONE);
+        btnGuardarContra.setVisibility(View.GONE);
         btnCambiarContra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                txtPassActual.setText("");
+                txtPassNueva.setText("");
+                txtConfirmarPassNueva.setText("");
                 mostrarCajasContrasena();
             }
         });
@@ -127,51 +148,7 @@ public class MiPerfil extends AppCompatActivity {
         btnGuardarContra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    String newPassword = txtPassNueva.getText().toString();
-                                    String contraseñaAntigua = txtPassAntigua.getText().toString();
-                                    if(contraseñaAntigua.equals(password)){
-                                        user.updatePassword(newPassword)
-                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
-                                                        if (task.isSuccessful()) {
-                                                            Toast.makeText(getApplicationContext(), "Contraseña actualizada", Toast.LENGTH_SHORT).show();
-                                                        } else {
-                                                            Toast.makeText(getApplicationContext(), "Error al actualizar la contraseña", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    }
-                                                });
-                                    }else{
-                                        Toast.makeText(getApplicationContext(), "Contraseña antigua incorrecta", Toast.LENGTH_SHORT).show();
-
-                                    }
-
-                                } else {
-                                    // Ocurrió un error en el inicio de sesión
-                                    Toast.makeText(getApplicationContext(), "Error en el inicio de sesión", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-
-
-            }
-        });
-
-
-        btonSalir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MiPerfil.this, MainActivity.class);
-                startActivity(intent);
+                cambiarContraseña();
             }
         });
 
@@ -185,16 +162,19 @@ public class MiPerfil extends AppCompatActivity {
     }
 
 
+
     private void mostrarCajasContrasena() {
-        int visibility = txtPassAntigua.getVisibility();
+        int visibility = txtPassActual.getVisibility();
 
         if (visibility == View.VISIBLE) {
-            txtPassAntigua.setVisibility(View.GONE);
+            txtPassActual.setVisibility(View.GONE);
             txtPassNueva.setVisibility(View.GONE);
+            txtConfirmarPassNueva.setVisibility(View.GONE);
             btnGuardarContra.setVisibility(View.GONE);
         } else {
-            txtPassAntigua.setVisibility(View.VISIBLE);
+            txtPassActual.setVisibility(View.VISIBLE);
             txtPassNueva.setVisibility(View.VISIBLE);
+            txtConfirmarPassNueva.setVisibility(View.VISIBLE);
             btnGuardarContra.setVisibility(View.VISIBLE);
         }
     }
@@ -210,8 +190,8 @@ public class MiPerfil extends AppCompatActivity {
         btnCancelar = dialogSubirFoto.findViewById(R.id.btonCancelar2);
         btnGaleria = dialogSubirFoto.findViewById(R.id.btonGaleria);
 
-        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        FirebaseFirestore.getInstance().collection("usuarios").document(userID)
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseFirestore.getInstance().collection("usuarios").document(userId)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -241,8 +221,7 @@ public class MiPerfil extends AppCompatActivity {
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Acción al hacer clic en el botón de Cancelar
-                dialogSubirFoto.dismiss(); // Cierra el diálogo
+                dialogSubirFoto.dismiss();
             }
         });
 
@@ -259,7 +238,7 @@ public class MiPerfil extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(getApplicationContext(), "Imagen de perfil eliminada", Toast.LENGTH_SHORT).show();
+                                        txtAlerta2.setText("Imagen de perfil eliminada");
                                         imgFotoPerfil2.setImageResource(R.drawable.foto_perfil);
                                         imgFotoPerfil1.setImageResource(R.drawable.foto_perfil);
                                     }
@@ -286,6 +265,56 @@ public class MiPerfil extends AppCompatActivity {
         dialogSubirFoto.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialogSubirFoto.show();
 
+    }
+
+    private void cambiarContraseña(){
+        //awesomeValidation= new AwesomeValidation(ValidationStyle.BASIC);
+        //awesomeValidation.addValidation(this,R.id.edtContrasenaAntigua, ".{1,}",R.string.invalid_currentPassword);
+        //awesomeValidation.addValidation(this,R.id.txtInputContrasenaNueva, ".{1,}",R.string.invalid_newPassword);
+        //awesomeValidation.addValidation(this,R.id.txtInputContrasenaNueva2, ".{1,}",R.string.invalid_newPassword2);
+
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            String newPassword = txtPassNueva.getText().toString();
+                            String contraseñaAntigua = txtPassActual.getText().toString();
+                            if(contraseñaAntigua.equals(password)){
+                                if(newPassword.equals(txtConfirmarPassNueva.getText().toString())){
+                                    currentUser.updatePassword(newPassword)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        userRef.update("contraseña",newPassword);
+                                                        txtPassActual.setText("");
+                                                        txtPassNueva.setText("");
+                                                        txtConfirmarPassNueva.setText("");
+                                                        txtAlerta.setText("Contraseña actualizada");
+                                                        txtAlerta.setTextColor(Color.GREEN);
+                                                    } else {
+                                                        Toast.makeText(getApplicationContext(), "Error al actualizar la contraseña", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+                                }else{
+                                    txtAlerta.setText("Las contraseñas no coinciden");
+                                    txtAlerta.setTextColor(Color.RED);
+                                }
+
+                            }else{
+                                txtAlerta.setText("Contraseña actual incorrecta");
+                                txtAlerta.setTextColor(Color.RED);
+
+                            }
+
+                        } else {
+                            txtAlerta.setText("Para volver a cambiar la contraseña, vuelva a iniciar sesión");
+                            txtAlerta.setTextColor(Color.RED);
+                        }
+                    }
+                });
     }
 
 
@@ -320,7 +349,7 @@ public class MiPerfil extends AppCompatActivity {
                                         .update(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {
-                                                Toast.makeText(getApplicationContext(), "Imagen Actualizada", Toast.LENGTH_SHORT).show();
+                                                txtAlerta2.setText("Imagen de perfil actualizada");
                                             }
                                         });
                             }

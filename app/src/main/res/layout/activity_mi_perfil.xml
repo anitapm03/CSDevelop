@@ -42,6 +42,7 @@
         android:padding="16dp">
 
         <!-- Foto de perfil -->
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgFotoPerfil2"
             android:layout_width="150dp"
@@ -51,22 +52,32 @@
             android:layout_gravity="center" />
 
         <!-- Botón para editar foto de perfil -->
+
         <Button
             android:id="@+id/btonEditarFoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Editar foto de perfil"
             android:layout_gravity="center"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="10dp" />
 
 
         <!-- TextInputLayout para el nombre de usuario -->
+        <TextView
+            android:id="@+id/alerta2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:gravity="center"
+            android:text=""
+            android:textColor="#0F8128" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtInputUsuario"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="2dp"
             android:hint="Nombre de usuario"
             app:startIconDrawable="@drawable/ic_menu_perfil">
 
@@ -86,7 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Actualizar nombre de usuario"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="10dp" />
 
         <!-- Botón de cambiar contraseña -->
         <Button
@@ -94,7 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cambiar Contraseña"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="8dp" />
 
         <!-- Cajas de texto para la contraseña antigua y la nueva -->
         <LinearLayout
@@ -109,7 +120,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Contraseña antigua">
+                android:hint="Contraseña actual">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtContrasenaAntigua"
@@ -139,23 +150,42 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtInputContrasenaNueva2"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirmar contraseña nueva">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtContrasenaNueva2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/san_francisco"
+                    android:inputType="textPassword"
+                    android:textSize="15sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <!-- Botón de guardar contraseña -->
+
+            <TextView
+                android:id="@+id/alerta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:text=""
+                android:textColor="#F60E0E" />
+
             <Button
                 android:id="@+id/btonGuardarContrasena"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Guardar nueva contraseña"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="3dp"
+                android:text="Guardar nueva contraseña" />
 
         </LinearLayout>
-
-        <!-- Botón de salir -->
-        <Button
-            android:id="@+id/btonSalir"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Salir"
-            android:layout_marginTop="16dp" />
 
     </LinearLayout>
 

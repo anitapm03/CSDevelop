@@ -56,9 +56,18 @@ public class PerfilFragment extends Fragment {
             }
         });
 
-        loadProfilePhoto();
+        onResume();
+
 
         return vista;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Llamar al método de actualización aquí
+        loadProfilePhoto();
     }
 
     private void loadProfilePhoto() {
