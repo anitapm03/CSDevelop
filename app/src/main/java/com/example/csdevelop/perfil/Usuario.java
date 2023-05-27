@@ -41,4 +41,14 @@ public class Usuario {
     public void setPassnueva(String passnueva) {
         this.passnueva = passnueva;
     }
+
+    String foto_perfil;
+
+    public String getFoto_perfil() {
+        return foto_perfil;
+    }
+
+    public void setFoto_perfil(String foto_perfil) {
+        this.foto_perfil = foto_perfil;
+    }
 }

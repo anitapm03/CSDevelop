@@ -86,4 +86,14 @@ dependencies {
 
     //validaciones de correo y contraseĂ±a
     implementation 'com.basgeekball:awesome-validation:4.2'
+
+    //libreria para subir archivos
+    implementation 'com.google.firebase:firebase-storage:16.0.1'
+
+    //libreria imagen circulo
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    //cargar imágenes desde URL
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 }

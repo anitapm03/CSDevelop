@@ -5,16 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+        tools:ignore="MissingConstraints">
 
-<!--La primera vista es un LinearLayout con una TextView que muestra
- "Perfil" en un fondo negro. -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,8 +20,9 @@
 
             <TextView
                 android:id="@+id/title_text"
-                android:layout_width="322dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:paddingStart="16dp"
                 android:text="Perfil"
                 android:textColor="#fff"
@@ -39,32 +36,46 @@
                 android:drawableEnd="@drawable/ic_logout" />
 
         </LinearLayout>
-<!--A continuación, hay otro LinearLayout con varias vistas.
- Primero, hay una TextView vacía, luego un LinearLayout con una
- sola ImageView que muestra una foto de perfil, y luego otro
- LinearLayout con tres TextViews que muestran información personal-->
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="459dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgFotoPerfil2"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:padding="16dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/foto_perfil" />
+
+            <TextView
+                android:id="@+id/nombreUsuario"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"/>
+                android:paddingTop="16dp"
+                android:text="Nombre de usuario"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btonEditar"
-                android:layout_width="match_parent"
+                android:layout_width="190dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:text="Editar Perfil" />
-
-            <!--El siguiente LinearLayout tiene un TextView
-             que dice "Mis Entradas", seguida de otro LinearLayout que contiene
-             una imagen, un título y una descripción de una entrada de concierto. -->
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- Aquí puedes agregar la vista de los conciertos favoritos del usuario -->
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

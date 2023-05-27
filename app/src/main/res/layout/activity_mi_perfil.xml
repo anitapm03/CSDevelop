@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="#FFFFFF">
 
-
+    <!-- Cabecera -->
     <LinearLayout
         android:id="@+id/cabeceraDetalle"
         android:layout_width="match_parent"
@@ -34,70 +33,41 @@
 
     </LinearLayout>
 
+    <!-- Contenido -->
     <LinearLayout
-        android:id="@+id/LinearParte1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/cabeceraDetalle"
         android:orientation="vertical"
-        >
+        android:padding="16dp">
 
-        <TextView
-            android:id="@+id/text"
-            android:layout_width="match_parent"
-            android:layout_height="91dp" />
+        <!-- Foto de perfil -->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgFotoPerfil2"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/foto_perfil"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="165dp"
-            app:srcCompat="@drawable/ic_menu_perfil" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/LinearParte2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/LinearParte1"
-        >
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="51dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
+        <!-- Botón para editar foto de perfil -->
         <Button
-            android:id="@+id/btonAnadir"
-            android:layout_width="251dp"
+            android:id="@+id/btonEditarFoto"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Añadir foto" />
+            android:text="Editar foto de perfil"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/LinearParte3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/LinearParte2"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:orientation="vertical"
-        >
+        <!-- TextInputLayout para el nombre de usuario -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtInputUsuario"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre Usuario"
+            android:layout_marginTop="10dp"
+            android:hint="Nombre de usuario"
             app:startIconDrawable="@drawable/ic_menu_perfil">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -107,102 +77,86 @@
                 android:fontFamily="@font/san_francisco"
                 android:inputType="textEmailAddress"
                 android:textSize="15sp" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtInputPassword"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <!-- Botón de actualizar -->
+        <Button
+            android:id="@+id/btonActualizar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contraseña antigua"
-            app:startIconDrawable="@drawable/ic_password2">
+            android:text="Actualizar nombre de usuario"
+            android:layout_marginTop="16dp" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtPassword"
+        <!-- Botón de cambiar contraseña -->
+        <Button
+            android:id="@+id/btonCambiarContrasena"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cambiar Contraseña"
+            android:layout_marginTop="16dp" />
+
+        <!-- Cajas de texto para la contraseña antigua y la nueva -->
+        <LinearLayout
+            android:id="@+id/layoutCambioContrasena"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtInputContrasenaAntigua"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/san_francisco"
-                android:inputType="textPassword"
-                android:textSize="15sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:hint="Contraseña antigua">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtInputPasswordC"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:hint="Contraseña nueva"
-            app:startIconDrawable="@drawable/ic_password">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtContrasenaAntigua"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/san_francisco"
+                    android:inputType="textPassword"
+                    android:textSize="15sp"
+                    app:startIconDrawable="@drawable/ic_password"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtPasswordC"
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtInputContrasenaNueva"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/san_francisco"
-                android:inputType="textPassword"
-                android:textSize="15sp" />
+                android:hint="Contraseña nueva">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtContrasenaNueva"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/san_francisco"
+                    android:inputType="textPassword"
+                    android:textSize="15sp" />
 
-    </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
-        android:id="@+id/LinearParte4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/LinearParte3"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:gravity="end">
+            <!-- Botón de guardar contraseña -->
+            <Button
+                android:id="@+id/btonGuardarContrasena"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Guardar nueva contraseña"
+                android:layout_marginTop="16dp" />
 
+        </LinearLayout>
 
+        <!-- Botón de salir -->
         <Button
-            android:id="@+id/btnActualizar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/black"
-            android:drawableEnd="@drawable/ic_registrarme"
-            android:drawableTint="#fff"
-            android:fontFamily="@font/san_francisco"
-            android:text="Actualizar" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/LinearParte5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/LinearParte4"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:orientation="horizontal">
-
-
-        <!--<TextView
-            android:id="@+id/txtNuevoUsuario"
+            android:id="@+id/btonSalir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/san_francisco"
-            android:gravity="center|center_horizontal"
-            android:text="@string/label_nuevoUser"
-            android:textColor="@color/negro"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-        />-->
-        <Button
-            android:id="@+id/btnCancelar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/black"
-            android:drawableEnd="@drawable/ic_login"
-            android:drawableTint="#fff"
-            android:fontFamily="@font/san_francisco"
-            android:text="Cancelar" />
-    </LinearLayout>
+            android:text="Salir"
+            android:layout_marginTop="16dp" />
 
+    </LinearLayout>
 
 </RelativeLayout>
