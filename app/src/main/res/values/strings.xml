@@ -6,7 +6,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="label_editarPerfil">EDITAR PERFIL</string>
-
+    <string name="label_resetearcontrasena">RESETEAR CONTRASEÑA</string>
 
 
     <!-- strings de validación -->

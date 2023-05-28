@@ -60,17 +60,19 @@ public class BuscarFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
                 return false;
             }
 
-            @Override
             public boolean onQueryTextChange(String newText) {
-                // Este método se llama cada vez que se escribe algo en el campo de búsqueda
+                String searchTerm = newText.toLowerCase();
+                if (!searchTerm.isEmpty()) {
+                    searchTerm = searchTerm.substring(0, 1).toUpperCase() + searchTerm.substring(1);
+                }
+
                 Query newQuery = firestore.collection("conciertos")
                         .orderBy("nombre")
-                        .startAt(newText)
-                        .endAt(newText + "\uf8ff");
+                        .startAt(searchTerm)
+                        .endAt(searchTerm + "\uf8ff");
 
                 FirestoreRecyclerOptions<Concierto> newOptions =
                         new FirestoreRecyclerOptions.Builder<Concierto>()
@@ -88,7 +90,9 @@ public class BuscarFragment extends Fragment {
 
     private void setUpRecyclerView() {
         Query originalQuery = firestore.collection("conciertos")
-                .orderBy("nombre");
+                .orderBy("nombre")
+                .orderBy("fecha")
+                .orderBy("hora");
 
         FirestoreRecyclerOptions<Concierto> firestoreRecyclerOptions =
                 new FirestoreRecyclerOptions.Builder<Concierto>()

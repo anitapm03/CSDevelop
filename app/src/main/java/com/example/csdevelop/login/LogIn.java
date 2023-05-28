@@ -26,7 +26,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LogIn extends AppCompatActivity {
-    Button btnIS, btnR;
+    Button btnIS, btnR, btnOlvideContraseña;
     TextInputEditText edtMail, edtPassword;
     TextView alerta;
     AwesomeValidation awesomeValidation;
@@ -60,6 +60,7 @@ public class LogIn extends AppCompatActivity {
         btnIS=findViewById(R.id.btnRG);
         btnR=findViewById(R.id.btnR);
         alerta = findViewById(R.id.alertaLogin);
+        btnOlvideContraseña = findViewById(R.id.btnOlvideContraseña);
 
         btnIS.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +92,13 @@ public class LogIn extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 registrarse();
+            }
+        });
+
+        btnOlvideContraseña.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LogIn.this, RestablecerContrasena.class));
             }
         });
     }

@@ -304,8 +304,14 @@ public class MiPerfil extends AppCompatActivity {
                                 }
 
                             }else{
-                                txtAlerta.setText("Contraseña actual incorrecta");
-                                txtAlerta.setTextColor(Color.RED);
+                                if(!txtPassActual.getText().toString().isEmpty()){
+                                    txtAlerta.setText("Contraseña actual incorrecta");
+                                    txtAlerta.setTextColor(Color.RED);
+                                }else{
+                                    txtAlerta.setText("Introduce tu contaseña actual");
+                                    txtAlerta.setTextColor(Color.RED);
+                                }
+
 
                             }
 

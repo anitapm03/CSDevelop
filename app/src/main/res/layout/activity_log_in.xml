@@ -168,20 +168,21 @@
         android:id="@+id/LinearParte6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:layout_below="@id/LinearParte5">
 
-        <TextView
+        <Button
+            android:id="@+id/btnOlvideContraseña"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:backgroundTint="#BAA3A3"
+            android:drawableTint="#fff"
             android:fontFamily="@font/san_francisco"
-            android:gravity="center|center_horizontal"
-            android:text="@string/label_olvide_password"
-            android:textColor="@color/negro"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:text="Olvidé mi contraseña"/>
 
     </LinearLayout>
 
