@@ -34,7 +34,7 @@ public class PerfilFragment extends Fragment {
 
 
 
-        logout=vista.findViewById(R.id.logout);
+        logout=vista.findViewById(R.id.volverAtras);
         btonPerfil = vista.findViewById(R.id.btonEditar);
         imgFotoPerfil = vista.findViewById(R.id.imgFotoPerfil2);
         nombreUsuario = vista.findViewById(R.id.nombreUsuario);

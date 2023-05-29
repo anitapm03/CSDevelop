@@ -8,7 +8,6 @@
     <string name="label_editarPerfil">EDITAR PERFIL</string>
 
 
-
     <!-- strings de validación -->
     <string name="invalid_mail">E-mail incorrecto</string>
     <string name="invalid_password">Contraseña no, valida. Min 8 dígitos.</string>
@@ -22,5 +21,9 @@
 
     <!-- strings grupos -->
     <string name="label_grupos">Grupos</string>
+
+    <!-- strings publicacion -->
+    <string name="aviso_foto">La subida de la imagen es opcional</string>
+    <string name="aviso_ig">Las imágenes compartidas podrán aparecer en el IG oficial de Conciertos Solo</string>
 
 </resources>

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import com.example.csdevelop.DetalleConcierto;
 import com.example.csdevelop.MainActivity;
 import com.example.csdevelop.R;
 import com.example.csdevelop.adapter.MensajesAdapter;
+import com.example.csdevelop.model.Concierto;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -53,6 +55,7 @@ public class ChatActivity extends AppCompatActivity {
     TextView nombreEventoChat;
     Button volver;
     ImageButton enviarMensaje, addImagen;
+
     RecyclerView rvMensajes;
 
     ArrayList<MensajeRecibir> msgList;
@@ -65,10 +68,10 @@ public class ChatActivity extends AppCompatActivity {
 
     //sacar datos del usuario para indicar quien envia el msg
     FirebaseFirestore firestore;
-    CollectionReference coleccionUsuarios;
+    CollectionReference coleccionUsuarios, coleccionConciertos;
     FirebaseAuth firebaseAuth;
     String id;
-    String nombreUsuario;
+    String nombreUsuario, referencia;
     private static final int PHOTO_SEND=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,13 +86,21 @@ public class ChatActivity extends AppCompatActivity {
         rvMensajes=findViewById(R.id.rvMensajes);
         addImagen=findViewById(R.id.addImagen);
 
-        //instanciamos lo de la base de datos
-        database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("chats/chat_general");
-        storage = FirebaseStorage.getInstance();
-
         //hacer un metodo que identifique el nombre del concierto
         //y cree una referencia chats/nombreEvento para acceder a los distintos chats
+        referencia = "chats/";
+        //recogemos el evento
+        Concierto concierto = (Concierto) getIntent().getSerializableExtra("concierto");
+        nombreEventoChat.setText(concierto.getNombre());
+        referencia += concierto.getNombre();
+
+
+        //instanciamos lo de la base de datos
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference(referencia);
+        storage = FirebaseStorage.getInstance();
+
+
 
         //recogemos los datos del usuario
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
