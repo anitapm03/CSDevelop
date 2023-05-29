@@ -218,6 +218,8 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
+
+
     public void onBackPressed(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
