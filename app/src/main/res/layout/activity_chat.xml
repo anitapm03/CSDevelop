@@ -22,7 +22,7 @@
                 android:layout_width="43dp"
                 android:layout_height="31dp"
                 android:drawableEnd="@drawable/ic_volver" />
-
+<!--
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/fotoConciertoChat"
                 android:layout_width="40dp"
@@ -31,7 +31,7 @@
                 app:civ_border_width="2dp"
                 app:civ_border_color="@color/white"
                 />
-
+-->
             <TextView
                 android:id="@+id/nombreEventoChat"
                 android:text="Chat ejemplo"

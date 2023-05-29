@@ -5,16 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+        tools:ignore="MissingConstraints">
 
-<!--La primera vista es un LinearLayout con una TextView que muestra
- "Perfil" en un fondo negro. -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,8 +20,9 @@
 
             <TextView
                 android:id="@+id/title_text"
-                android:layout_width="322dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:paddingStart="16dp"
                 android:text="Perfil"
                 android:textColor="#fff"
@@ -39,218 +36,46 @@
                 android:drawableEnd="@drawable/ic_logout" />
 
         </LinearLayout>
-<!--A continuación, hay otro LinearLayout con varias vistas.
- Primero, hay una TextView vacía, luego un LinearLayout con una
- sola ImageView que muestra una foto de perfil, y luego otro
- LinearLayout con tres TextViews que muestran información personal-->
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="459dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgFotoPerfil2"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:padding="16dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/foto_perfil" />
+
             <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="41dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="240dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imageView11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="240dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/fotoperfil" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="43dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView17"
-                    android:layout_width="166dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/textView18"
-                    android:layout_width="332dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textColor="#000000"
-                    android:text="JULIA MARTÍN GÓMEZ"
-                    android:textSize="22sp" />
-
-                <TextView
-                    android:id="@+id/textView20"
-                    android:layout_width="107dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/nombreUsuario"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:paddingTop="16dp"
+                android:text="-"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textView21"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <!--El siguiente LinearLayout tiene un TextView
-             que dice "Mis Entradas", seguida de otro LinearLayout que contiene
-             una imagen, un título y una descripción de una entrada de concierto. -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="138dp"
-                android:orientation="vertical"
-                >
-
-                <TextView
-                    android:id="@+id/textView30"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="     Mis Entradas"
-                    android:textColor="#000000"
-                    android:textSize="19sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:background="@drawable/bordes"
-                    android:layout_margin="3dp">
-
-                    <TextView
-                        android:id="@+id/textView34"
-                        android:layout_width="12dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-
-                        android:text="TextView" />
-
-                    <ImageView
-                        android:id="@+id/imageView14"
-                        android:layout_width="221dp"
-                        android:layout_height="106dp"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/discomelendi" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/textView31"
-                            android:layout_width="match_parent"
-                            android:layout_height="32dp" />
-
-                        <TextView
-                            android:id="@+id/textView32"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Concierto Melendi +2"
-                            android:textColor="#000000"
-                            android:textSize="19sp" />
-
-                        <TextView
-                            android:id="@+id/textView302"
-                            android:layout_width="match_parent"
-                            android:layout_height="37dp"
-                            android:text="   Faltan 3 días..."
-                            android:textSize="17sp" />
-
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="175dp"
-                android:orientation="vertical"
-
-                >
-
-                <TextView
-                    android:id="@+id/textView37"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/textView303"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="       Favoritos"
-                    android:textColor="#000000"
-                    android:textSize="19sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="132dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/bordes"
-                    android:layout_margin="3dp">
-
-                    <ImageView
-                        android:id="@+id/imageView15"
-                        android:layout_width="235dp"
-                        android:layout_height="121dp"
-                        android:layout_weight="1"
-                        android:layout_margin="10dp"
-                        app:srcCompat="@drawable/discovinilo" />
-
-                    <TextView
-                        android:id="@+id/textView343"
-                        android:layout_width="12dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-
-                        android:text="TextView" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/textView301"
-                            android:layout_width="match_parent"
-                            android:layout_height="33dp" />
-
-                        <TextView
-                            android:id="@+id/textView3022"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Concierto Canto del Loco"
-                            android:textColor="#000000"
-                            android:textSize="19sp" />
-
-                        <TextView
-                            android:id="@+id/textView3002"
-                            android:layout_width="match_parent"
-                            android:layout_height="37dp"
-                            android:text="   Comprar entrada..."
-                            android:textSize="17sp" />
-
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
+            <Button
+                android:id="@+id/btonEditar"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Editar Perfil" />
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- Aquí puedes agregar la vista de los conciertos favoritos del usuario -->
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

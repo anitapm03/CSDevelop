@@ -5,6 +5,8 @@
     <string name="label_olvide_password">Olvidé mi contraseña?</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_editarPerfil">EDITAR PERFIL</string>
+
 
 
     <!-- strings de validación -->
@@ -13,4 +15,9 @@
     <string name="invalid_username">Nombre de usuario no válido</string>
     <string name="invalid_passwordLogin">Introduzca una contraseña</string>
     <string name="invalid_usernameLogin">Introduzca un email</string>
+    <string name="invalid_currentPassword">Introduzca la contraseña actual</string>
+    <string name="invalid_newPassword">Introduzca la contraseña actual</string>
+    <string name="invalid_newPassword2">Introduzca la contraseña actual</string>
+
+
 </resources>
