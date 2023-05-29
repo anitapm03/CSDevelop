@@ -96,7 +96,7 @@ public class LogIn extends AppCompatActivity {
     }
 
     public void iniciarSesion(){
-        Intent is =new Intent(this, ChatActivity.class);
+        Intent is =new Intent(this, MainActivity.class);
         //para no ejecutar actividades innecesarias
         is.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(is);

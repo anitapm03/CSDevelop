@@ -85,8 +85,11 @@ public class ChatActivity extends AppCompatActivity {
 
         //instanciamos lo de la base de datos
         database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("chat");
+        databaseReference = database.getReference("chats/chat_general");
         storage = FirebaseStorage.getInstance();
+
+        //hacer un metodo que identifique el nombre del concierto
+        //y cree una referencia chats/nombreEvento para acceder a los distintos chats
 
         //recogemos los datos del usuario
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
