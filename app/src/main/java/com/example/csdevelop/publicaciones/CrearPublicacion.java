@@ -40,6 +40,8 @@ public class CrearPublicacion extends AppCompatActivity {
     private static final String TYPE_TEXT="1";
     private static final String TYPE_PIC="2";
 
+    String enlaceFoto = "";
+
     EditText txtPubli;
     Button addImg, publicar, volver;
     ImageView fotoPubli;
@@ -107,8 +109,15 @@ public class CrearPublicacion extends AppCompatActivity {
 
                 //meter una condicion que me diga si tiene imagen o no
 
-                //añadimos una publicacion nueva
-                databaseReference.push().setValue(new Publicacion(txtPubli.getText().toString(), nombreUsuario, TYPE_TEXT, id));
+                if (enlaceFoto.length() == 0){
+                    //añadimos una publicacion nueva de texto porque no hay enlace
+                    databaseReference.push().setValue(new Publicacion(txtPubli.getText().toString(), nombreUsuario, TYPE_TEXT, id));
+                } else {
+                    databaseReference.push().setValue(new Publicacion(txtPubli.getText().toString(), nombreUsuario, enlaceFoto,TYPE_PIC, id));
+                }
+
+
+
 
                 //cerramos el activity
                 Intent intent = new Intent(CrearPublicacion.this, MainActivity.class);
@@ -164,14 +173,13 @@ public class CrearPublicacion extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     String url = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
-                    //Uri u = Uri.parse(url);
-                    // NO FUNCIONA
 
-                    //Uri u = taskSnapshot.getMetadata().getReference().getDownloadUrl().getResult();
+                    enlaceFoto = url;
 
-                    Publicacion p = new Publicacion(txtPubli.getText().toString(),nombreUsuario,url,TYPE_PIC,id);
+                    //Opcion de cambiar el boton a añadir imagen y publicar
+                    //Publicacion p = new Publicacion(txtPubli.getText().toString(),nombreUsuario,url,TYPE_PIC,id);
 
-                    databaseReference.push().setValue(p);
+                    //databaseReference.push().setValue(p);
 
                 }
             });

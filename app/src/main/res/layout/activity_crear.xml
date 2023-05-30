@@ -49,13 +49,15 @@
             android:id="@+id/txtPubli"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:background="@drawable/bordes"
+            android:gravity="bottom|start"
             android:hint="Cuentanos que tal el ultimo concierto al que viniste con nosotros!"
             android:inputType="textMultiLine"
+            android:padding="10dp"
+
             android:shadowColor="#FF0000"
-            android:textAlignment="center"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:background="@drawable/bordes"/>
+            android:textColorHint="#BFBABA" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,12 +66,13 @@
             android:textColor="@color/white">
 
         </TextView>
+
         <Button
             android:id="@+id/addFoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Añadir imagen" />
+            android:text="Añadir imagen!" />
 
         <ImageView
             android:id="@+id/fotoPubli"
@@ -87,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="publicar!" />
+            android:text="Publicar!" />
     </LinearLayout>
 
 </RelativeLayout>

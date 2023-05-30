@@ -83,11 +83,7 @@ public class PublicacionAdapter extends RecyclerView.Adapter<HolderPublicacion> 
         //si no, es de tipo foto y se realiza lo siguiente
         if (listPublicaciones.get(position).getTipoPublicacion().equals(TIPO_IMAGEN)){
             holder.getFotoPublicacion().setVisibility(View.VISIBLE);
-
             Glide.with(c).load(listPublicaciones.get(position).getUrlFotoPublicacion()).into(holder.getFotoPublicacion());
-
-        } else if (listPublicaciones.get(position).getTipoPublicacion().equals(TIPO_TEXTO)){
-            holder.getFotoPublicacion().setVisibility(View.GONE);
 
         }
 

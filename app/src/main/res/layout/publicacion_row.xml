@@ -18,27 +18,30 @@
         android:id="@+id/rowPublicacion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#000000"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="5dp"
+        android:background="@drawable/borde_publi_usuario">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgFotoConciertoGrupo"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:padding="10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="5dp"
             android:scaleType="centerCrop"
             android:src="@drawable/foto_perfil" />
         <TextView
             android:id="@+id/nombreConciertoRow"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:fontFamily="@font/san_francisco"
             android:text="nombre"
-
-            android:textColor="@color/white"
-            android:textSize="24dp"
+            android:gravity="center_vertical|start"
+            android:textColor="@color/black"
+            android:textSize="20dp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -56,16 +59,26 @@
                 android:fontFamily="@font/san_francisco"
                 android:text="Nose Quien ha subido esta foto:"
                 android:textColor="@color/white"
-                android:textSize="20dp"
+                android:textSize="22dp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/imagenPublicacion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
 
-            </ImageView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imagenPublicacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                </ImageView>
+
+            </LinearLayout>
+
+
 
 
 
