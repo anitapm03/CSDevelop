@@ -96,4 +96,8 @@ dependencies {
     //cargar imágenes desde URL
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    //efecto recarga en rv
+    implementation 'com.firebaseui:firebase-ui-firestore:8.0.0'
+    implementation 'com.firebaseui:firebase-ui-firestore'
+
 }

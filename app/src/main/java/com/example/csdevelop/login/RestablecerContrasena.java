@@ -16,6 +16,11 @@ import com.example.csdevelop.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 
 public class RestablecerContrasena extends AppCompatActivity {
@@ -25,6 +30,11 @@ public class RestablecerContrasena extends AppCompatActivity {
     TextView alerta;
     FirebaseAuth mAuth;
     private String email;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseUser currentUser;
+
+    DocumentReference userRef;
+
 
     private AlertDialog mDialog;
 
@@ -76,7 +86,9 @@ public class RestablecerContrasena extends AppCompatActivity {
                     String codigoColor = "#3C7C32";
                     int color = Color.parseColor(codigoColor);
                     alerta.setTextColor(color);
-                    mDialog.dismiss();
+
+                    CollectionReference usuariosRef = db.collection("usuarios");
+                    Query query = usuariosRef.whereEqualTo("email", email);
                 } else {
                     alerta.setText("El correo introducido no está asociado a ninguna cuenta");
                     mDialog.dismiss();

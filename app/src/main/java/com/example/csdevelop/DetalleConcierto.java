@@ -117,6 +117,7 @@ public class DetalleConcierto extends AppCompatActivity {
                 contador++;
 
                 if (indice%2==0){
+
                     Toast.makeText(DetalleConcierto.this, "favorito", Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(DetalleConcierto.this, "no favorito", Toast.LENGTH_SHORT).show();

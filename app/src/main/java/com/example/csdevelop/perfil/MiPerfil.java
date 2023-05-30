@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -25,12 +26,15 @@ import android.widget.Toast;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.csdevelop.R;
+import com.example.csdevelop.login.LogIn;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -59,6 +63,8 @@ public class MiPerfil extends AppCompatActivity {
     ImageView imgFotoPerfil1, imgFotoPerfil2;
     TextView txtPassActual, txtPassNueva, txtConfirmarPassNueva, txtAlerta, txtAlerta2;
     String email, password, userId;
+    AuthCredential credential;
+    DocumentSnapshot document;
 
     AwesomeValidation awesomeValidation;
     @Override
@@ -84,6 +90,7 @@ public class MiPerfil extends AppCompatActivity {
 
 
 
+
         userId = currentUser.getUid();
         userRef = db.collection("usuarios").document(userId);
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -91,11 +98,10 @@ public class MiPerfil extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
+                    document = task.getResult();
                     if (document.exists()) {
                         String username = document.getString("nombre");
                         email = document.getString("email");
-                        password = document.getString("contraseña");
                         txtNombre.setText(username);
                         String fotoPerfilURL = document.getString("foto_perfil");
 
@@ -111,11 +117,11 @@ public class MiPerfil extends AppCompatActivity {
         });
 
 
+
         btonVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
-
             }
         });
 
@@ -127,6 +133,7 @@ public class MiPerfil extends AppCompatActivity {
                     String colorHex = "#0F8128";
                     int colorInt = Color.parseColor(colorHex);
                     txtAlerta2.setTextColor(colorInt);
+                    quitarTextView();
             }
 
         });
@@ -148,7 +155,11 @@ public class MiPerfil extends AppCompatActivity {
         btnGuardarContra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cambiarContraseña();
+                if(txtPassActual.getText().toString().isEmpty()){
+                    txtAlerta.setText("introduce la contraseña actual");
+                }else {
+                    cambiarContraseña();
+                }
             }
         });
 
@@ -162,6 +173,21 @@ public class MiPerfil extends AppCompatActivity {
     }
 
 
+    private void quitarTextView(){
+        CountDownTimer countDownTimer = new CountDownTimer(4000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
+
+            @Override
+            public void onFinish() {
+                txtAlerta2.setText("");
+                txtAlerta.setText("");
+            }
+        };
+
+        countDownTimer.start();
+    }
 
     private void mostrarCajasContrasena() {
         int visibility = txtPassActual.getVisibility();
@@ -202,7 +228,6 @@ public class MiPerfil extends AppCompatActivity {
                             if (fotoPerfilURL != null && !fotoPerfilURL.isEmpty()) {
                                 Picasso.get().load(fotoPerfilURL).into(imgFotoPerfil2);
                             } else {
-                                // El usuario no tiene foto de perfil, establecer la imagen por defecto
                                 imgFotoPerfil2.setImageResource(R.drawable.foto_perfil);
 
                             }
@@ -239,8 +264,10 @@ public class MiPerfil extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         txtAlerta2.setText("Imagen de perfil eliminada");
+                                        txtAlerta2.setTextColor(Color.RED);
                                         imgFotoPerfil2.setImageResource(R.drawable.foto_perfil);
                                         imgFotoPerfil1.setImageResource(R.drawable.foto_perfil);
+                                        quitarTextView();
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -257,6 +284,7 @@ public class MiPerfil extends AppCompatActivity {
                     }
                 });
             }
+
         });
 
 
@@ -268,56 +296,41 @@ public class MiPerfil extends AppCompatActivity {
     }
 
     private void cambiarContraseña(){
-        //awesomeValidation= new AwesomeValidation(ValidationStyle.BASIC);
-        //awesomeValidation.addValidation(this,R.id.edtContrasenaAntigua, ".{1,}",R.string.invalid_currentPassword);
-        //awesomeValidation.addValidation(this,R.id.txtInputContrasenaNueva, ".{1,}",R.string.invalid_newPassword);
-        //awesomeValidation.addValidation(this,R.id.txtInputContrasenaNueva2, ".{1,}",R.string.invalid_newPassword2);
-
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        password = txtPassActual.getText().toString();
+        credential = EmailAuthProvider.getCredential(email, password);
+        currentUser.reauthenticate(credential)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+                    public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             String newPassword = txtPassNueva.getText().toString();
-                            String contraseñaAntigua = txtPassActual.getText().toString();
-                            if(contraseñaAntigua.equals(password)){
-                                if(newPassword.equals(txtConfirmarPassNueva.getText().toString())){
-                                    currentUser.updatePassword(newPassword)
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        userRef.update("contraseña",newPassword);
-                                                        txtPassActual.setText("");
-                                                        txtPassNueva.setText("");
-                                                        txtConfirmarPassNueva.setText("");
-                                                        txtAlerta.setText("Contraseña actualizada");
-                                                        txtAlerta.setTextColor(Color.GREEN);
-                                                    } else {
-                                                        Toast.makeText(getApplicationContext(), "Error al actualizar la contraseña", Toast.LENGTH_SHORT).show();
-                                                    }
+                            if(newPassword.equals(txtConfirmarPassNueva.getText().toString())){
+                                currentUser.updatePassword(newPassword)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> updateTask) {
+                                                if (updateTask.isSuccessful()) {
+                                                    txtAlerta.setText("Contraseña actualizada");
+                                                    txtAlerta.setTextColor(Color.GREEN);
+                                                    quitarTextView();
+                                                } else {
+                                                    txtAlerta.setText("Error al actualizar la contraseña");
+                                                    txtAlerta.setTextColor(Color.RED);
+                                                    quitarTextView();
                                                 }
-                                            });
-                                }else{
-                                    txtAlerta.setText("Las contraseñas no coinciden");
-                                    txtAlerta.setTextColor(Color.RED);
-                                }
-
+                                            }
+                                        });
                             }else{
-                                if(!txtPassActual.getText().toString().isEmpty()){
-                                    txtAlerta.setText("Contraseña actual incorrecta");
-                                    txtAlerta.setTextColor(Color.RED);
-                                }else{
-                                    txtAlerta.setText("Introduce tu contaseña actual");
-                                    txtAlerta.setTextColor(Color.RED);
-                                }
-
-
+                                txtAlerta.setText("Las contraseñas no coinciden");
+                                txtAlerta.setTextColor(Color.RED);
+                                quitarTextView();
                             }
 
                         } else {
-                            txtAlerta.setText("Para volver a cambiar la contraseña, vuelva a iniciar sesión");
+                            txtAlerta.setText("Contraseña actual INCORRECTA");
                             txtAlerta.setTextColor(Color.RED);
+                            quitarTextView();
+
                         }
                     }
                 });
@@ -356,6 +369,8 @@ public class MiPerfil extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(Void unused) {
                                                 txtAlerta2.setText("Imagen de perfil actualizada");
+                                                txtAlerta.setTextColor(Color.GREEN);
+                                                quitarTextView();
                                             }
                                         });
                             }
