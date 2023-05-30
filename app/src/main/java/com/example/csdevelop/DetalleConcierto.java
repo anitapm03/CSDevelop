@@ -95,6 +95,10 @@ public class DetalleConcierto extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DetalleConcierto.this, MainActivity.class);
+
+                String fragment = "inicio";
+                intent.putExtra("fragment", fragment );
+
                 startActivity(intent);
 
                 finish();
@@ -123,6 +127,10 @@ public class DetalleConcierto extends AppCompatActivity {
 
     public void onBackPressed(){
         Intent intent = new Intent(this, MainActivity.class);
+
+        String fragment = "inicio";
+        intent.putExtra("fragment", fragment );
+        
         startActivity(intent);
 
         finish();
