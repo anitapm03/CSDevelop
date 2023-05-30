@@ -3,6 +3,7 @@ package com.example.csdevelop.login;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -25,7 +26,7 @@ public class RestablecerContrasena extends AppCompatActivity {
     FirebaseAuth mAuth;
     private String email;
 
-    private ProgressDialog mDialog;
+    private AlertDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +38,21 @@ public class RestablecerContrasena extends AppCompatActivity {
         editTextEmail = findViewById(R.id.email);
         alerta = findViewById(R.id.alertaRestablecer);
         mAuth = FirebaseAuth.getInstance();
-        mDialog = new ProgressDialog(this);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Espere un momento...")
+                .setCancelable(false);
+        mDialog = builder.create();
 
         btonEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 email = editTextEmail.getText().toString();
-                if(!email.isEmpty()){
+                if (!email.isEmpty()) {
                     resetPassword();
-                }else{
+                } else {
                     alerta.setText("Introduzca un email");
                 }
-
             }
         });
 
@@ -60,30 +64,24 @@ public class RestablecerContrasena extends AppCompatActivity {
         });
     }
 
-    private void resetPassword(){
+    private void resetPassword() {
         mAuth.setLanguageCode("es");
         mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    mDialog.setMessage("Espere un momento...");
-                    mDialog.setCanceledOnTouchOutside(false);
+                if (task.isSuccessful()) {
                     mDialog.show();
+
                     alerta.setText("El correo ha sido enviado");
                     String codigoColor = "#3C7C32";
                     int color = Color.parseColor(codigoColor);
                     alerta.setTextColor(color);
                     mDialog.dismiss();
-                }else{
+                } else {
                     alerta.setText("El correo introducido no está asociado a ninguna cuenta");
-                    String codigoColor = "#FA000F";
-                    int color = Color.parseColor(codigoColor);
-                    alerta.setTextColor(color);
                     mDialog.dismiss();
                 }
-
             }
         });
-
     }
 }
