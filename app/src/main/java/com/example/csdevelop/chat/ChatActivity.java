@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import com.example.csdevelop.DetalleConcierto;
 import com.example.csdevelop.MainActivity;
 import com.example.csdevelop.R;
 import com.example.csdevelop.adapter.MensajesAdapter;
+import com.example.csdevelop.model.Concierto;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -44,7 +46,9 @@ import java.util.ArrayList;
 //import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatActivity extends AppCompatActivity {
-
+    //tipos de mensaje
+    private static final String TYPE_TEXT="1";
+    private static final String TYPE_PIC="2";
     //ID CHAT GLOBAL
     String id_chat_global;
 
@@ -53,6 +57,7 @@ public class ChatActivity extends AppCompatActivity {
     TextView nombreEventoChat;
     Button volver;
     ImageButton enviarMensaje, addImagen;
+
     RecyclerView rvMensajes;
 
     ArrayList<MensajeRecibir> msgList;
@@ -65,10 +70,10 @@ public class ChatActivity extends AppCompatActivity {
 
     //sacar datos del usuario para indicar quien envia el msg
     FirebaseFirestore firestore;
-    CollectionReference coleccionUsuarios;
+    CollectionReference coleccionUsuarios, coleccionConciertos;
     FirebaseAuth firebaseAuth;
     String id;
-    String nombreUsuario;
+    String nombreUsuario, referencia;
     private static final int PHOTO_SEND=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +88,21 @@ public class ChatActivity extends AppCompatActivity {
         rvMensajes=findViewById(R.id.rvMensajes);
         addImagen=findViewById(R.id.addImagen);
 
+        //hacer un metodo que identifique el nombre del concierto
+        //y cree una referencia chats/nombreEvento para acceder a los distintos chats
+        referencia = "chats/";
+        //recogemos el evento
+        Concierto concierto = (Concierto) getIntent().getSerializableExtra("concierto");
+        nombreEventoChat.setText(concierto.getNombre());
+        referencia += concierto.getNombre();
+
+
         //instanciamos lo de la base de datos
         database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("chat");
+        databaseReference = database.getReference(referencia);
         storage = FirebaseStorage.getInstance();
+
+
 
         //recogemos los datos del usuario
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -125,7 +141,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                // adapter.addMensaje(new Mensaje(eText.getText().toString(), "Ana"));
-                databaseReference.push().setValue(new MensajeEnviar(eText.getText().toString(), nombreUsuario, "1", id,ServerValue.TIMESTAMP));
+                databaseReference.push().setValue(new MensajeEnviar(eText.getText().toString(), nombreUsuario, TYPE_TEXT, id,ServerValue.TIMESTAMP));
                 eText.setText("");
             }
         });
@@ -210,13 +226,15 @@ public class ChatActivity extends AppCompatActivity {
                     // NO FUNCIONA
 
                     //Uri u = taskSnapshot.getMetadata().getReference().getDownloadUrl().getResult();
-                    MensajeEnviar m = new MensajeEnviar("Ha enviado una foto:",nombreUsuario,url, "2" ,id , ServerValue.TIMESTAMP);
+                    MensajeEnviar m = new MensajeEnviar("ha enviado una imagen: ",nombreUsuario,url, TYPE_PIC ,id , ServerValue.TIMESTAMP);
                     databaseReference.push().setValue(m);
 
                 }
             });
         }
     }
+
+
 
     public void onBackPressed(){
         Intent intent = new Intent(this, MainActivity.class);

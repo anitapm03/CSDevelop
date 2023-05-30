@@ -30,7 +30,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/logout"
+                android:id="@+id/volverAtras"
                 android:layout_width="43dp"
                 android:layout_height="31dp"
                 android:drawableEnd="@drawable/ic_logout" />

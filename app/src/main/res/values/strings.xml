@@ -8,7 +8,6 @@
     <string name="label_editarPerfil">EDITAR PERFIL</string>
     <string name="label_resetearcontrasena">RESETEAR CONTRASEÑA</string>
 
-
     <!-- strings de validación -->
     <string name="invalid_mail">E-mail incorrecto</string>
     <string name="invalid_password">Contraseña no, valida. Min 8 dígitos.</string>
@@ -19,5 +18,12 @@
     <string name="invalid_newPassword">Introduzca la contraseña actual</string>
     <string name="invalid_newPassword2">Introduzca la contraseña actual</string>
 
+
+    <!-- strings grupos -->
+    <string name="label_grupos">Grupos</string>
+
+    <!-- strings publicacion -->
+    <string name="aviso_foto">La subida de la imagen es opcional</string>
+    <string name="aviso_ig">Las imágenes compartidas podrán aparecer en el IG oficial de Conciertos Solo</string>
 
 </resources>

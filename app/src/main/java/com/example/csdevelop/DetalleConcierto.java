@@ -19,9 +19,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import org.intellij.lang.annotations.Identifier;
 
 public class DetalleConcierto extends AppCompatActivity {
     TextView nombreEvento, fechaEvento, horaEvento, nombreSala, direccionSala;
@@ -42,7 +39,7 @@ public class DetalleConcierto extends AppCompatActivity {
         fechaEvento=findViewById(R.id.fechaEvento);
         horaEvento=findViewById(R.id.horaEvento);
         entradas=findViewById(R.id.enlace);
-        volver=findViewById(R.id.logout);
+        volver=findViewById(R.id.volverAtras);
         fotoEvento=findViewById(R.id.fotoEvento);
         favorito= findViewById(R.id.favorito);
         nombreSala=findViewById(R.id.nombreSala);

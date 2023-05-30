@@ -14,9 +14,6 @@
         android:theme="@style/Theme.CSDevelop"
         tools:targetApi="31">
         <activity
-            android:name=".login.RestablecerContrasena"
-            android:exported="false" />
-        <activity
             android:name=".perfil.MiPerfil"
             android:exported="false" />
         <activity

@@ -23,7 +23,8 @@ public class ConciertoAdapter extends FirestoreRecyclerAdapter<Concierto, Concie
 
     //nuevo
     private View.OnClickListener listener1;
-
+    //longitud maxima del titulo para no descuadrar el rv
+    private static final int MAX_LONG=13;
 
 
     //no va
@@ -47,7 +48,16 @@ public class ConciertoAdapter extends FirestoreRecyclerAdapter<Concierto, Concie
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Concierto concierto) {
         //una vez hecho link en el oncreate y despues en el viewHolder hacemos esto
         //para recuperar los datos
-        holder.nombre.setText(concierto.getNombre());
+        if (concierto.getNombre().length()<MAX_LONG){
+            holder.nombre.setText(concierto.getNombre());
+        } else {
+            String nombreCorto= concierto.getNombre().substring(0, MAX_LONG) + "...";
+            holder.nombre.setText(nombreCorto);
+        }
+
+
+
+
         holder.fecha.setText(concierto.getFecha());
         holder.hora.setText(concierto.getHora());
 
