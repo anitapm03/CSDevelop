@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements PruebaFragment.Fr
     FloatingActionButton btnGrupos;
     private FirebaseAnalytics mFirebaseAnalytics;
 
+    String f;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +38,47 @@ public class MainActivity extends AppCompatActivity implements PruebaFragment.Fr
         Intent isR= getIntent();
         btnGrupos=findViewById(R.id.btnGrupos);
 
+        //recogemos el fragment del que veniamos
+
+        f=getIntent().getStringExtra("fragment");
+        if (f == null){
+            f="inicio";
+        }
+        System.out.println(f);
+
+        if (f.equals("social")){
+
+            replaceFragment(new SocialFragment());
+            binding.bottomNavigation.setBackground(null);
+            binding.bottomNavigation.getMenu().getItem(1).setChecked(true);
+
+
+        } else if (f.equals("grupos")){
+
+            replaceFragment(new GruposFragment());
+            binding.bottomNavigation.setBackground(null);
+
+
+        } else if (f.equals("perfil")) {
+
+            replaceFragment(new PerfilFragment());
+            binding.bottomNavigation.setBackground(null);
+
+
+        } else if (f.equals("inicio")) {
+
+            replaceFragment(new PruebaFragment());
+            binding.bottomNavigation.setBackground(null);
+
+
+        } else {
+
+            replaceFragment(new PruebaFragment());
+            binding.bottomNavigation.setBackground(null);
+        }
+
         //replaceFragment(new InicioFragment());
-        replaceFragment(new PruebaFragment());
+        //replaceFragment(new PruebaFragment());
         binding.bottomNavigation.setBackground(null);
 
         binding.bottomNavigation.setOnItemSelectedListener(item ->{
@@ -59,6 +100,9 @@ public class MainActivity extends AppCompatActivity implements PruebaFragment.Fr
 
             return true;
         });
+
+
+
 
         btnGrupos.setOnClickListener(new View.OnClickListener() {
             @Override

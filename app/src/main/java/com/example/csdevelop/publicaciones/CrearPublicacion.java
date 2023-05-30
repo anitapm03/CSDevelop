@@ -144,23 +144,16 @@ public class CrearPublicacion extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CrearPublicacion.this, MainActivity.class);
+
+                String fragment = "social";
+                intent.putExtra("fragment", fragment );
+
                 startActivity(intent);
 
                 finish();
             }
         });
     }
-
-    private void uploadPhoto(){
-
-        Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-        i.setType("image/*");
-        i.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-        startActivityForResult(Intent.createChooser(i, "Selecciona una imagen"),PHOTO_SEND);
-
-    }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -196,6 +189,10 @@ public class CrearPublicacion extends AppCompatActivity {
 
     public void onBackPressed(){
         Intent intent = new Intent(this, MainActivity.class);
+
+        String fragment = "social";
+        intent.putExtra("fragment", fragment );
+
         startActivity(intent);
 
         finish();

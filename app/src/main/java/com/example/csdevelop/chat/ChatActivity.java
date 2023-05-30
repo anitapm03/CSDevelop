@@ -199,6 +199,10 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChatActivity.this, MainActivity.class);
+
+                String fragment = "grupos";
+                intent.putExtra("fragment", fragment );
+
                 startActivity(intent);
 
                 finish();
@@ -238,6 +242,10 @@ public class ChatActivity extends AppCompatActivity {
 
     public void onBackPressed(){
         Intent intent = new Intent(this, MainActivity.class);
+
+        String fragment = "grupos";
+        intent.putExtra("fragment", fragment );
+
         startActivity(intent);
 
         finish();
