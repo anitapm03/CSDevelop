@@ -46,7 +46,9 @@ import java.util.ArrayList;
 //import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatActivity extends AppCompatActivity {
-
+    //tipos de mensaje
+    private static final String TYPE_TEXT="1";
+    private static final String TYPE_PIC="2";
     //ID CHAT GLOBAL
     String id_chat_global;
 
@@ -139,7 +141,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                // adapter.addMensaje(new Mensaje(eText.getText().toString(), "Ana"));
-                databaseReference.push().setValue(new MensajeEnviar(eText.getText().toString(), nombreUsuario, "1", id,ServerValue.TIMESTAMP));
+                databaseReference.push().setValue(new MensajeEnviar(eText.getText().toString(), nombreUsuario, TYPE_TEXT, id,ServerValue.TIMESTAMP));
                 eText.setText("");
             }
         });
@@ -224,7 +226,7 @@ public class ChatActivity extends AppCompatActivity {
                     // NO FUNCIONA
 
                     //Uri u = taskSnapshot.getMetadata().getReference().getDownloadUrl().getResult();
-                    MensajeEnviar m = new MensajeEnviar("Ha enviado una foto:",nombreUsuario,url, "2" ,id , ServerValue.TIMESTAMP);
+                    MensajeEnviar m = new MensajeEnviar("ha enviado una imagen: ",nombreUsuario,url, TYPE_PIC ,id , ServerValue.TIMESTAMP);
                     databaseReference.push().setValue(m);
 
                 }

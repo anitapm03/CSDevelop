@@ -37,6 +37,8 @@ import com.google.firebase.storage.UploadTask;
 import java.util.HashMap;
 
 public class CrearPublicacion extends AppCompatActivity {
+    private static final String TYPE_TEXT="1";
+    private static final String TYPE_PIC="2";
 
     EditText txtPubli;
     Button addImg, publicar, volver;
@@ -51,22 +53,11 @@ public class CrearPublicacion extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private String storage_path = "publicaciones-img/*";
-    private static final int COD_SEL_IMAGE = 300;
-    private static final int COD_SEL_Storage = 200;
-    private Uri image_url;
-
-    FirebaseAuth mauth;
-    FirebaseFirestore mfirestore;
-    String photo = "photo";
-    String idd;
-
-    ProgressDialog progressDialog;
 
     //sacar datos del usuario para indicar quien envia la publi
     FirebaseFirestore firestore;
     CollectionReference coleccionUsuarios;
     FirebaseAuth firebaseAuth;
-
     String id;
     String nombreUsuario;
 
@@ -94,7 +85,7 @@ public class CrearPublicacion extends AppCompatActivity {
         id = mAuth.getCurrentUser().getUid();
         firestore= FirebaseFirestore.getInstance();
         coleccionUsuarios= firestore.collection("usuarios");
-        //XFaTmJtvW9Wp4hLgxNPrJ3TQ5rF2
+
         coleccionUsuarios.document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -113,8 +104,11 @@ public class CrearPublicacion extends AppCompatActivity {
         publicar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //meter una condicion que me diga si tiene imagen o no
+
                 //añadimos una publicacion nueva
-                databaseReference.push().setValue(new Publicacion(txtPubli.getText().toString(), nombreUsuario, "1", id));
+                databaseReference.push().setValue(new Publicacion(txtPubli.getText().toString(), nombreUsuario, TYPE_TEXT, id));
 
                 //cerramos el activity
                 Intent intent = new Intent(CrearPublicacion.this, MainActivity.class);
@@ -127,12 +121,12 @@ public class CrearPublicacion extends AppCompatActivity {
         addImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-                //aqui hay que manejar la imagen que es lo chungo
-
-                uploadPhoto();
+                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                i.setType("image/jpeg");
+                i.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                startActivityForResult(Intent.createChooser(i, "Selecciona una imagen"),PHOTO_SEND);
+                fotoPubli.setVisibility(View.VISIBLE);
+                //getPic();
             }
         });
 
@@ -150,58 +144,42 @@ public class CrearPublicacion extends AppCompatActivity {
 
     private void uploadPhoto(){
 
-        //para abrir la galeria
-        Intent i = new Intent(Intent.ACTION_PICK);
+        Intent i = new Intent(Intent.ACTION_GET_CONTENT);
         i.setType("image/*");
-
-        startActivityForResult(i, COD_SEL_IMAGE);
+        i.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+        startActivityForResult(Intent.createChooser(i, "Selecciona una imagen"),PHOTO_SEND);
 
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Log.d("image_url", "requestCode - RESULT_OK: "+requestCode+" "+RESULT_OK);
-        if(resultCode == RESULT_OK) {
-            if (requestCode == COD_SEL_IMAGE) {
-                image_url = data.getData();
-                subirPhoto(image_url);
-
-            }
-        }
         super.onActivityResult(requestCode, resultCode, data);
-    }
+        if(requestCode == PHOTO_SEND && resultCode == RESULT_OK){
+            Uri u = data.getData();
+            storageReference = storage.getReference("publicaciones");
+            final StorageReference fotoReferencia = storageReference.child(u.getLastPathSegment());
+            fotoReferencia.putFile(u).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    String url = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+                    //Uri u = Uri.parse(url);
+                    // NO FUNCIONA
 
-    private void subirPhoto(Uri image_url){
-        progressDialog.setMessage("Cargando imagen");
-        progressDialog.show();
-        String ruta = storage_path + "" + photo + "" + mauth.getUid() + "" + idd;
+                    //Uri u = taskSnapshot.getMetadata().getReference().getDownloadUrl().getResult();
 
-        StorageReference reference = storageReference.child(ruta);
+                    Publicacion p = new Publicacion(txtPubli.getText().toString(),nombreUsuario,url,TYPE_PIC,id);
 
-        reference.putFile(image_url).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                while (!uriTask.isSuccessful());
-                if (uriTask.isSuccessful()){
-                    uriTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            String downloadUri = uri.toString();
-                            HashMap<String, Object> map = new HashMap<>();
-                            map.put("photo", downloadUri);
-                            //aqui se añade a firestore
+                    databaseReference.push().setValue(p);
 
-                            Publicacion p = new Publicacion(txtPubli.getText().toString(),nombreUsuario,downloadUri, "2" ,id );
-                            databaseReference.push().setValue(p);
-
-                            progressDialog.dismiss();
-                        }
-                    });
                 }
-            }
-        });
+            });
+        }
+
     }
+
+
 
     private void getImg(String id){
         

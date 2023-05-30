@@ -25,6 +25,7 @@ import java.util.List;
 public class PublicacionAdapter extends RecyclerView.Adapter<HolderPublicacion> {
     FirebaseUser fUser;
     private static final String TIPO_TEXTO="1";
+    private static final String TIPO_IMAGEN="2";
 
 
     private List<Publicacion> listPublicaciones = new ArrayList<>();
@@ -80,11 +81,10 @@ public class PublicacionAdapter extends RecyclerView.Adapter<HolderPublicacion> 
 
         //si tipo mensaje es == 1 significa que es una publicacion de solo texto
         //si no, es de tipo foto y se realiza lo siguiente
-        if (!listPublicaciones.get(position).getTipoPublicacion().equals(TIPO_TEXTO)){
+        if (listPublicaciones.get(position).getTipoPublicacion().equals(TIPO_IMAGEN)){
             holder.getFotoPublicacion().setVisibility(View.VISIBLE);
-            //manejar imagen del storage
 
-            //Glide.with(c).load(listMensaje.get(position).getUrlFoto()).into(holder.getFotoMensaje());
+            Glide.with(c).load(listPublicaciones.get(position).getUrlFotoPublicacion()).into(holder.getFotoPublicacion());
 
         } else if (listPublicaciones.get(position).getTipoPublicacion().equals(TIPO_TEXTO)){
             holder.getFotoPublicacion().setVisibility(View.GONE);
