@@ -1,6 +1,7 @@
 package com.example.csdevelop.fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,7 @@ import com.squareup.picasso.Picasso;
 
 public class PerfilFragment extends Fragment {
 
-    Button logout, btonPerfil;
+    Button logout, btonPerfil, btonTwitter, btonInsta, btonWeb;
     ImageView imgFotoPerfil;
     TextView nombreUsuario;
 
@@ -47,6 +48,9 @@ public class PerfilFragment extends Fragment {
         btonPerfil = vista.findViewById(R.id.btonEditar);
         imgFotoPerfil = vista.findViewById(R.id.imgFotoPerfil2);
         nombreUsuario = vista.findViewById(R.id.nombreUsuario);
+        btonTwitter = vista.findViewById(R.id.twitterButton);
+        btonInsta = vista.findViewById(R.id.instagramButton);
+        btonWeb = vista.findViewById(R.id.webButton);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +70,35 @@ public class PerfilFragment extends Fragment {
         });
 
         onResume();
+
+        btonTwitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://twitter.com/ConciertosSolo?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"));
+                startActivity(intent);
+            }
+        });
+
+        btonInsta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://www.instagram.com/"));
+                startActivity(intent);
+            }
+        });
+
+        btonWeb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(""));
+                startActivity(intent);
+            }
+        });
+
+
 
 
         return vista;
