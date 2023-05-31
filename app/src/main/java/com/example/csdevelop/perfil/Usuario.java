@@ -1,9 +1,11 @@
 package com.example.csdevelop.perfil;
 
+import java.util.List;
+
 public class Usuario {
 
     String nombreUsuario, passAntigua, passnueva;
-
+    private List<String> misFavoritos;
     public Usuario(){
 
     }
@@ -50,5 +52,13 @@ public class Usuario {
 
     public void setFoto_perfil(String foto_perfil) {
         this.foto_perfil = foto_perfil;
+    }
+
+    public List<String> getMisFavoritos() {
+        return misFavoritos;
+    }
+
+    public void setMisFavoritos(List<String> misFavoritos) {
+        this.misFavoritos = misFavoritos;
     }
 }

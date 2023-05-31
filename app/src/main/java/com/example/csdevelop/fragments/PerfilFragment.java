@@ -10,8 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.csdevelop.R;
+import com.example.csdevelop.adapter.GruposAdapter;
 import com.example.csdevelop.login.LogIn;
 import com.example.csdevelop.perfil.MiPerfil;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,6 +28,13 @@ public class PerfilFragment extends Fragment {
     Button logout, btonPerfil;
     ImageView imgFotoPerfil;
     TextView nombreUsuario;
+
+    RecyclerView rv;
+
+    GruposAdapter adapter;
+
+    FirebaseFirestore firestore;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

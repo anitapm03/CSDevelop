@@ -39,15 +39,15 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="459dp"
+            android:layout_height="164dp"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgFotoPerfil2"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
+                android:layout_width="245dp"
+                android:layout_height="227dp"
                 android:padding="16dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/foto_perfil" />
@@ -69,13 +69,71 @@
                 android:text="Editar Perfil" />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/conciertosTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Mis conciertos favoritos:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/conciertosRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="438dp"
+                android:layout_weight="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/conciertosTitle" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <!-- Aquí puedes agregar la vista de los conciertos favoritos del usuario -->
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/conciertosRecyclerView"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <Button
+                android:id="@+id/twitterButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Twitter"
+                android:drawablePadding="8dp"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/instagramButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Instagram"
+                android:drawablePadding="8dp"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/webButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Web"
+                android:drawablePadding="8dp" />
+
         </LinearLayout>
+
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

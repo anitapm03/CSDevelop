@@ -14,11 +14,21 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.csdevelop.model.Concierto;
+import com.example.csdevelop.perfil.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DetalleConcierto extends AppCompatActivity {
     TextView nombreEvento, fechaEvento, horaEvento, nombreSala, direccionSala;
@@ -28,6 +38,13 @@ public class DetalleConcierto extends AppCompatActivity {
 
     FirebaseFirestore firestore;
     CollectionReference coleccionSalas;
+
+    FirebaseAuth mAuth;
+    String userId, nombreConcierto;
+
+    DocumentReference conciertosRef;
+    FirebaseFirestore db;
+    Concierto concierto;
 
     int contador=0;
     @Override
@@ -45,8 +62,12 @@ public class DetalleConcierto extends AppCompatActivity {
         nombreSala=findViewById(R.id.nombreSala);
         direccionSala=findViewById(R.id.direccionSala);
 
+        mAuth = FirebaseAuth.getInstance();
+        userId = mAuth.getCurrentUser().getUid();
+        db = FirebaseFirestore.getInstance();
+        conciertosRef = db.collection("usuarios").document(userId);
         //recogemos el evento
-        Concierto concierto = (Concierto) getIntent().getSerializableExtra("concierto");
+        concierto = (Concierto) getIntent().getSerializableExtra("concierto");
 
         //colocamos la info
         nombreEvento.setText(concierto.getNombre());
@@ -108,22 +129,25 @@ public class DetalleConcierto extends AppCompatActivity {
         favorito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                conciertosFavoritos();
 
-                int[] iconos= {R.drawable.ic_fav,R.drawable.ic_no_fav};
+            }
+        });
 
-                int indice = contador % iconos.length;
-
-                favorito.setCompoundDrawablesWithIntrinsicBounds(iconos[indice],0,0,0);
-                contador++;
-
-                if (indice%2==0){
-
-                    Toast.makeText(DetalleConcierto.this, "favorito", Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(DetalleConcierto.this, "no favorito", Toast.LENGTH_SHORT).show();
+        // Verificar si el concierto está en favoritos y establecer el ícono adecuado
+        conciertosRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    List<String> misFavoritos = documentSnapshot.toObject(Usuario.class).getMisFavoritos();
+                    if (misFavoritos != null && misFavoritos.contains(concierto.getNombre())) {
+                        favorito.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_fav, 0, 0, 0);
+                        contador++;
+                    }
                 }
             }
         });
+
     }
 
     public void onBackPressed(){
@@ -135,6 +159,56 @@ public class DetalleConcierto extends AppCompatActivity {
         startActivity(intent);
 
         finish();
+    }
+
+    public void conciertosFavoritos(){
+        int[] iconos = {R.drawable.ic_fav, R.drawable.ic_no_fav};
+
+        int indice = contador % iconos.length;
+
+        favorito.setCompoundDrawablesWithIntrinsicBounds(iconos[indice], 0, 0, 0);
+        contador++;
+
+        if (indice % 2 == 0) {
+            Map<String, Object> actualizaciones = new HashMap<>();
+            actualizaciones.put("misFavoritos", FieldValue.arrayUnion(concierto.getNombre()));
+
+            conciertosRef.update(actualizaciones)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(DetalleConcierto.this, "Concierto agregado a favoritos", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(DetalleConcierto.this, "Error al agregar el concierto a favoritos", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+            Toast.makeText(DetalleConcierto.this, "favorito", Toast.LENGTH_SHORT).show();
+        } else {
+            Map<String, Object> actualizaciones = new HashMap<>();
+            actualizaciones.put("misFavoritos", FieldValue.arrayRemove(concierto.getNombre()));
+
+            // Actualizar el documento en Firestore
+            conciertosRef.update(actualizaciones)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(DetalleConcierto.this, "Concierto eliminado de favoritos", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(DetalleConcierto.this, "Error al eliminar el concierto de favoritos", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+            Toast.makeText(DetalleConcierto.this, "no favorito", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
