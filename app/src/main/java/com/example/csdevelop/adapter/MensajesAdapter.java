@@ -91,9 +91,11 @@ public class MensajesAdapter extends RecyclerView.Adapter<HolderMensaje> {
             holder.getFotoMensaje().setVisibility(View.VISIBLE);
             holder.getRecibeMensaje().setVisibility(View.VISIBLE);
 
-            //mostramos la img  Glide.with(holder.itemView.getContext()).load(img).into(holder.foto);
-            //Glide.with(c).load(listMensaje.get(position).getUrlFoto()).into(holder.getFotoMensaje());
-            Glide.with(holder.itemView.getContext()).load(holder.getFotoMensaje()).into(holder.getFotoMensaje());
+            String urlFoto = listMensaje.get(position).getUrlFoto();
+            Glide.with(holder.itemView.getContext())
+                    .load(urlFoto)
+                    .into(holder.getFotoMensaje());
+
         } else if (listMensaje.get(position).getTipo().equals("1")){
             holder.getFotoMensaje().setVisibility(View.GONE);
             holder.getRecibeMensaje().setVisibility(View.VISIBLE);
@@ -114,7 +116,6 @@ public class MensajesAdapter extends RecyclerView.Adapter<HolderMensaje> {
 
     @Override
     public int getItemViewType(int position) {
-        //return super.getItemViewType(position);
         FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
         if(listMensaje.get(position).getIdUsuario().equals(fUser.getUid())){
             soloMios=true;

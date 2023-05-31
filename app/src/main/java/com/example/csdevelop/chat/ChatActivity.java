@@ -7,8 +7,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,11 +21,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.csdevelop.DetalleConcierto;
 import com.example.csdevelop.MainActivity;
 import com.example.csdevelop.R;
 import com.example.csdevelop.adapter.MensajesAdapter;
 import com.example.csdevelop.model.Concierto;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -42,6 +50,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 //import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -52,12 +62,14 @@ public class ChatActivity extends AppCompatActivity {
     //ID CHAT GLOBAL
     String id_chat_global;
 
+    Uri uri;
    // CircleImageView fotoConciertoChat;
     EditText eText;
     TextView nombreEventoChat;
     Button volver;
     ImageButton enviarMensaje, addImagen;
 
+    final int CODIGO_RESPUESTA_GALERIA = 3;
     RecyclerView rvMensajes;
 
     ArrayList<MensajeRecibir> msgList;
@@ -66,7 +78,6 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private FirebaseStorage storage;
-    private StorageReference storageReference;
 
     //sacar datos del usuario para indicar quien envia el msg
     FirebaseFirestore firestore;
@@ -79,6 +90,8 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        Glide.with(this).setDefaultRequestOptions(new RequestOptions().format(DecodeFormat.PREFER_ARGB_8888)).applyDefaultRequestOptions(RequestOptions.noTransformation()).applyDefaultRequestOptions(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL)).applyDefaultRequestOptions(RequestOptions.skipMemoryCacheOf(true)).applyDefaultRequestOptions(RequestOptions.overrideOf(250, 250));
 
         volver=findViewById(R.id.volver);
         //fotoConciertoChat=findViewById(R.id.fotoConciertoChat);
@@ -149,10 +162,8 @@ public class ChatActivity extends AppCompatActivity {
         addImagen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-                i.setType("image/jpeg");
-                i.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-                startActivityForResult(Intent.createChooser(i, "Selecciona una imagen"),PHOTO_SEND);
+                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i,CODIGO_RESPUESTA_GALERIA);
             }
         });
 
@@ -208,6 +219,7 @@ public class ChatActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }//fin oncreate
 
     //para que baje autom cuando la pantalla se llene de msgs
@@ -216,27 +228,46 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PHOTO_SEND && resultCode == RESULT_OK){
-            Uri u = data.getData();
-            storageReference = storage.getReference("imagenes_chat");
-            final StorageReference fotoReferencia = storageReference.child(u.getLastPathSegment());
-            fotoReferencia.putFile(u).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    String url = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
-                    //Uri u = Uri.parse(url);
-                    // NO FUNCIONA
+        if (requestCode == CODIGO_RESPUESTA_GALERIA) {
+            if (data != null && data.getData() != null) {
+                uri = data.getData();
+                try {
+                    final StorageReference refe = storage.getReference().child("imagenes_chat").child(FirebaseAuth.getInstance().getCurrentUser().getUid() + ".jpg");
+                    UploadTask uploadTask = refe.putFile(uri);
+                    uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                        @Override
+                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                            if (!task.isSuccessful()) {
+                                throw task.getException();
+                            }
 
-                    //Uri u = taskSnapshot.getMetadata().getReference().getDownloadUrl().getResult();
-                    MensajeEnviar m = new MensajeEnviar("ha enviado una imagen: ",nombreUsuario,url, TYPE_PIC ,id , ServerValue.TIMESTAMP);
-                    databaseReference.push().setValue(m);
+                            // Obtener la URL de descarga del archivo subido
+                            return refe.getDownloadUrl();
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            if (task.isSuccessful()) {
+                                Uri downloadUri = task.getResult();
 
+                                // Crear un mensaje con la URL de descarga y enviarlo al chat
+                                MensajeEnviar m = new MensajeEnviar("Ha enviado una imagen: ", nombreUsuario, downloadUri.toString(), TYPE_PIC, id, ServerValue.TIMESTAMP);
+                                databaseReference.push().setValue(m);
+                            } else {
+                                // Error al obtener la URL de descarga
+                                Log.e("Error", task.getException().toString());
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e("Error", "" + e.toString());
                 }
-            });
+            }
         }
     }
+
 
 
 
