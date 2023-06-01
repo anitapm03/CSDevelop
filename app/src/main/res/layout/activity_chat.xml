@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_centerVertical="true"
-            android:hint="Escribe algo!"
+            android:hint="@string/escribir"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
             >

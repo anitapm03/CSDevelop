@@ -10,7 +10,6 @@ import android.view.View;
 
 import com.example.csdevelop.fragments.BuscarFragment;
 import com.example.csdevelop.fragments.GruposFragment;
-import com.example.csdevelop.fragments.InicioFragment;
 import com.example.csdevelop.fragments.PerfilFragment;
 import com.example.csdevelop.fragments.PruebaFragment;
 import com.example.csdevelop.fragments.SocialFragment;

@@ -23,21 +23,21 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Galeria" />
+            android:text="@string/btn_galeria" />
 
         <Button
             android:id="@+id/btonEliminar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Eliminar" />
+            android:text="@string/btn_eliminar" />
 
         <Button
             android:id="@+id/btonCancelar2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Salir" />
+            android:text="@string/btn_salir" />
 
     </LinearLayout>
 </LinearLayout>

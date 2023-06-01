@@ -69,7 +69,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Usuario"
+            android:hint="@string/text_usuario"
             app:startIconDrawable="@drawable/ic_menu_perfil">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -86,7 +86,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="E-Mail"
+            android:hint="@string/edt_email"
             app:startIconDrawable="@drawable/ic_email">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -103,7 +103,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contraseña"
+            android:hint="@string/text_contrasenia"
             app:startIconDrawable="@drawable/ic_password2">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -121,7 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:hint="Confirmar contraseña"
+            android:hint="@string/edt_confirmPas"
             app:startIconDrawable="@drawable/ic_password">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -161,7 +161,7 @@
             android:drawableEnd="@drawable/ic_login"
             android:drawableTint="#fff"
             android:fontFamily="@font/san_francisco"
-            android:text="Registrar usuario" />
+            android:text="@string/btn_rguser" />
     </LinearLayout>
 
     <LinearLayout
@@ -195,7 +195,7 @@
             android:drawableEnd="@drawable/ic_registrarme"
             android:drawableTint="#fff"
             android:fontFamily="@font/san_francisco"
-            android:text="Ya tengo cuenta!" />
+            android:text="@string/btn_tengoCuenta" />
     </LinearLayout>
 
 

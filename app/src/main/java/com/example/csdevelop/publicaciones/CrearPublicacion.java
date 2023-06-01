@@ -121,6 +121,10 @@ public class CrearPublicacion extends AppCompatActivity {
 
                 //cerramos el activity
                 Intent intent = new Intent(CrearPublicacion.this, MainActivity.class);
+
+                String fragment = "social";
+                intent.putExtra("fragment", fragment );
+
                 startActivity(intent);
 
                 finish();

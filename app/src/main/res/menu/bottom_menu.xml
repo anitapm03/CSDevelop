@@ -3,12 +3,12 @@
     <!-- formato de menu, con sus iconos y los nombres-->
     <item
         android:id="@+id/inicio"
-        android:title="Inicio"
+        android:title="@string/menu_inicio"
         android:icon="@drawable/ic_menu_conciertos"
         />
     <item
         android:id="@+id/social"
-        android:title="Social"
+        android:title="@string/menu_social"
         android:icon="@drawable/ic_menu_social"
         />
     <item
@@ -17,12 +17,12 @@
         android:enabled="false"/>
     <item
         android:id="@+id/buscar"
-        android:title="Buscar"
+        android:title="@string/menu_buscar"
         android:icon="@drawable/ic_menu_buscar"
         />
     <item
         android:id="@+id/perfil"
-        android:title="Perfil"
+        android:title="@string/menu_perfil"
         android:icon="@drawable/ic_menu_perfil"
         />
 </menu>

@@ -43,7 +43,7 @@
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Introduce tu email"
+            android:hint="@string/edt_email"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:inputType="textEmailAddress"
@@ -68,7 +68,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:background="#000000"
-            android:text="Enviar"
+            android:text="@string/btn_enviar"
             android:textColor="#fff" />
 
     </LinearLayout>

@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:paddingStart="16dp"
-            android:text="Nueva publicacion"
+            android:text="@string/titulo_nuevaPubli"
             android:textColor="#fff"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -51,7 +51,7 @@
             android:layout_height="200dp"
             android:background="@drawable/bordes"
             android:gravity="bottom|start"
-            android:hint="Cuentanos que tal el ultimo concierto al que viniste con nosotros!"
+            android:hint="@string/hint_publi"
             android:inputType="textMultiLine"
             android:padding="10dp"
 
@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Añadir imagen!" />
+            android:text="@string/btn_img" />
 
         <ImageView
             android:id="@+id/fotoPubli"
@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Publicar!" />
+            android:text="@string/btn_publicar" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -11,6 +11,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -78,7 +79,11 @@ public class SocialFragment extends Fragment {
         rvPublicaciones.setHasFixedSize(true);
         publicacionesArr =new ArrayList<>();
         adapter = new PublicacionAdapter(getContext());
-        rvPublicaciones.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        //layout para que aparezcan arriba las publicaciones nuevas
+        rvPublicaciones.setLayoutManager(new GridLayoutManager(getContext(),1,GridLayoutManager.VERTICAL,true));
+
+        //rvPublicaciones.setLayoutManager(new LinearLayoutManager(getContext()));
         rvPublicaciones.setAdapter(adapter);
         //query
 

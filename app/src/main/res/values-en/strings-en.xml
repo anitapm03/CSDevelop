@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CSDevelop</string>
+    <string name="label_bienvenida">Welcome to Conciertos Solo!</string>
+    <string name="label_nuevoUser"><u>Register now!</u></string>
+    <string name="label_olvide_password">I forgot my password</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_editarPerfil">Edit profile</string>
+    <string name="label_resetearcontrasena">Reset password</string>
+
+    <!-- strings de validación -->
+    <string name="invalid_mail">Wrong e-mail</string>
+    <string name="invalid_password">No valid password. At least 8 characters.</string>
+    <string name="invalid_username">Invalid username</string>
+    <string name="invalid_passwordLogin">Insert a password</string>
+    <string name="invalid_usernameLogin">Insert an e-mail</string>
+    <string name="invalid_currentPassword">Insert your current password</string>
+    <string name="invalid_newPassword">Insert yout new password</string>
+    <string name="invalid_newPassword2">Confirm the new password</string>
+
+
+    <!-- strings grupos -->
+    <string name="label_grupos">Groups</string>
+
+    <!-- strings publicacion -->
+    <string name="aviso_foto">Image upload is optional</string>
+    <string name="aviso_ig">Shared images may appear on the official IG of Conciertos Solo</string>
+    <string name="titulo_nuevaPubli">New post</string>
+    <string name="hint_publi">Tell us about the last concert you came to with us!</string>
+    <string name="btn_img">Add a picture!</string>
+    <string name="btn_publicar">Post!</string>
+
+    <!-- strings chat  -->
+    <string name="escribir">Write something!</string>
+
+    <!-- strings detalle  -->
+    <string name="detalle_conci">Event details</string>
+    <string name="btn_enlace">Tickets</string>
+    <string name="btn_accesoGrupo">Join group</string>
+
+    <!-- strings log in   -->
+    <string name="text_usuario">Username</string>
+    <string name="text_contrasenia">Password</string>
+    <string name="btn_is">Log in!</string>
+    <string name="btn_rg">Register here!</string>
+    <string name="btn_olvideContraseña">I forgot my password</string>
+
+    <!-- strings registro -->
+
+    <string name="edt_email">Email</string>
+    <string name="edt_confirmPas">Confirm Password</string>
+    <string name="btn_rguser">Register user</string>
+    <string name="btn_tengoCuenta">I already have an account!</string>
+
+    <!-- strings perfil -->
+    <string name="label_perfil">Profile</string>
+    <string name="btn_editarPerfil">Edit profile</string>
+    <string name="favoritos">My favorite concerts:</string>
+    <string name="btn_editarFoto">Edit profile photo</string>
+    <string name="hint_username">Username</string>
+    <string name="btn_actualizarNombre">Update username</string>
+    <string name="btn_cambioPass">Change password</string>
+    <string name="edt_actualPasw">Current password</string>
+    <string name="edt_nuevaPas">New password</string>
+    <string name="edt_confirmarPasw">Confirm new password</string>
+    <string name="btn_guardarPasw">Save new password</string>
+
+    <string name="instagram">Instagram</string>
+    <string name="twitter">Twitter</string>
+    <string name="web">Web</string>
+
+    <string name="btn_galeria">Gallery</string>
+    <string name="btn_eliminar">Delete</string>
+    <string name="btn_salir">Cancel</string>
+
+    <!-- string reset passw -->
+    <string name="btn_enviar">Send</string>
+
+    <!-- string buscar -->
+    <string name="edt_buscar">Search here</string>
+
+    <!-- string inicio -->
+    <string name="label_inicio">Events</string>
+
+    <!-- string Social -->
+    <string name="label_Social">Social</string>
+
+    <!-- string menu -->
+    <string name="menu_inicio">Events</string>
+    <string name="menu_social">Social</string>
+    <string name="menu_buscar">Search</string>
+    <string name="menu_perfil">Profile</string>
+
+
+
+</resources>

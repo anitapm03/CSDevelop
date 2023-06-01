@@ -57,7 +57,7 @@
             android:id="@+id/btonEditarFoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Editar foto de perfil"
+            android:text="@string/btn_editarFoto"
             android:layout_gravity="center"
             android:layout_marginTop="10dp" />
 
@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:hint="Nombre de usuario"
+            android:hint="@string/hint_username"
             app:startIconDrawable="@drawable/ic_menu_perfil">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -96,7 +96,7 @@
             android:id="@+id/btonActualizar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Actualizar nombre de usuario"
+            android:text="@string/btn_actualizarNombre"
             android:layout_marginTop="10dp" />
 
         <!-- Botón de cambiar contraseña -->
@@ -104,7 +104,7 @@
             android:id="@+id/btonCambiarContrasena"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cambiar Contraseña"
+            android:text="@string/btn_cambioPass"
             android:layout_marginTop="8dp" />
 
         <!-- Cajas de texto para la contraseña antigua y la nueva -->
@@ -120,7 +120,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Contraseña actual">
+                android:hint="@string/edt_actualPasw">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtContrasenaAntigua"
@@ -138,7 +138,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Contraseña nueva">
+                android:hint="@string/edt_nuevaPas">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtContrasenaNueva"
@@ -155,7 +155,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Confirmar contraseña nueva">
+                android:hint="@string/edt_confirmarPasw">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtContrasenaNueva2"
@@ -183,7 +183,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="Guardar nueva contraseña" />
+                android:text="@string/btn_guardarPasw" />
 
         </LinearLayout>
 

@@ -24,6 +24,9 @@
             android:name=".chat.ChatActivity"
             android:exported="false" />
         <activity
+            android:name=".publicaciones.CrearPublicacion"
+            android:exported="false" />
+        <activity
             android:name=".DetalleConcierto"
             android:exported="false">
             <meta-data

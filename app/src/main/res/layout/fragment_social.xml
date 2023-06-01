@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:paddingStart="16dp"
-            android:text="Social"
+            android:text="@string/label_Social"
             android:textColor="#fff"
             android:textSize="22sp"
             android:textStyle="bold" />

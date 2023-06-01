@@ -69,7 +69,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Usuario"
+            android:hint="@string/text_usuario"
             app:startIconDrawable="@drawable/ic_menu_perfil">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -86,7 +86,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contraseña"
+            android:hint="@string/text_contrasenia"
             app:startIconDrawable="@drawable/ic_password">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -127,7 +127,7 @@
             android:drawableEnd="@drawable/ic_login"
             android:drawableTint="#fff"
             android:fontFamily="@font/san_francisco"
-            android:text="Iniciar Sesión" />
+            android:text="@string/btn_is" />
     </LinearLayout>
 
     <LinearLayout
@@ -161,7 +161,7 @@
             android:drawableEnd="@drawable/ic_registrarme"
             android:drawableTint="#fff"
             android:fontFamily="@font/san_francisco"
-            android:text="Registrarme!" />
+            android:text="@string/btn_rg" />
     </LinearLayout>
 
     <LinearLayout
@@ -182,7 +182,7 @@
             android:backgroundTint="#BAA3A3"
             android:drawableTint="#fff"
             android:fontFamily="@font/san_francisco"
-            android:text="Olvidé mi contraseña"/>
+            android:text="@string/btn_olvideContraseña"/>
 
     </LinearLayout>
 
@@ -206,7 +206,8 @@
             android:drawableEnd="@drawable/ic_spt"
             android:drawableTint="#fff"
             android:fontFamily="@font/san_francisco"
-            android:text="Iniciar Sesión Con Spotify" />
+            android:text="Iniciar Sesión Con Spotify"
+            android:visibility="gone"/>
     </LinearLayout>
 
 </RelativeLayout>

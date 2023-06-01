@@ -36,7 +36,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:paddingStart="16dp"
-                android:text="Detalles del Evento"
+                android:text="@string/detalle_conci"
                 android:textColor="#fff"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -112,7 +112,7 @@
                     android:layout_marginLeft="2.5dp"
                     android:layout_marginRight="2.5dp"
                     android:backgroundTint="@color/white"
-                    android:text="Entradas"
+                    android:text="@string/btn_enlace"
                     android:textColor="@color/black" />
 
                 <Button
@@ -122,7 +122,7 @@
                     android:layout_marginLeft="2.5dp"
                     android:layout_marginRight="2.5dp"
                     android:backgroundTint="@color/white"
-                    android:text="Unirme al grupo"
+                    android:text="@string/btn_accesoGrupo"
                     android:textColor="@color/black" />
 
                 <Button

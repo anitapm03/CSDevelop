@@ -25,5 +25,71 @@
     <!-- strings publicacion -->
     <string name="aviso_foto">La subida de la imagen es opcional</string>
     <string name="aviso_ig">Las imágenes compartidas podrán aparecer en el IG oficial de Conciertos Solo</string>
+    <string name="titulo_nuevaPubli">Nueva publicacion</string>
+    <string name="hint_publi">Cuentanos que tal el ultimo concierto al que viniste con nosotros!</string>
+    <string name="btn_img">Añadir imagen!</string>
+    <string name="btn_publicar">Publicar!</string>
+
+    <!-- strings chat  -->
+    <string name="escribir">Escribe algo!</string>
+
+    <!-- strings detalle  -->
+    <string name="detalle_conci">Detalles del evento</string>
+    <string name="btn_enlace">Entradas</string>
+    <string name="btn_accesoGrupo">Unirme al grupo</string>
+
+    <!-- strings log in   -->
+    <string name="text_usuario">Usuario</string>
+    <string name="text_contrasenia">Contraseña</string>
+    <string name="btn_is">Iniciar sesión</string>
+    <string name="btn_rg">Registrarme!</string>
+    <string name="btn_olvideContraseña">Olvidé mi contraseña</string>
+
+    <!-- strings registro -->
+
+    <string name="edt_email">Email</string>
+    <string name="edt_confirmPas">Confirmar contraseña</string>
+    <string name="btn_rguser">Registrar usuario</string>
+    <string name="btn_tengoCuenta">Ya tengo cuenta!</string>
+
+    <!-- strings perfil -->
+    <string name="label_perfil">Perfil</string>
+    <string name="btn_editarPerfil">Editar perfil</string>
+    <string name="favoritos">Mis conciertos favoritos:</string>
+    <string name="btn_editarFoto">Editar foto de perfil</string>
+    <string name="hint_username">Nombre de usuario</string>
+    <string name="btn_actualizarNombre">Actualizar nombre de usuario</string>
+    <string name="btn_cambioPass">Cambiar Contraseña</string>
+    <string name="edt_actualPasw">Contraseña actual</string>
+    <string name="edt_nuevaPas">Contraseña nueva</string>
+    <string name="edt_confirmarPasw">Confirmar contraseña nueva</string>
+    <string name="btn_guardarPasw">Guardar nueva contraseña</string>
+
+    <string name="instagram">Instagram</string>
+    <string name="twitter">Twitter</string>
+    <string name="web">Web</string>
+
+    <string name="btn_galeria">Galería</string>
+    <string name="btn_eliminar">Eliminar</string>
+    <string name="btn_salir">Salir</string>
+
+    <!-- string reset passw -->
+    <string name="btn_enviar">Enviar</string>
+
+    <!-- string buscar -->
+    <string name="edt_buscar">Buscar aquí</string>
+
+    <!-- string inicio -->
+    <string name="label_inicio">Eventos</string>
+
+    <!-- string Social -->
+    <string name="label_Social">Social</string>
+
+    <!-- string menu -->
+    <string name="menu_inicio">Inicio</string>
+    <string name="menu_social">Social</string>
+    <string name="menu_buscar">Buscar</string>
+    <string name="menu_perfil">Perfil</string>
+
 
 </resources>
