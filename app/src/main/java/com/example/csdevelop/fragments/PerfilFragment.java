@@ -84,7 +84,7 @@ public class PerfilFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://www.instagram.com/"));
+                intent.setData(Uri.parse("https://instagram.com/conciertos.solo?igshid=MzRlODBiNWFlZA=="));
                 startActivity(intent);
             }
         });
@@ -93,7 +93,7 @@ public class PerfilFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(""));
+                intent.setData(Uri.parse("https://conciertossolo.com/"));
                 startActivity(intent);
             }
         });

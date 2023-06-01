@@ -41,7 +41,7 @@ public class BuscarFragment extends Fragment {
         rv=vista.findViewById(R.id.rv);
         SearchView searchView = vista.findViewById(R.id.search);
         searchView.setIconifiedByDefault(false);
-        searchView.setQueryHint("Introduzca artista, grupo, lugar...");
+        searchView.setQueryHint("Introduzca artista, grupo...");
 
         setUpRecyclerView();
 

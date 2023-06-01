@@ -4,12 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.csdevelop.R;
+import com.example.csdevelop.login.LogIn;
 import com.example.csdevelop.publicaciones.Publicacion;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,37 +57,46 @@ public class PublicacionAdapter extends RecyclerView.Adapter<HolderPublicacion> 
         holder.getTextoPublicacion().setText(listPublicaciones.get(position).getNombreUsuario());
         //foto perfil
         String userId= listPublicaciones.get(position).getIdUsuarioPublicacion();
+        if (userId != null) {
+            FirebaseFirestore.getInstance().collection("usuarios").document(userId)
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.exists()) {
+                                String fotoPerfilURL = documentSnapshot.getString("foto_perfil");
 
-        FirebaseFirestore.getInstance().collection("usuarios").document(userId)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            String fotoPerfilURL = documentSnapshot.getString("foto_perfil");
+                                if (fotoPerfilURL != null && !fotoPerfilURL.isEmpty()) {
 
-                            if (fotoPerfilURL != null && !fotoPerfilURL.isEmpty()) {
+                                    Glide.with(c).load(fotoPerfilURL).into(holder.getFotoUsuario());
 
-                                Glide.with(c).load(fotoPerfilURL).into(holder.getFotoUsuario());
+                                } else {
 
+                                    Glide.with(c).load(R.drawable.foto_perfil).into(holder.getFotoUsuario());
+                                }
                             } else {
-
                                 Glide.with(c).load(R.drawable.foto_perfil).into(holder.getFotoUsuario());
                             }
-                        } else {
-                            Glide.with(c).load(R.drawable.foto_perfil).into(holder.getFotoUsuario());
                         }
-                    }
-                });
+                    });
 
 
-        //si tipo mensaje es == 1 significa que es una publicacion de solo texto
-        //si no, es de tipo foto y se realiza lo siguiente
-        if (listPublicaciones.get(position).getTipoPublicacion().equals(TIPO_IMAGEN)){
-            holder.getFotoPublicacion().setVisibility(View.VISIBLE);
-            Glide.with(c).load(listPublicaciones.get(position).getUrlFotoPublicacion()).into(holder.getFotoPublicacion());
+            //si tipo mensaje es == 1 significa que es una publicacion de solo texto
+            //si no, es de tipo foto y se realiza lo siguiente
+            if (listPublicaciones.get(position).getTipoPublicacion().equals(TIPO_IMAGEN)){
+                holder.getFotoPublicacion().setVisibility(View.VISIBLE);
+
+                Glide.with(c).load(listPublicaciones.get(position).getUrlFotoPublicacion()).into(holder.getFotoPublicacion());
+
+            } else if (listPublicaciones.get(position).getTipoPublicacion().equals(TIPO_TEXTO)){
+                holder.getFotoPublicacion().setVisibility(View.GONE);
+
+            }
+        } else {
 
         }
+
+
 
     }
 
