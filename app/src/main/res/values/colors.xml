@@ -13,6 +13,7 @@
     <color name="negro">#181D27</color>
     <color name="gris">#79807B</color>
     <color name="verdeSpoti">#81b71a</color>
+    <color name="rojoPubli">#FFFFFFFF</color>
 
     <!--Paleta de verdes-->
     <color name="verdeFosforito">#51FF00</color>

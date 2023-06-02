@@ -27,7 +27,8 @@
     <string name="aviso_foto">Image upload is optional</string>
     <string name="aviso_ig">Shared images may appear on the official IG of Conciertos Solo</string>
     <string name="titulo_nuevaPubli">New post</string>
-    <string name="hint_publi">Tell us about the last concert you came to with us!</string>
+    <string name="titulo_hint_publi">Share your experience with us!</string>
+    <string name="hint_publi">Write your comment here...</string>
     <string name="btn_img">Add a picture!</string>
     <string name="btn_publicar">Post!</string>
 

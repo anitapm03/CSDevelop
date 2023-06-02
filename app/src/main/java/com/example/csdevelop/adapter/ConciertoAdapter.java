@@ -18,27 +18,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 public class ConciertoAdapter extends FirestoreRecyclerAdapter<Concierto, ConciertoAdapter.ViewHolder> implements View.OnClickListener{//nuevo
 
-    //no va
-    //final ConciertoAdapter.OnItemClickListener listener;
-
-    //nuevo
     private View.OnClickListener listener1;
     //longitud maxima del titulo para no descuadrar el rv
     private static final int MAX_LONG=13;
 
 
-    //no va
-    /*public interface OnItemClickListener {
-        void onItemClick(Concierto concierto);
-    }*/
-
-    /**
-     * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
-     * FirestoreRecyclerOptions} for configuration options.
-     *
-     * @param options
-     */
-    //constructor arreglar
     public ConciertoAdapter(@NonNull FirestoreRecyclerOptions<Concierto> options) {
         super(options);
 
@@ -54,9 +38,6 @@ public class ConciertoAdapter extends FirestoreRecyclerAdapter<Concierto, Concie
             String nombreCorto= concierto.getNombre().substring(0, MAX_LONG) + "...";
             holder.nombre.setText(nombreCorto);
         }
-
-
-
 
         holder.fecha.setText(concierto.getFecha());
         holder.hora.setText(concierto.getHora());

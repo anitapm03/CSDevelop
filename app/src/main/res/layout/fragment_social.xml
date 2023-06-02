@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -25,32 +24,38 @@
             android:textSize="22sp"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/addPub"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:drawableEnd="@drawable/ic_add_publicacion" />
-
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_below="@id/barra">
-
+        android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/rvPublicaciones"
-            android:layout_marginBottom="50dp"
-            >
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/addPub"
+            android:layout_width="65dp"
+            android:layout_height="62dp"
+            android:layout_margin="16dp"
+            android:background="@android:color/transparent"
+            android:drawableEnd="@drawable/ic_add_publicacion"
+            android:elevation="8dp"
+            android:padding="8dp"
+            android:stateListAnimator="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.93" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-</RelativeLayout>
+</FrameLayout>
