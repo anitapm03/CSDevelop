@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.csdevelop.Internet;
 import com.example.csdevelop.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -42,6 +43,10 @@ public class RestablecerContrasena extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restablecer_contrasena);
+
+        if(!Internet.isNetworkAvailable(this)){
+            Internet.showNoInternetAlert(this);
+        }
 
         btonEnviar = findViewById(R.id.btnEnviar);
         btonVolver = findViewById(R.id.btonVolver);

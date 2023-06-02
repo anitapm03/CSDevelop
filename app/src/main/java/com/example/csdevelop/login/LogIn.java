@@ -1,6 +1,10 @@
 package com.example.csdevelop.login;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +40,11 @@ public class LogIn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.Theme_CSDevelop);
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_log_in);
+
+
+        if (!isNetworkAvailable()) {
+            showNoInternetAlert();
+        }
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -191,5 +199,21 @@ public class LogIn extends AppCompatActivity {
 
         }
 
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+
+    }
+
+    private void showNoInternetAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("No hay conexión a internet");
+        builder.setMessage("Por favor, asegúrese de tener una conexión a internet activa.");
+        builder.setPositiveButton("Aceptar", (dialog, which)->finish());
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

@@ -52,6 +52,10 @@ public class DetalleConcierto extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_concierto);
 
+        if(!Internet.isNetworkAvailable(this)){
+            Internet.showNoInternetAlert(this);
+        }
+
         nombreEvento=findViewById(R.id.nombreEvento);
         fechaEvento=findViewById(R.id.fechaEvento);
         horaEvento=findViewById(R.id.horaEvento);

@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.csdevelop.Internet;
 import com.example.csdevelop.MainActivity;
 import com.example.csdevelop.R;
 import com.example.csdevelop.chat.ChatActivity;
@@ -67,6 +68,10 @@ public class CrearPublicacion extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear);
+
+        if(!Internet.isNetworkAvailable(this)){
+            Internet.showNoInternetAlert(this);
+        }
 
         txtPubli = findViewById(R.id.txtPubli);
         volver = findViewById(R.id.volverAtras);

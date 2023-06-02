@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.csdevelop.DetalleConcierto;
+import com.example.csdevelop.Internet;
 import com.example.csdevelop.R;
 import com.example.csdevelop.adapter.ConciertoAdapter;
 import com.example.csdevelop.adapter.GruposAdapter;
@@ -41,6 +42,10 @@ public class GruposFragment extends Fragment {
 
         //creamos una vista con lo que habia en el return y ya podemos programar
         View vista=inflater.inflate(R.layout.fragment_grupos, container, false);
+
+        if(!Internet.isNetworkAvailable(getContext())){
+            Internet.showNoInternetAlert(getContext());
+        }
 
         firestore=FirebaseFirestore.getInstance();
 

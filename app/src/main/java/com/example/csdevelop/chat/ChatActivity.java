@@ -26,6 +26,7 @@ import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.csdevelop.DetalleConcierto;
+import com.example.csdevelop.Internet;
 import com.example.csdevelop.MainActivity;
 import com.example.csdevelop.R;
 import com.example.csdevelop.adapter.MensajesAdapter;
@@ -90,6 +91,10 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        if(!Internet.isNetworkAvailable(this)){
+            Internet.showNoInternetAlert(this);
+        }
 
         Glide.with(this).setDefaultRequestOptions(new RequestOptions().format(DecodeFormat.PREFER_ARGB_8888)).applyDefaultRequestOptions(RequestOptions.noTransformation()).applyDefaultRequestOptions(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL)).applyDefaultRequestOptions(RequestOptions.skipMemoryCacheOf(true)).applyDefaultRequestOptions(RequestOptions.overrideOf(250, 250));
 

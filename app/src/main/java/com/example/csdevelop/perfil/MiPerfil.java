@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.example.csdevelop.Internet;
 import com.example.csdevelop.R;
 import com.example.csdevelop.login.LogIn;
 import com.google.android.gms.tasks.Continuation;
@@ -71,6 +72,10 @@ public class MiPerfil extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mi_perfil);
+
+        if(!Internet.isNetworkAvailable(this)){
+            Internet.showNoInternetAlert(this);
+        }
 
         final EditText txtNombre = findViewById(R.id.edtUsuario);
 

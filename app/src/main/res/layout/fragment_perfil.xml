@@ -52,12 +52,23 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/foto_perfil" />
 
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:indeterminate="true"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/imgFotoPerfil2"
+                app:layout_constraintBottom_toBottomOf="@id/imgFotoPerfil2"
+                app:layout_constraintStart_toStartOf="@id/imgFotoPerfil2"
+                app:layout_constraintEnd_toEndOf="@id/imgFotoPerfil2" />
+
             <TextView
                 android:id="@+id/nombreUsuario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
-                android:text="-"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -65,7 +76,7 @@
                 android:id="@+id/btonEditar"
                 android:layout_width="190dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginBottom="0dp"
                 android:text="@string/btn_editarPerfil" />
 
         </LinearLayout>

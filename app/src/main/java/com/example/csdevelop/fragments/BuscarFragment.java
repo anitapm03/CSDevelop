@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.csdevelop.DetalleConcierto;
+import com.example.csdevelop.Internet;
 import com.example.csdevelop.R;
 import com.example.csdevelop.adapter.ConciertoAdapter;
 import com.example.csdevelop.model.Concierto;
@@ -35,6 +36,10 @@ public class BuscarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vista=inflater.inflate(R.layout.fragment_buscar, container, false);
+
+        if(!Internet.isNetworkAvailable(getContext())){
+            Internet.showNoInternetAlert(getContext());
+        }
 
         firestore=FirebaseFirestore.getInstance();
 

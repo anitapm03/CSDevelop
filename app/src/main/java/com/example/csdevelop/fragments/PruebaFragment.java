@@ -16,8 +16,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.csdevelop.DetalleConcierto;
+import com.example.csdevelop.Internet;
 import com.example.csdevelop.R;
 import com.example.csdevelop.adapter.ConciertoAdapter;
+import com.example.csdevelop.login.LogIn;
 import com.example.csdevelop.model.Concierto;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,15 +34,17 @@ public class PruebaFragment extends Fragment {
     ConciertoAdapter adapter;
     FirebaseFirestore firestore;
 
-    public PruebaFragment() {
-        // Required empty public constructor
-    }
+    public PruebaFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //creamos una vista con lo que habia en el return y ya podemos programar
         View vista=inflater.inflate(R.layout.fragment_prueba, container, false);
+
+        if(!Internet.isNetworkAvailable(getContext())){
+            Internet.showNoInternetAlert(getContext());
+        }
 
         firestore=FirebaseFirestore.getInstance();
 
@@ -71,7 +75,6 @@ public class PruebaFragment extends Fragment {
         adapter.notifyDataSetChanged();
         rv.setAdapter(adapter);
 
-        // Inflate the layout for this fragment
         return vista;
     }
 

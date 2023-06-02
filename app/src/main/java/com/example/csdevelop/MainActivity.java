@@ -4,7 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 
@@ -17,7 +21,7 @@ import com.example.csdevelop.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-public class MainActivity extends AppCompatActivity implements PruebaFragment.FragmentListener {
+public class MainActivity extends AppCompatActivity implements PruebaFragment.FragmentListener{
     ActivityMainBinding binding;
     FloatingActionButton btnGrupos;
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -110,6 +114,8 @@ public class MainActivity extends AppCompatActivity implements PruebaFragment.Fr
             }
         });
     }
+
+
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

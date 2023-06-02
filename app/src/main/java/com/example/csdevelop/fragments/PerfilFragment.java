@@ -8,11 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.csdevelop.Internet;
 import com.example.csdevelop.R;
 import com.example.csdevelop.adapter.GruposAdapter;
 import com.example.csdevelop.login.LogIn;
@@ -29,6 +31,7 @@ public class PerfilFragment extends Fragment {
     Button logout, btonPerfil, btonTwitter, btonInsta, btonWeb;
     ImageView imgFotoPerfil;
     TextView nombreUsuario;
+    private ProgressBar progressBar;
 
     RecyclerView rv;
 
@@ -42,7 +45,9 @@ public class PerfilFragment extends Fragment {
                              Bundle savedInstanceState) {
         View vista=inflater.inflate(R.layout.fragment_perfil, container, false);
 
-
+        if(!Internet.isNetworkAvailable(getContext())){
+            Internet.showNoInternetAlert(getContext());
+        }
 
         logout=vista.findViewById(R.id.volverAtras);
         btonPerfil = vista.findViewById(R.id.btonEditar);
@@ -51,6 +56,7 @@ public class PerfilFragment extends Fragment {
         btonTwitter = vista.findViewById(R.id.twitterButton);
         btonInsta = vista.findViewById(R.id.instagramButton);
         btonWeb = vista.findViewById(R.id.webButton);
+        progressBar = vista.findViewById(R.id.progressBar);
         rv = vista.findViewById(R.id.conciertosRecyclerView);
 
 
@@ -115,6 +121,9 @@ public class PerfilFragment extends Fragment {
     }
 
     private void loadProfilePhoto() {
+        progressBar.setVisibility(View.VISIBLE);
+        imgFotoPerfil.setVisibility(View.GONE);
+
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         FirebaseFirestore.getInstance().collection("usuarios").document(userID)
                 .get()
@@ -127,11 +136,17 @@ public class PerfilFragment extends Fragment {
 
                             nombreUsuario.setText(nomUsuario.toUpperCase());
                             if (fotoPerfilURL != null && !fotoPerfilURL.isEmpty()) {
+                                progressBar.setVisibility(View.GONE);
+                                imgFotoPerfil.setVisibility(View.VISIBLE);
                                 Picasso.get().load(fotoPerfilURL).into(imgFotoPerfil);
                             } else {
+                                progressBar.setVisibility(View.GONE);
+                                imgFotoPerfil.setVisibility(View.VISIBLE);
                                 imgFotoPerfil.setImageResource(R.drawable.foto_perfil);
                             }
                         } else {
+                            progressBar.setVisibility(View.GONE);
+                            imgFotoPerfil.setVisibility(View.VISIBLE);
                             imgFotoPerfil.setImageResource(R.drawable.foto_perfil);
                         }
                     }

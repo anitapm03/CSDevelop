@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.csdevelop.DetalleConcierto;
+import com.example.csdevelop.Internet;
 import com.example.csdevelop.MainActivity;
 import com.example.csdevelop.R;
 import com.example.csdevelop.adapter.GruposAdapter;
@@ -67,6 +68,10 @@ public class SocialFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v =inflater.inflate(R.layout.fragment_social, container, false);
+
+        if(!Internet.isNetworkAvailable(getContext())){
+            Internet.showNoInternetAlert(getContext());
+        }
 
         addPub = v.findViewById(R.id.addPub);
         rvPublicaciones = v.findViewById(R.id.rvPublicaciones);
