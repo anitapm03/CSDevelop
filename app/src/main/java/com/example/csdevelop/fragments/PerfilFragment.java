@@ -51,6 +51,8 @@ public class PerfilFragment extends Fragment {
         btonTwitter = vista.findViewById(R.id.twitterButton);
         btonInsta = vista.findViewById(R.id.instagramButton);
         btonWeb = vista.findViewById(R.id.webButton);
+        rv = vista.findViewById(R.id.conciertosRecyclerView);
+
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
