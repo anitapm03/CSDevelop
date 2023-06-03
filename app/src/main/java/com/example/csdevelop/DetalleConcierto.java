@@ -181,7 +181,6 @@ public class DetalleConcierto extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(DetalleConcierto.this, "Concierto agregado a favoritos", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -191,7 +190,6 @@ public class DetalleConcierto extends AppCompatActivity {
                         }
                     });
 
-            Toast.makeText(DetalleConcierto.this, "favorito", Toast.LENGTH_SHORT).show();
         } else {
             Map<String, Object> actualizaciones = new HashMap<>();
             actualizaciones.put("misFavoritos", FieldValue.arrayRemove(concierto.getNombre()));
@@ -201,7 +199,6 @@ public class DetalleConcierto extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(DetalleConcierto.this, "Concierto eliminado de favoritos", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -210,8 +207,6 @@ public class DetalleConcierto extends AppCompatActivity {
                             Toast.makeText(DetalleConcierto.this, "Error al eliminar el concierto de favoritos", Toast.LENGTH_SHORT).show();
                         }
                     });
-
-            Toast.makeText(DetalleConcierto.this, "no favorito", Toast.LENGTH_SHORT).show();
         }
     }
 

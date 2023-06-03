@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -95,6 +96,11 @@ public class MiPerfil extends AppCompatActivity {
 
 
 
+        // estilo basico de validacion
+        awesomeValidation= new AwesomeValidation(ValidationStyle.BASIC);
+        awesomeValidation.addValidation(this,R.id.edtContrasenaNueva, ".{8,}",R.string.invalid_password);
+        awesomeValidation.addValidation(this,R.id.edtUsuario, ".{3,}",R.string.invalid_username );
+
 
         userId = currentUser.getUid();
         userRef = db.collection("usuarios").document(userId);
@@ -133,12 +139,14 @@ public class MiPerfil extends AppCompatActivity {
         btonActualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(awesomeValidation.validate()) {
                     userRef.update("nombre",txtNombre.getText().toString());
                     txtAlerta2.setText("Nombre de usuario actualizado");
-                    String colorHex = "#0F8128";
+                    String colorHex = "#01B706";
                     int colorInt = Color.parseColor(colorHex);
                     txtAlerta2.setTextColor(colorInt);
                     quitarTextView();
+                }
             }
 
         });
@@ -161,8 +169,10 @@ public class MiPerfil extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(txtPassActual.getText().toString().isEmpty()){
-                    txtAlerta.setText("introduce la contraseña actual");
-                }else {
+                    txtAlerta.setText("Introduce la contraseña actual");
+                    txtAlerta.setTextColor(Color.RED);
+                    quitarTextView();
+                }else if(awesomeValidation.validate()) {
                     cambiarContraseña();
                 }
             }
@@ -268,7 +278,7 @@ public class MiPerfil extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        txtAlerta2.setText("Imagen de perfil eliminada");
+                                        txtAlerta2.setText("Foto de perfil eliminada");
                                         txtAlerta2.setTextColor(Color.RED);
                                         imgFotoPerfil2.setImageResource(R.drawable.foto_perfil);
                                         imgFotoPerfil1.setImageResource(R.drawable.foto_perfil);
@@ -278,14 +288,18 @@ public class MiPerfil extends AppCompatActivity {
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(getApplicationContext(), "Error al eliminar la referencia en Firestore", Toast.LENGTH_SHORT).show();
+                                        txtAlerta2.setText("ERROR al eliminar la foto de perfil");
+                                        txtAlerta2.setTextColor(Color.RED);
+                                        quitarTextView();
                                     }
                                 });
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "Error al eliminar la imagen en Firebase Storage", Toast.LENGTH_SHORT).show();
+                        txtAlerta2.setText("ERROR al eliminar la foto de perfil");
+                        txtAlerta2.setTextColor(Color.RED);
+                        quitarTextView();
                     }
                 });
             }
@@ -310,21 +324,29 @@ public class MiPerfil extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             String newPassword = txtPassNueva.getText().toString();
                             if(newPassword.equals(txtConfirmarPassNueva.getText().toString())){
-                                currentUser.updatePassword(newPassword)
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> updateTask) {
-                                                if (updateTask.isSuccessful()) {
-                                                    txtAlerta.setText("Contraseña actualizada");
-                                                    txtAlerta.setTextColor(Color.GREEN);
-                                                    quitarTextView();
-                                                } else {
-                                                    txtAlerta.setText("Error al actualizar la contraseña");
-                                                    txtAlerta.setTextColor(Color.RED);
-                                                    quitarTextView();
+                                if(!newPassword.equals(password)){
+                                    currentUser.updatePassword(newPassword)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> updateTask) {
+                                                    if (updateTask.isSuccessful()) {
+                                                        txtAlerta.setText("Contraseña actualizada");
+                                                        String colorHex = "#01B706";
+                                                        int colorInt = Color.parseColor(colorHex);
+                                                        txtAlerta.setTextColor(colorInt);
+                                                        quitarTextView();
+                                                    } else {
+                                                        txtAlerta.setText("Error al actualizar la contraseña");
+                                                        txtAlerta.setTextColor(Color.RED);
+                                                        quitarTextView();
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
+                                }else {
+                                    txtAlerta.setText("La contraseña actual y la nueva contraseña son iguales. Elija una contraseña diferente.");
+                                    txtAlerta.setTextColor(Color.RED);
+                                    quitarTextView();
+                                }
                             }else{
                                 txtAlerta.setText("Las contraseñas no coinciden");
                                 txtAlerta.setTextColor(Color.RED);

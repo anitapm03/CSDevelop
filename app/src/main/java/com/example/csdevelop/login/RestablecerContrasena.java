@@ -7,11 +7,15 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.csdevelop.Internet;
 import com.example.csdevelop.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,6 +40,7 @@ public class RestablecerContrasena extends AppCompatActivity {
 
     DocumentReference userRef;
 
+    AwesomeValidation awesomeValidation;
 
     private AlertDialog mDialog;
 
@@ -54,6 +59,9 @@ public class RestablecerContrasena extends AppCompatActivity {
         alerta = findViewById(R.id.alertaRestablecer);
         mAuth = FirebaseAuth.getInstance();
 
+        awesomeValidation= new AwesomeValidation(ValidationStyle.BASIC);
+        awesomeValidation.addValidation(this,R.id.email, Patterns.EMAIL_ADDRESS,R.string.invalid_mail);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Espere un momento...")
                 .setCancelable(false);
@@ -63,10 +71,8 @@ public class RestablecerContrasena extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 email = editTextEmail.getText().toString();
-                if (!email.isEmpty()) {
+                if (awesomeValidation.validate()) {
                     resetPassword();
-                } else {
-                    alerta.setText("Introduzca un email");
                 }
             }
         });
@@ -88,17 +94,33 @@ public class RestablecerContrasena extends AppCompatActivity {
                     mDialog.show();
 
                     alerta.setText("El correo ha sido enviado");
-                    String codigoColor = "#3C7C32";
+                    String codigoColor = "#01B706";
                     int color = Color.parseColor(codigoColor);
                     alerta.setTextColor(color);
+                    quitarTextView();
 
                     CollectionReference usuariosRef = db.collection("usuarios");
                     Query query = usuariosRef.whereEqualTo("email", email);
+                    mDialog.dismiss();
                 } else {
                     alerta.setText("El correo introducido no está asociado a ninguna cuenta");
-                    mDialog.dismiss();
                 }
             }
         });
+    }
+
+    private void quitarTextView(){
+        CountDownTimer countDownTimer = new CountDownTimer(4000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
+
+            @Override
+            public void onFinish() {
+                alerta.setText("");
+            }
+        };
+
+        countDownTimer.start();
     }
 }
