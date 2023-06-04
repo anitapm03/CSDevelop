@@ -77,11 +77,13 @@ public class SocialFragment extends Fragment {
         adapter = new PublicacionAdapter(getContext());
 
         //layout para que aparezcan arriba las publicaciones nuevas
-        rvPublicaciones.setLayoutManager(new GridLayoutManager(getContext(),1,GridLayoutManager.VERTICAL,true));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        rvPublicaciones.setLayoutManager(layoutManager);
 
         //rvPublicaciones.setLayoutManager(new LinearLayoutManager(getContext()));
         rvPublicaciones.setAdapter(adapter);
-
 
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
@@ -140,7 +142,7 @@ public class SocialFragment extends Fragment {
     }
 
     private void setScrollbar(){
-        rvPublicaciones.scrollToPosition(adapter.getItemCount());
+        rvPublicaciones.scrollToPosition(0);
     }
 
     //para que termine el activity y no explote
