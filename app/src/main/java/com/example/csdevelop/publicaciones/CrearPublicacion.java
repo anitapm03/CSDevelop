@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +16,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.csdevelop.Internet;
 import com.example.csdevelop.MainActivity;
 import com.example.csdevelop.R;
 import com.example.csdevelop.chat.ChatActivity;
 import com.example.csdevelop.chat.MensajeEnviar;
+import com.example.csdevelop.login.LogIn;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -46,8 +53,8 @@ public class CrearPublicacion extends AppCompatActivity {
     EditText txtPubli;
     Button addImg, publicar, volver;
     ImageView fotoPubli;
-
-    private static final int PHOTO_SEND=1;
+    Uri uri;
+    final int CODIGO_RESPUESTA_GALERIA = 3;
 
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
@@ -55,13 +62,13 @@ public class CrearPublicacion extends AppCompatActivity {
     //para la imagen
     private FirebaseStorage storage;
     private StorageReference storageReference;
-    private String storage_path = "publicaciones-img/*";
 
     //sacar datos del usuario para indicar quien envia la publi
     FirebaseFirestore firestore;
     CollectionReference coleccionUsuarios;
     FirebaseAuth firebaseAuth;
     String id;
+    ImageView fotoSeleccionada;
     String nombreUsuario;
 
     @Override
@@ -73,12 +80,19 @@ public class CrearPublicacion extends AppCompatActivity {
             Internet.showNoInternetAlert(this);
         }
 
+        Glide.with(this)
+                .setDefaultRequestOptions(new RequestOptions().format(DecodeFormat.PREFER_ARGB_8888))
+                .applyDefaultRequestOptions(RequestOptions.noTransformation())
+                .applyDefaultRequestOptions(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
+                .applyDefaultRequestOptions(RequestOptions.skipMemoryCacheOf(true))
+                .applyDefaultRequestOptions(RequestOptions.overrideOf(250, 250));
+
         txtPubli = findViewById(R.id.txtPubli);
         volver = findViewById(R.id.volverAtras);
         publicar = findViewById(R.id.publicar);
         addImg = findViewById(R.id.addFoto);
         fotoPubli = findViewById(R.id.fotoPubli);
-
+        fotoSeleccionada = findViewById(R.id.imageView);
 
         //instanciamos lo de la base de datos
         database = FirebaseDatabase.getInstance();
@@ -116,13 +130,10 @@ public class CrearPublicacion extends AppCompatActivity {
 
                 if (enlaceFoto.length() == 0){
                     //añadimos una publicacion nueva de texto porque no hay enlace
-                    databaseReference.push().setValue(new Publicacion(txtPubli.getText().toString(), nombreUsuario, TYPE_TEXT, id));
+                    databaseReference.push().setValue(new Publicacion( nombreUsuario, txtPubli.getText().toString(), TYPE_TEXT, id));
                 } else {
-                    databaseReference.push().setValue(new Publicacion(txtPubli.getText().toString(), nombreUsuario, enlaceFoto,TYPE_PIC, id));
+                    databaseReference.push().setValue(new Publicacion(nombreUsuario,txtPubli.getText().toString(), uri.toString(),TYPE_PIC, id));
                 }
-
-
-
 
                 //cerramos el activity
                 Intent intent = new Intent(CrearPublicacion.this, MainActivity.class);
@@ -139,12 +150,8 @@ public class CrearPublicacion extends AppCompatActivity {
         addImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-                i.setType("image/jpeg");
-                i.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-                startActivityForResult(Intent.createChooser(i, "Selecciona una imagen"),PHOTO_SEND);
-                fotoPubli.setVisibility(View.VISIBLE);
-                //getPic();
+                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i,CODIGO_RESPUESTA_GALERIA);
             }
         });
 
@@ -165,36 +172,47 @@ public class CrearPublicacion extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PHOTO_SEND && resultCode == RESULT_OK){
-            Uri u = data.getData();
-            storageReference = storage.getReference("publicaciones");
-            final StorageReference fotoReferencia = storageReference.child(u.getLastPathSegment());
-            fotoReferencia.putFile(u).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    String url = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+        if (requestCode == CODIGO_RESPUESTA_GALERIA) {
+            if (data != null && data.getData() != null) {
+                uri = data.getData();
+                try {
+                    final StorageReference refe = storage.getReference().child("imagenes_social")
+                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid() + ".jpg");
+                    UploadTask uploadTask = refe.putFile(uri);
+                    uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                        @Override
+                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                            if (!task.isSuccessful()) {
+                                throw task.getException();
+                            }
 
-                    enlaceFoto = url;
+                            // Obtener la URL de descarga del archivo subido
+                            return refe.getDownloadUrl();
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            if (task.isSuccessful()) {
+                                uri = task.getResult();
+                                enlaceFoto = uri.toString();
+                                Glide.with(CrearPublicacion.this).load(enlaceFoto).into(fotoSeleccionada);
 
-                    //Opcion de cambiar el boton a añadir imagen y publicar
-                    //Publicacion p = new Publicacion(txtPubli.getText().toString(),nombreUsuario,url,TYPE_PIC,id);
-
-                    //databaseReference.push().setValue(p);
-
+                            } else {
+                                // Error al obtener la URL de descarga
+                                Log.e("Error", task.getException().toString());
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e("Error", "" + e.toString());
                 }
-            });
+            }
         }
-
     }
 
 
-
-    private void getImg(String id){
-        
-
-    }
 
     public void onBackPressed(){
         Intent intent = new Intent(this, MainActivity.class);

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.csdevelop.DetalleConcierto;
 import com.example.csdevelop.Internet;
 import com.example.csdevelop.MainActivity;
@@ -49,18 +50,9 @@ public class SocialFragment extends Fragment {
 
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
-    private FirebaseStorage storage;
-    private StorageReference storageReference;
-    CollectionReference coleccionUsuarios;
-    FirebaseAuth firebaseAuth;
-    String id;
-    String nombreUsuario;
     ArrayList<Publicacion> publicacionesArr;
 
-    private static final int PHOTO_SEND=1;
-
     public SocialFragment(){
-        // se necesita el constructor vacio
     }
 
     @Override
@@ -79,7 +71,6 @@ public class SocialFragment extends Fragment {
         firestore=FirebaseFirestore.getInstance();
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("publicaciones/");
-        storage = FirebaseStorage.getInstance();
 
         rvPublicaciones.setHasFixedSize(true);
         publicacionesArr =new ArrayList<>();
@@ -90,7 +81,7 @@ public class SocialFragment extends Fragment {
 
         //rvPublicaciones.setLayoutManager(new LinearLayoutManager(getContext()));
         rvPublicaciones.setAdapter(adapter);
-        //query
+
 
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
@@ -128,7 +119,6 @@ public class SocialFragment extends Fragment {
         });
 
 
-
         addPub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,7 +126,6 @@ public class SocialFragment extends Fragment {
             }
         });
 
-        // Inflate the layout for this fragment
         return v;
     }
 
@@ -151,7 +140,7 @@ public class SocialFragment extends Fragment {
     }
 
     private void setScrollbar(){
-        rvPublicaciones.scrollToPosition(adapter.getItemCount()-1);
+        rvPublicaciones.scrollToPosition(adapter.getItemCount());
     }
 
     //para que termine el activity y no explote

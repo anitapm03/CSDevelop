@@ -61,10 +61,6 @@ public class MensajesAdapter extends RecyclerView.Adapter<HolderMensaje> {
 
     @Override
     public void onBindViewHolder(@NonNull HolderMensaje holder, int position) {
-
-        //MensajeRecibir msg = listMensaje.get(position);
-
-
         if(soloMios){
             //aqui iria el manejo del visto si se implementa
             holder.getEntregado().setVisibility(View.VISIBLE);
