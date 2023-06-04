@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,8 +23,11 @@ import com.example.csdevelop.adapter.ConciertoAdapter;
 import com.example.csdevelop.login.LogIn;
 import com.example.csdevelop.model.Concierto;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +37,8 @@ public class PruebaFragment extends Fragment {
     RecyclerView rv;
     ConciertoAdapter adapter;
     FirebaseFirestore firestore;
+
+
 
     public PruebaFragment() {}
 
@@ -53,7 +59,31 @@ public class PruebaFragment extends Fragment {
 
         //rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setLayoutManager(new GridLayoutManager(getContext(),2));
-        Query query = firestore.collection("conciertos");
+        Query query = firestore.collection("conciertos");//.limit(6)
+
+        /*intento de paginacion
+        query.get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot documentSnapshots) {
+                        // ...
+
+                        // Get the last visible document
+                        DocumentSnapshot lastVisible = documentSnapshots.getDocuments()
+                                .get(documentSnapshots.size() -1);
+
+
+                        Query next = firestore.collection("conciertos")
+                                .startAfter(lastVisible)
+                                .limit(6);
+
+                        // Use the query for pagination
+                        // ...
+                    }
+                });
+
+
+        //fin nuevo*/
         FirestoreRecyclerOptions<Concierto> firestoreRecyclerOptions =
                 new FirestoreRecyclerOptions.Builder<Concierto>().setQuery(query, Concierto.class).build();
 
@@ -77,6 +107,8 @@ public class PruebaFragment extends Fragment {
 
         return vista;
     }
+
+
 
     @Override
     public void onStart() {

@@ -159,8 +159,11 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                // adapter.addMensaje(new Mensaje(eText.getText().toString(), "Ana"));
-                databaseReference.push().setValue(new MensajeEnviar(eText.getText().toString(), nombreUsuario, TYPE_TEXT, id,ServerValue.TIMESTAMP));
-                eText.setText("");
+                if(!eText.getText().toString().equals("")){
+                    databaseReference.push().setValue(new MensajeEnviar(eText.getText().toString(), nombreUsuario, TYPE_TEXT, id,ServerValue.TIMESTAMP));
+                    eText.setText("");
+                }
+
             }
         });
 

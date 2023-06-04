@@ -38,6 +38,7 @@
     <string name="detalle_conci">Detalles del evento</string>
     <string name="btn_enlace">Entradas</string>
     <string name="btn_accesoGrupo">Unirme al grupo</string>
+    <string name="detalles_sala">Detalles de la sala:</string>
 
     <!-- strings log in   -->
     <string name="text_usuario">Usuario</string>

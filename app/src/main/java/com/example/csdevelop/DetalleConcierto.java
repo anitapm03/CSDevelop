@@ -32,7 +32,7 @@ import java.util.Map;
 
 public class DetalleConcierto extends AppCompatActivity {
     TextView nombreEvento, fechaEvento, horaEvento, nombreSala, direccionSala;
-    Button entradas, volver, favorito;
+    Button entradas, volver, favorito, unirse;
     String enlace, foto, sala, nombreSalaString, direccionSalaString;
     ImageView fotoEvento;
 
@@ -65,6 +65,7 @@ public class DetalleConcierto extends AppCompatActivity {
         favorito= findViewById(R.id.favorito);
         nombreSala=findViewById(R.id.nombreSala);
         direccionSala=findViewById(R.id.direccionSala);
+        unirse=findViewById(R.id.unirse);
 
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getCurrentUser().getUid();
@@ -135,6 +136,13 @@ public class DetalleConcierto extends AppCompatActivity {
             public void onClick(View v) {
                 conciertosFavoritos();
 
+            }
+        });
+
+        unirse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                conciertosGrupos();
             }
         });
 
@@ -210,5 +218,22 @@ public class DetalleConcierto extends AppCompatActivity {
         }
     }
 
+    public void conciertosGrupos(){
 
+            Map<String, Object> actualizaciones = new HashMap<>();
+            actualizaciones.put("misGrupos", FieldValue.arrayUnion(concierto.getNombre()));
+
+            conciertosRef.update(actualizaciones)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(DetalleConcierto.this, "Error al agregar el grupo", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+    }
 }
