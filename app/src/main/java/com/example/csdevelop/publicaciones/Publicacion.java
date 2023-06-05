@@ -1,10 +1,11 @@
 package com.example.csdevelop.publicaciones;
 
+import android.net.Uri;
+
 import java.io.Serializable;
 
 public class Publicacion implements Serializable {
     private String nombreUsuario, textoPublicacion, urlFotoPublicacion, tipoPublicacion, idUsuarioPublicacion;
-
     public Publicacion(){}
 
     public Publicacion(String nombreUsuario, String textoPublicacion, String tipoPublicacion, String idUsuarioPublicacion) {
@@ -21,6 +22,8 @@ public class Publicacion implements Serializable {
         this.tipoPublicacion = tipoPublicacion;
         this.idUsuarioPublicacion = idUsuarioPublicacion;
     }
+
+
 
     public String getNombreUsuario() {
         return nombreUsuario;

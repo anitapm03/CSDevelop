@@ -33,12 +33,17 @@ public class PublicacionAdapter extends RecyclerView.Adapter<HolderPublicacion> 
     private List<Publicacion> listPublicaciones = new ArrayList<>();
 
     private Context c;
-
+    private String enlaceFoto;
     public PublicacionAdapter (Context c){this.c = c;}
 
     public void addPublicacion(Publicacion p){
         listPublicaciones.add(p);
         notifyItemInserted(listPublicaciones.size());
+    }
+
+    public void setEnlaceFoto(String enlaceFoto) {
+        this.enlaceFoto = enlaceFoto;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -52,11 +57,10 @@ public class PublicacionAdapter extends RecyclerView.Adapter<HolderPublicacion> 
 
     @Override
     public void onBindViewHolder(@NonNull HolderPublicacion holder, int position) {
-        //rellenar los campos
-        holder.getNombreUsuario().setText(listPublicaciones.get(position).getTextoPublicacion());
-        holder.getTextoPublicacion().setText(listPublicaciones.get(position).getNombreUsuario());
-        //foto perfil
-        String userId= listPublicaciones.get(position).getIdUsuarioPublicacion();
+        holder.getNombreUsuario().setText(listPublicaciones.get(position).getNombreUsuario());
+        holder.getTextoPublicacion().setText(listPublicaciones.get(position).getTextoPublicacion());
+
+        String userId = listPublicaciones.get(position).getIdUsuarioPublicacion();
         if (userId != null) {
             FirebaseFirestore.getInstance().collection("usuarios").document(userId)
                     .get()
@@ -67,11 +71,8 @@ public class PublicacionAdapter extends RecyclerView.Adapter<HolderPublicacion> 
                                 String fotoPerfilURL = documentSnapshot.getString("foto_perfil");
 
                                 if (fotoPerfilURL != null && !fotoPerfilURL.isEmpty()) {
-
                                     Glide.with(c).load(fotoPerfilURL).into(holder.getFotoUsuario());
-
                                 } else {
-
                                     Glide.with(c).load(R.drawable.foto_perfil).into(holder.getFotoUsuario());
                                 }
                             } else {
@@ -79,33 +80,22 @@ public class PublicacionAdapter extends RecyclerView.Adapter<HolderPublicacion> 
                             }
                         }
                     });
-
-
-            //si tipo mensaje es == 1 significa que es una publicacion de solo texto
-            //si no, es de tipo foto y se realiza lo siguiente
-            if (listPublicaciones.get(position).getTipoPublicacion().equals(TIPO_IMAGEN)){
-                holder.getFotoPublicacion().setVisibility(View.VISIBLE);
-
-                Glide.with(c).load(listPublicaciones.get(position).getUrlFotoPublicacion()).into(holder.getFotoPublicacion());
-
-            } else if (listPublicaciones.get(position).getTipoPublicacion().equals(TIPO_TEXTO)){
-                holder.getFotoPublicacion().setVisibility(View.GONE);
-
-            }
-        } else {
-
         }
 
-
-
+        if (listPublicaciones.get(position).getTipoPublicacion().equals(TIPO_IMAGEN)) {
+            String enlaceFoto = listPublicaciones.get(position).getUrlFotoPublicacion();
+            if (enlaceFoto != null && !enlaceFoto.isEmpty()) {
+                Glide.with(holder.itemView.getContext())
+                        .load(enlaceFoto)
+                        .into(holder.getFotoPublicacion());
+            }
+        }
     }
+
 
     @Override
     public int getItemCount() {
         return listPublicaciones.size();
     }
 
-    private void loadProfilePhoto() {
-
-    }
 }

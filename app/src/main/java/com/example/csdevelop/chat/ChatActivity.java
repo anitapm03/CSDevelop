@@ -96,7 +96,13 @@ public class ChatActivity extends AppCompatActivity {
             Internet.showNoInternetAlert(this);
         }
 
-        Glide.with(this).setDefaultRequestOptions(new RequestOptions().format(DecodeFormat.PREFER_ARGB_8888)).applyDefaultRequestOptions(RequestOptions.noTransformation()).applyDefaultRequestOptions(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL)).applyDefaultRequestOptions(RequestOptions.skipMemoryCacheOf(true)).applyDefaultRequestOptions(RequestOptions.overrideOf(250, 250));
+        Glide.with(this)
+                .setDefaultRequestOptions(new RequestOptions()
+                        .format(DecodeFormat.PREFER_ARGB_8888))
+                .applyDefaultRequestOptions(RequestOptions.noTransformation())
+                .applyDefaultRequestOptions(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
+                .applyDefaultRequestOptions(RequestOptions.skipMemoryCacheOf(true))
+                .applyDefaultRequestOptions(RequestOptions.overrideOf(250, 250));
 
         volver=findViewById(R.id.volver);
         //fotoConciertoChat=findViewById(R.id.fotoConciertoChat);
@@ -128,7 +134,7 @@ public class ChatActivity extends AppCompatActivity {
         id = mAuth.getCurrentUser().getUid();
         firestore= FirebaseFirestore.getInstance();
         coleccionUsuarios= firestore.collection("usuarios");
-        //XFaTmJtvW9Wp4hLgxNPrJ3TQ5rF2
+
         coleccionUsuarios.document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -158,8 +164,7 @@ public class ChatActivity extends AppCompatActivity {
         enviarMensaje.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // adapter.addMensaje(new Mensaje(eText.getText().toString(), "Ana"));
-                if(!eText.getText().toString().equals("")){
+                if(!eText.getText().toString().isEmpty()){
                     databaseReference.push().setValue(new MensajeEnviar(eText.getText().toString(), nombreUsuario, TYPE_TEXT, id,ServerValue.TIMESTAMP));
                     eText.setText("");
                 }
