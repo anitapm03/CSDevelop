@@ -10,30 +10,30 @@ import com.example.csdevelop.R;
 
 public class HolderFav extends RecyclerView.ViewHolder{
 
-    private TextView nombre;
-    private ImageView foto;
+    private TextView nombreHolder;
+    private ImageView fotoHolder;
 
     public HolderFav(View itemView) {
         super(itemView);
 
-        nombre = itemView.findViewById(R.id.nombreConciertoRow1);
-        foto = itemView.findViewById(R.id.imgFotoConciertoGrupo1);
+        nombreHolder = itemView.findViewById(R.id.nombreConciertoRow1);
+        fotoHolder = itemView.findViewById(R.id.imgFotoConciertoGrupo1);
 
     }
 
-    public TextView getNombre() {
-        return nombre;
+    public TextView getNombreHolder() {
+        return nombreHolder;
     }
 
-    public void setNombre(TextView nombre) {
-        this.nombre = nombre;
+    public void setNombreHolder(TextView nombreHolder) {
+        this.nombreHolder = nombreHolder;
     }
 
-    public ImageView getFoto() {
-        return foto;
+    public ImageView getFotoHolder() {
+        return fotoHolder;
     }
 
-    public void setFoto(ImageView foto) {
-        this.foto = foto;
+    public void setFotoHolder(ImageView fotoHolder) {
+        this.fotoHolder = fotoHolder;
     }
 }

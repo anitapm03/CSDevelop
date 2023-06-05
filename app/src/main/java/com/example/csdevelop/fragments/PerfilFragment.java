@@ -35,6 +35,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -106,6 +107,7 @@ public class PerfilFragment extends Fragment {
         CollectionReference collectionRef = firestore.collection("usuarios");
         Query q = collectionRef.whereEqualTo(FieldPath.documentId(), id);
         List<Concierto> listaConciertos = new ArrayList<>();
+        List<Concierto> listaConciertos2 = new ArrayList<>();
         q.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -128,7 +130,33 @@ public class PerfilFragment extends Fragment {
                         public void run() {
                             Toast.makeText(getContext(), "LISTA2 " + arrayValues, Toast.LENGTH_LONG).show();
 
-                            adapter.setConciertos(listaConciertos);
+                            for (Object valor: arrayValues) {
+
+                                String nombre = valor.toString();
+                                System.out.println(nombre);
+
+                                DocumentReference conciRef = firestore.collection("conciertos").document(nombre);
+
+                                conciRef.get().addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document.exists()) {
+
+                                            Concierto c = document.toObject(Concierto.class);
+                                            listaConciertos2.add(c);
+                                            System.out.println("lista obj"+listaConciertos2);
+                                            // Haz lo que necesites con el objetoConcierto
+                                        } else {
+                                            // El objeto no existe en la base de datos
+                                        }
+                                    } else {
+                                        // Error al obtener el objeto
+                                    }
+                                });
+
+                            }
+
+                            adapter.setConciertos(listaConciertos2);
                             adapter.notifyDataSetChanged();
                             rv.setAdapter(adapter);
                         }

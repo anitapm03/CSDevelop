@@ -36,13 +36,13 @@ public class ConciertosFavsAdapter extends RecyclerView.Adapter<HolderFav>  impl
     }
     @Override
     public void onBindViewHolder(@NonNull HolderFav holder, int position) {
-        Concierto concierto = listConci.get(position);
+        //Concierto concierto = listConci.get(position);
 
         // Set the data to the views
-        holder.getNombre().setText(concierto.getNombre());
+        holder.getNombreHolder().setText(listConci.get(position).getNombre());
 
         String img = listConci.get(position).getImagen();
-        Glide.with(holder.itemView.getContext()).load(img).into(holder.getFoto());
+        Glide.with(holder.itemView.getContext()).load(img).into(holder.getFotoHolder());
     }
 
     @NonNull
@@ -74,9 +74,9 @@ public class ConciertosFavsAdapter extends RecyclerView.Adapter<HolderFav>  impl
     }
 
 
-
+    /*
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView nombre, fecha, hora;
+        TextView nombre;
         ImageView foto;
 
         public ViewHolder(@NonNull View itemView) {
@@ -85,5 +85,5 @@ public class ConciertosFavsAdapter extends RecyclerView.Adapter<HolderFav>  impl
             nombre = itemView.findViewById(R.id.nombreConciertoRow1);
             foto = itemView.findViewById(R.id.imgFotoConciertoGrupo1);
         }
-    }
+    }*/
 }
