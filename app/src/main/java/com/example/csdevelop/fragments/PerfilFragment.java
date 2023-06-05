@@ -1,5 +1,6 @@
 package com.example.csdevelop.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,20 +11,40 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.csdevelop.DetalleConcierto;
 import com.example.csdevelop.Internet;
 import com.example.csdevelop.R;
+import com.example.csdevelop.adapter.ConciertosFavsAdapter;
 import com.example.csdevelop.adapter.GruposAdapter;
+import com.example.csdevelop.adapter.MensajesAdapter;
+import com.example.csdevelop.chat.MensajeRecibir;
 import com.example.csdevelop.login.LogIn;
+import com.example.csdevelop.model.Concierto;
 import com.example.csdevelop.perfil.MiPerfil;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class PerfilFragment extends Fragment {
@@ -32,13 +53,21 @@ public class PerfilFragment extends Fragment {
     ImageView imgFotoPerfil;
     TextView nombreUsuario;
     private ProgressBar progressBar;
+    ArrayList<Concierto> favsList;
 
+    List<String> nombresFavs = new ArrayList<>();
     RecyclerView rv;
 
-    GruposAdapter adapter;
+    //GruposAdapter adapter;
+    ConciertosFavsAdapter adapter;
 
     FirebaseFirestore firestore;
 
+    //ConciertosFavsAdapter favsAdapter;
+
+    public PerfilFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,6 +87,50 @@ public class PerfilFragment extends Fragment {
         btonWeb = vista.findViewById(R.id.webButton);
         progressBar = vista.findViewById(R.id.progressBar);
         rv = vista.findViewById(R.id.conciertosRecyclerView);
+
+        //recogemos los datos del usuario
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String id = mAuth.getCurrentUser().getUid();//id del usuario
+
+        firestore=FirebaseFirestore.getInstance();
+
+        rv.setHasFixedSize(true);
+        favsList =new ArrayList<>();
+        adapter = new ConciertosFavsAdapter(getContext());
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setAdapter(adapter);
+
+        CollectionReference collectionRef = firestore.collection("usuarios");
+        Query q = collectionRef.whereEqualTo(FieldPath.documentId(), id);
+
+        q.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    for (QueryDocumentSnapshot document : task.getResult()){
+                        Object arrayField = document.get("misFavoritos");
+                        System.out.println(arrayField);
+                        if(arrayField instanceof List){
+                            List<Object> arrayValues = (List<Object>) arrayField;
+                            //System.out.println(arrayValues);
+                            for (Object value : arrayValues){
+                                String nombre = value.toString();
+                                //arrayValues.add(value);
+
+
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        //System.out.println("LISTA " + arrayValues);
+
+
+        adapter.notifyDataSetChanged();
+        rv.setAdapter(adapter);
 
 
         logout.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +185,19 @@ public class PerfilFragment extends Fragment {
         return vista;
     }
 
+    public void lanzarDetalle(Concierto concierto){
+        Intent intent = new Intent(getContext(), DetalleConcierto.class);
+        intent.putExtra("concierto", concierto);
+        startActivity(intent );
+
+        if (fragmentListener!= null){
+            fragmentListener.onFragmentFinish();
+        }
+
+    }
+
+
+
     @Override
     public void onResume() {
         super.onResume();
@@ -159,4 +245,34 @@ public class PerfilFragment extends Fragment {
         is.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(is);
     }
+
+
+
+    //para que termine el activity y no explote
+    private PruebaFragment.FragmentListener fragmentListener;
+    public interface FragmentListener{
+        void onFragmentFinish();
+    }
+
+    public void onAttach(Context context){
+        super.onAttach(context);
+        try{
+            fragmentListener = (PruebaFragment.FragmentListener) context;
+
+        } catch (ClassCastException e){
+            throw new ClassCastException(context.toString() + " debe implementar Fragment Listener");
+        }
+    }
+
+    /*@Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }*/
 }

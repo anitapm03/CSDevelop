@@ -5,7 +5,7 @@ import java.util.List;
 public class Usuario {
 
     String nombreUsuario, passAntigua, passnueva;
-    private List<String> misFavoritos;
+    private List<String> misFavoritos, misGrupos;
     public Usuario(){
 
     }
@@ -60,5 +60,13 @@ public class Usuario {
 
     public void setMisFavoritos(List<String> misFavoritos) {
         this.misFavoritos = misFavoritos;
+    }
+
+    public List<String> getMisGrupos() {
+        return misGrupos;
+    }
+
+    public void setMisGrupos(List<String> misGrupos) {
+        this.misGrupos = misGrupos;
     }
 }

@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,8 +23,18 @@ import com.example.csdevelop.adapter.GruposAdapter;
 import com.example.csdevelop.chat.ChatActivity;
 import com.example.csdevelop.model.Concierto;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +44,9 @@ public class GruposFragment extends Fragment {
     RecyclerView rv;
     GruposAdapter adapter;
     FirebaseFirestore firestore;
+
+
+    CollectionReference coleccionUsuarios;
 
     public GruposFragment() {
         // Required empty public constructor
@@ -51,14 +66,83 @@ public class GruposFragment extends Fragment {
 
         rv=vista.findViewById(R.id.rvGrupos);
 
+
+
+
+        //recogemos los datos del usuario
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String id = mAuth.getCurrentUser().getUid();//id del usuario
+
+        /*CollectionReference usuariosRef = firestore.collection("usuarios");
+        DocumentReference usuarioDocRef = usuariosRef.document(id);
+
+        final List<Concierto> lista = new ArrayList<>();
+
+        usuarioDocRef.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            // Verificar si el documento existe
+
+                            if (documentSnapshot.contains("misGrupos")) {
+                                // Verificar si el campo "misFavoritos" está presente en el documento
+
+                                List<String> misGrupos = (List<String>) documentSnapshot.get("misGrupos");
+
+                                for (int i = 0; i < misGrupos.size(); i++) {
+                                    firestore= FirebaseFirestore.getInstance();
+                                    CollectionReference conciertosColeccion= firestore.collection("conciertos");
+                                    String nomConci = misGrupos.get(i);
+
+                                    Query peticion = conciertosColeccion.whereEqualTo("nombre",nomConci);
+
+                                    peticion.get()
+                                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                    if (!queryDocumentSnapshots.isEmpty()) {
+                                                        for (DocumentSnapshot conciertoDoc : queryDocumentSnapshots.getDocuments()) {
+                                                            Concierto concierto = conciertoDoc.toObject(Concierto.class);
+                                                            lista.add(concierto);
+                                                        }
+                                                    } else {
+                                                        // No se encontró ningún objeto con el atributo buscado en la colección
+                                                    }
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    // Manejar errores
+                                                }
+                                            });
+
+                                }
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Manejar errores
+                    }
+                });
+
+
+        //FirestoreRecyclerOptions<Concierto> firestoreRecyclerOptions =
+               // new FirestoreRecyclerOptions.Builder<Concierto>().setQuery(query, Concierto.class).build();*/
+
+        //System.out.println(lista);
+
+
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
         Query query = firestore.collection("conciertos");
         FirestoreRecyclerOptions<Concierto> firestoreRecyclerOptions =
                 new FirestoreRecyclerOptions.Builder<Concierto>().setQuery(query, Concierto.class).build();
-
-        List<Concierto> listaConciertos = new ArrayList<>();
-
         adapter = new GruposAdapter(firestoreRecyclerOptions);
 
         adapter.setOnClickListener(new View.OnClickListener() {
