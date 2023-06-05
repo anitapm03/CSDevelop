@@ -65,6 +65,8 @@ public class PerfilFragment extends Fragment {
 
     //ConciertosFavsAdapter favsAdapter;
 
+    List<Object> arrayValues;
+
     public PerfilFragment() {
         // Required empty public constructor
     }
@@ -103,7 +105,7 @@ public class PerfilFragment extends Fragment {
 
         CollectionReference collectionRef = firestore.collection("usuarios");
         Query q = collectionRef.whereEqualTo(FieldPath.documentId(), id);
-
+        List<Concierto> listaConciertos = new ArrayList<>();
         q.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -112,25 +114,29 @@ public class PerfilFragment extends Fragment {
                         Object arrayField = document.get("misFavoritos");
                         System.out.println(arrayField);
                         if(arrayField instanceof List){
-                            List<Object> arrayValues = (List<Object>) arrayField;
-                            //System.out.println(arrayValues);
+                            arrayValues = (List<Object>) arrayField;
+                            Toast.makeText(getContext(), "LISTA1 " + arrayValues, Toast.LENGTH_LONG).show();
                             for (Object value : arrayValues){
                                 String nombre = value.toString();
-                                //arrayValues.add(value);
-
-
+                                listaConciertos.add(new Concierto(nombre));
                             }
                         }
                     }
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(), "LISTA2 " + arrayValues, Toast.LENGTH_LONG).show();
+
+                            adapter.setConciertos(listaConciertos);
+                            adapter.notifyDataSetChanged();
+                            rv.setAdapter(adapter);
+                        }
+                    });
                 }
             }
         });
 
-        //System.out.println("LISTA " + arrayValues);
-
-
-        adapter.notifyDataSetChanged();
-        rv.setAdapter(adapter);
 
 
         logout.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +152,6 @@ public class PerfilFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MiPerfil.class);
                 startActivity(intent);
-
             }
         });
 

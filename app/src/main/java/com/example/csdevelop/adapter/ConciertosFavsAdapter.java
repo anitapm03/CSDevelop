@@ -36,10 +36,10 @@ public class ConciertosFavsAdapter extends RecyclerView.Adapter<HolderFav>  impl
     }
     @Override
     public void onBindViewHolder(@NonNull HolderFav holder, int position) {
-        //Concierto concierto = conciertos.get(position);
+        Concierto concierto = listConci.get(position);
 
         // Set the data to the views
-        holder.getNombre().setText(listConci.get(position).getNombre());
+        holder.getNombre().setText(concierto.getNombre());
 
         String img = listConci.get(position).getImagen();
         Glide.with(holder.itemView.getContext()).load(img).into(holder.getFoto());
@@ -47,7 +47,7 @@ public class ConciertosFavsAdapter extends RecyclerView.Adapter<HolderFav>  impl
 
     @NonNull
     @Override
-    public HolderFav onCreateViewHolder( ViewGroup parent, int viewType) {
+    public HolderFav onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.conciertos_favs_row, parent, false);
         view.setOnClickListener(this);
         return new HolderFav(view);
@@ -69,9 +69,13 @@ public class ConciertosFavsAdapter extends RecyclerView.Adapter<HolderFav>  impl
         }
     }
 
+    public void setConciertos(List<Concierto> conciertos) {
+        listConci = conciertos;
+    }
 
 
-    /*public class ViewHolder extends RecyclerView.ViewHolder {
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView nombre, fecha, hora;
         ImageView foto;
 
@@ -81,5 +85,5 @@ public class ConciertosFavsAdapter extends RecyclerView.Adapter<HolderFav>  impl
             nombre = itemView.findViewById(R.id.nombreConciertoRow1);
             foto = itemView.findViewById(R.id.imgFotoConciertoGrupo1);
         }
-    }*/
+    }
 }

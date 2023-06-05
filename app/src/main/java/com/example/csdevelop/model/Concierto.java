@@ -1,10 +1,12 @@
 package com.example.csdevelop.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Concierto implements Serializable {
     String enlace, fecha, hora, idArtista, idSala, nombre, imagen;
-
+    Boolean isFavorito;
+    private List<Concierto> conciertosList;
     //constructor
     public Concierto(){}
 
@@ -19,11 +21,16 @@ public class Concierto implements Serializable {
         this.imagen = imagen;
     }
 
+    public Concierto(String nombre) {
+    }
+
     //getters y setters
     public String getEnlace() {
         return enlace;
     }
-
+    public boolean isFavorito() {
+        return isFavorito;
+    }
     public void setEnlace(String enlace) {
         this.enlace = enlace;
     }
