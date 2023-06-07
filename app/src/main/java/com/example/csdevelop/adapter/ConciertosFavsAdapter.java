@@ -1,6 +1,7 @@
 package com.example.csdevelop.adapter;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,78 +13,71 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.csdevelop.R;
-import com.example.csdevelop.model.Concierto;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConciertosFavsAdapter extends RecyclerView.Adapter<HolderFav>  implements View.OnClickListener{
+public class ConciertosFavsAdapter extends RecyclerView.Adapter<ConciertosFavsAdapter.ViewHolder> implements View.OnClickListener {
 
     private View.OnClickListener listener;
-
-    private List<Concierto> listConci = new ArrayList<>();
+    private List<String> listConci = new ArrayList<>();
     private Context c;
 
     public ConciertosFavsAdapter(Context c) {
         this.c = c;
     }
 
-    public void addConcierto (Concierto concierto){
+    public void addConcierto(String concierto) {
         listConci.add(concierto);
         notifyItemInserted(listConci.size());
     }
+
     @Override
-    public void onBindViewHolder(@NonNull HolderFav holder, int position) {
-        //Concierto concierto = listConci.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        String concierto = listConci.get(position);
 
         // Set the data to the views
-        holder.getNombreHolder().setText(listConci.get(position).getNombre());
+        holder.nombreHolder.setText(concierto);
 
-        String img = listConci.get(position).getImagen();
-        Glide.with(holder.itemView.getContext()).load(img).into(holder.getFotoHolder());
     }
 
     @NonNull
     @Override
-    public HolderFav onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.conciertos_favs_row, parent, false);
         view.setOnClickListener(this);
-        return new HolderFav(view);
+        return new ViewHolder(view);
     }
 
-    public void setOnClickListener(View.OnClickListener listener){
-        this.listener=listener;
-
+    public void setOnClickListener(View.OnClickListener listener) {
+        this.listener = listener;
     }
 
-    public int getItemCount(){
+    public int getItemCount() {
         return listConci.size();
     }
 
     @Override
     public void onClick(View v) {
-        if (listener!=null){
+        if (listener != null) {
             listener.onClick(v);
         }
     }
 
-    public void setConciertos(List<Concierto> conciertos) {
+    public void setConciertos(List<String> conciertos) {
         listConci = conciertos;
     }
 
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-    /*
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView nombre;
-        ImageView foto;
+        private TextView nombreHolder;
+        private ImageView fotoHolder;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            nombre = itemView.findViewById(R.id.nombreConciertoRow1);
-            foto = itemView.findViewById(R.id.imgFotoConciertoGrupo1);
+            nombreHolder = itemView.findViewById(R.id.nombreConciertoRow1);
+            fotoHolder = itemView.findViewById(R.id.imgFotoConciertoGrupo1);
         }
-    }*/
+    }
 }

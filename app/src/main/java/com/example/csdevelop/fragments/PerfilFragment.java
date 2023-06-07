@@ -22,9 +22,6 @@ import com.example.csdevelop.DetalleConcierto;
 import com.example.csdevelop.Internet;
 import com.example.csdevelop.R;
 import com.example.csdevelop.adapter.ConciertosFavsAdapter;
-import com.example.csdevelop.adapter.GruposAdapter;
-import com.example.csdevelop.adapter.MensajesAdapter;
-import com.example.csdevelop.chat.MensajeRecibir;
 import com.example.csdevelop.login.LogIn;
 import com.example.csdevelop.model.Concierto;
 import com.example.csdevelop.perfil.MiPerfil;
@@ -59,12 +56,9 @@ public class PerfilFragment extends Fragment {
     List<String> nombresFavs = new ArrayList<>();
     RecyclerView rv;
 
-    //GruposAdapter adapter;
     ConciertosFavsAdapter adapter;
 
     FirebaseFirestore firestore;
-
-    //ConciertosFavsAdapter favsAdapter;
 
     List<Object> arrayValues;
 
@@ -75,13 +69,13 @@ public class PerfilFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View vista=inflater.inflate(R.layout.fragment_perfil, container, false);
+        View vista = inflater.inflate(R.layout.fragment_perfil, container, false);
 
-        if(!Internet.isNetworkAvailable(getContext())){
+        if (!Internet.isNetworkAvailable(getContext())) {
             Internet.showNoInternetAlert(getContext());
         }
 
-        logout=vista.findViewById(R.id.volverAtras);
+        logout = vista.findViewById(R.id.volverAtras);
         btonPerfil = vista.findViewById(R.id.btonEditar);
         imgFotoPerfil = vista.findViewById(R.id.imgFotoPerfil2);
         nombreUsuario = vista.findViewById(R.id.nombreUsuario);
@@ -91,15 +85,15 @@ public class PerfilFragment extends Fragment {
         progressBar = vista.findViewById(R.id.progressBar);
         rv = vista.findViewById(R.id.conciertosRecyclerView);
 
-        //recogemos los datos del usuario
+        // Recogemos los datos del usuario
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-        String id = mAuth.getCurrentUser().getUid();//id del usuario
+        String id = mAuth.getCurrentUser().getUid(); // ID del usuario
 
-        firestore=FirebaseFirestore.getInstance();
+        firestore = FirebaseFirestore.getInstance();
 
         rv.setHasFixedSize(true);
-        favsList =new ArrayList<>();
+        favsList = new ArrayList<>();
         adapter = new ConciertosFavsAdapter(getContext());
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setAdapter(adapter);
@@ -107,18 +101,18 @@ public class PerfilFragment extends Fragment {
         CollectionReference collectionRef = firestore.collection("usuarios");
         Query q = collectionRef.whereEqualTo(FieldPath.documentId(), id);
         List<Concierto> listaConciertos = new ArrayList<>();
-        List<Concierto> listaConciertos2 = new ArrayList<>();
+        List<String> listaConciertos1 = new ArrayList<>();
+
         q.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
-                    for (QueryDocumentSnapshot document : task.getResult()){
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
                         Object arrayField = document.get("misFavoritos");
                         System.out.println(arrayField);
-                        if(arrayField instanceof List){
+                        if (arrayField instanceof List) {
                             arrayValues = (List<Object>) arrayField;
-                            Toast.makeText(getContext(), "LISTA1 " + arrayValues, Toast.LENGTH_LONG).show();
-                            for (Object value : arrayValues){
+                            for (Object value : arrayValues) {
                                 String nombre = value.toString();
                                 listaConciertos.add(new Concierto(nombre));
                             }
@@ -128,35 +122,12 @@ public class PerfilFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getContext(), "LISTA2 " + arrayValues, Toast.LENGTH_LONG).show();
-
-                            for (Object valor: arrayValues) {
-
+                            for (Object valor : arrayValues) {
                                 String nombre = valor.toString();
-                                System.out.println(nombre);
-
-                                DocumentReference conciRef = firestore.collection("conciertos").document(nombre);
-
-                                conciRef.get().addOnCompleteListener(task -> {
-                                    if (task.isSuccessful()) {
-                                        DocumentSnapshot document = task.getResult();
-                                        if (document.exists()) {
-
-                                            Concierto c = document.toObject(Concierto.class);
-                                            listaConciertos2.add(c);
-                                            System.out.println("lista obj"+listaConciertos2);
-                                            // Haz lo que necesites con el objetoConcierto
-                                        } else {
-                                            // El objeto no existe en la base de datos
-                                        }
-                                    } else {
-                                        // Error al obtener el objeto
-                                    }
-                                });
-
+                                listaConciertos1.add(nombre);
                             }
 
-                            adapter.setConciertos(listaConciertos2);
+                            adapter.setConciertos(listaConciertos1);
                             adapter.notifyDataSetChanged();
                             rv.setAdapter(adapter);
                         }
@@ -164,8 +135,6 @@ public class PerfilFragment extends Fragment {
                 }
             }
         });
-
-
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,24 +181,18 @@ public class PerfilFragment extends Fragment {
             }
         });
 
-
-
-
         return vista;
     }
 
-    public void lanzarDetalle(Concierto concierto){
+    public void lanzarDetalle(Concierto concierto) {
         Intent intent = new Intent(getContext(), DetalleConcierto.class);
         intent.putExtra("concierto", concierto);
-        startActivity(intent );
+        startActivity(intent);
 
-        if (fragmentListener!= null){
+        if (fragmentListener != null) {
             fragmentListener.onFragmentFinish();
         }
-
     }
-
-
 
     @Override
     public void onResume() {
@@ -272,40 +235,27 @@ public class PerfilFragment extends Fragment {
                 });
     }
 
-    private void goLogin(){
-        Intent is =new Intent(getContext(), LogIn.class);
+    private void goLogin() {
+        Intent is = new Intent(getContext(), LogIn.class);
         //para no ejecutar actividades innecesarias
-        is.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+        is.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(is);
     }
 
-
-
     //para que termine el activity y no explote
     private PruebaFragment.FragmentListener fragmentListener;
-    public interface FragmentListener{
+
+    public interface FragmentListener {
         void onFragmentFinish();
     }
 
-    public void onAttach(Context context){
+    public void onAttach(Context context) {
         super.onAttach(context);
-        try{
+        try {
             fragmentListener = (PruebaFragment.FragmentListener) context;
 
-        } catch (ClassCastException e){
+        } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " debe implementar Fragment Listener");
         }
     }
-
-    /*@Override
-    public void onStart() {
-        super.onStart();
-        adapter.startListening();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        adapter.stopListening();
-    }*/
 }
