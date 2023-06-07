@@ -85,6 +85,7 @@ public class PublicacionAdapter extends RecyclerView.Adapter<HolderPublicacion> 
         if (listPublicaciones.get(position).getTipoPublicacion().equals(TIPO_IMAGEN)) {
             String enlaceFoto = listPublicaciones.get(position).getUrlFotoPublicacion();
             if (enlaceFoto != null && !enlaceFoto.isEmpty()) {
+                holder.getFotoPublicacion().setVisibility(View.VISIBLE);
                 Glide.with(holder.itemView.getContext())
                         .load(enlaceFoto)
                         .into(holder.getFotoPublicacion());
