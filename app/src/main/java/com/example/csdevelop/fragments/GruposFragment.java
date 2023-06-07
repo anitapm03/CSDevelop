@@ -66,76 +66,12 @@ public class GruposFragment extends Fragment {
 
         rv=vista.findViewById(R.id.rvGrupos);
 
-
-
-
         //recogemos los datos del usuario
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         String id = mAuth.getCurrentUser().getUid();//id del usuario
 
-        /*CollectionReference usuariosRef = firestore.collection("usuarios");
-        DocumentReference usuarioDocRef = usuariosRef.document(id);
 
-        final List<Concierto> lista = new ArrayList<>();
-
-        usuarioDocRef.get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            // Verificar si el documento existe
-
-                            if (documentSnapshot.contains("misGrupos")) {
-                                // Verificar si el campo "misFavoritos" está presente en el documento
-
-                                List<String> misGrupos = (List<String>) documentSnapshot.get("misGrupos");
-
-                                for (int i = 0; i < misGrupos.size(); i++) {
-                                    firestore= FirebaseFirestore.getInstance();
-                                    CollectionReference conciertosColeccion= firestore.collection("conciertos");
-                                    String nomConci = misGrupos.get(i);
-
-                                    Query peticion = conciertosColeccion.whereEqualTo("nombre",nomConci);
-
-                                    peticion.get()
-                                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                                @Override
-                                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                                    if (!queryDocumentSnapshots.isEmpty()) {
-                                                        for (DocumentSnapshot conciertoDoc : queryDocumentSnapshots.getDocuments()) {
-                                                            Concierto concierto = conciertoDoc.toObject(Concierto.class);
-                                                            lista.add(concierto);
-                                                        }
-                                                    } else {
-                                                        // No se encontró ningún objeto con el atributo buscado en la colección
-                                                    }
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    // Manejar errores
-                                                }
-                                            });
-
-                                }
-                            }
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Manejar errores
-                    }
-                });
-
-
-        //FirestoreRecyclerOptions<Concierto> firestoreRecyclerOptions =
-               // new FirestoreRecyclerOptions.Builder<Concierto>().setQuery(query, Concierto.class).build();*/
-
-        //System.out.println(lista);
 
 
         rv.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -120,11 +120,14 @@ public class PerfilFragment extends Fragment {
                             adapter.setConciertos(listaConciertos1);
                             adapter.notifyDataSetChanged();
                             rv.setAdapter(adapter);
+
+
                         }
                     }
                 }
             }
         });
+
 
 
 

@@ -1,6 +1,7 @@
 package com.example.csdevelop.adapter;
 
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,9 @@ import com.example.csdevelop.model.Concierto;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GruposAdapter extends FirestoreRecyclerAdapter<Concierto, GruposAdapter.ViewHolder> implements View.OnClickListener{
 
 
@@ -23,8 +27,8 @@ public class GruposAdapter extends FirestoreRecyclerAdapter<Concierto, GruposAda
 
     public GruposAdapter(@NonNull FirestoreRecyclerOptions<Concierto> options) {
         super(options);
-
     }
+
 
     @Override
     protected void onBindViewHolder(@NonNull GruposAdapter.ViewHolder holder, int position, @NonNull Concierto concierto) {

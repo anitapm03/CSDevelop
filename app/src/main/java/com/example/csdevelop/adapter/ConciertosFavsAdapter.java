@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.csdevelop.R;
+import com.example.csdevelop.model.Concierto;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -29,6 +31,7 @@ public class ConciertosFavsAdapter extends RecyclerView.Adapter<ConciertosFavsAd
     public ConciertosFavsAdapter(Context c) {
         this.c = c;
     }
+
 
     public void addConcierto(String concierto) {
         listConci.add(concierto);
@@ -55,6 +58,7 @@ public class ConciertosFavsAdapter extends RecyclerView.Adapter<ConciertosFavsAd
     public void setOnClickListener(View.OnClickListener listener) {
         this.listener = listener;
     }
+
 
     public int getItemCount() {
         return listConci.size();
