@@ -27,6 +27,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.util.Locale;
+
 
 public class RestablecerContrasena extends AppCompatActivity {
 
@@ -86,14 +88,15 @@ public class RestablecerContrasena extends AppCompatActivity {
     }
 
     private void resetPassword() {
-        mAuth.setLanguageCode("es");
+        String language = Locale.getDefault().getLanguage();
+        mAuth.setLanguageCode(language);
         mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     mDialog.show();
 
-                    alerta.setText("El correo ha sido enviado");
+                    alerta.setText(getString(R.string.correoEnviado));
                     String codigoColor = "#01B706";
                     int color = Color.parseColor(codigoColor);
                     alerta.setTextColor(color);
@@ -102,8 +105,17 @@ public class RestablecerContrasena extends AppCompatActivity {
                     CollectionReference usuariosRef = db.collection("usuarios");
                     Query query = usuariosRef.whereEqualTo("email", email);
                     mDialog.dismiss();
+                    new CountDownTimer(3000, 1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {}
+
+                        @Override
+                        public void onFinish() {
+                            finish();
+                        }
+                    }.start();
                 } else {
-                    alerta.setText("El correo introducido no está asociado a ninguna cuenta");
+                    alerta.setText(getString(R.string.correoNingunaCuenta));
                 }
             }
         });

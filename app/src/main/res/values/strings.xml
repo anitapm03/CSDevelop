@@ -11,7 +11,7 @@
     <!-- strings de validación -->
     <string name="invalid_mail">E-mail incorrecto</string>
     <string name="invalid_password">Contraseña no, valida. Min 8 dígitos.</string>
-    <string name="invalid_username">Nombre de usuario no válido</string>
+    <string name="invalid_username">Max 3 a 15 caracteres</string>
     <string name="invalid_passwordLogin">Introduzca una contraseña</string>
     <string name="invalid_usernameLogin">Introduzca un email</string>
     <string name="invalid_currentPassword">Introduzca la contraseña actual</string>
@@ -41,7 +41,7 @@
     <string name="detalles_sala">Detalles de la sala:</string>
 
     <!-- strings log in   -->
-    <string name="text_usuario">Usuario</string>
+    <string name="text_usuario">Email</string>
     <string name="text_contrasenia">Contraseña</string>
     <string name="btn_is">Iniciar sesión</string>
     <string name="btn_rg">Registrarme!</string>
@@ -92,6 +92,26 @@
     <string name="menu_social">Social</string>
     <string name="menu_buscar">Buscar</string>
     <string name="menu_perfil">Perfil</string>
+
+
+    <!-- alertas -->
+    <string name="correoEnviado">El correo ha sido enviado</string>
+    <string name="correoNingunaCuenta">Este correo no está asociado a ninguna cuenta</string>
+    <string name="contraseñaActual">Introduce la contraseña actual</string>
+    <string name="emailInvalido">Email Invalido</string>
+    <string name="contraIncorrecta">Contraseña Incorrecta</string>
+    <string name="nombreActualizado">Nombre de usuario actualizado</string>
+    <string name="errorNombreActualizado">Error al actualizar el nombre de usuario</string>
+    <string name="nombreExiste">El nombre de usuario ya existe</string>
+    <string name="fotoEliminada">Foto de perfil eliminada</string>
+    <string name="fotoActualizada">Foto de perfil actualizada</string>
+    <string name="errorFotoEliminada">Foto de perfil eliminada</string>
+    <string name="contraActualizada">Contraseña actualizada</string>
+    <string name="errorContraAct">Error al actualizar la contraseña</string>
+    <string name="mismaContraseña">La contraseña actual y la nueva contraseña son iguales. Elija una contraseña diferente</string>
+    <string name="contraNoCoinciden">Las contraseñas no coinciden</string>
+    <string name="contraActualIncorrecta">Contraseña actual INCORRECTA</string>
+
 
 
 </resources>

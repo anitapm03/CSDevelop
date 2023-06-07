@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -141,16 +142,18 @@ public class LogIn extends AppCompatActivity {
                 break;
 
             case "ERROR_INVALID_EMAIL":
-                alerta.setText("Email inválido");
+                alerta.setText(getString(R.string.emailInvalido));
                 alerta.setTextColor(ContextCompat.getColor(this,R.color.rojo));
+                quitarTextView();
                 //Toast.makeText(LogIn.this, "La dirección de correo electrónico está mal formateada.", Toast.LENGTH_LONG).show();
                 //edtMail.setError("La dirección de correo electrónico está mal formateada.");
                 edtMail.requestFocus();
                 break;
 
             case "ERROR_WRONG_PASSWORD":
-                alerta.setText("Contraseña incorrecta");
+                alerta.setText(getString(R.string.contraIncorrecta));
                 alerta.setTextColor(ContextCompat.getColor(this,R.color.rojo));
+                quitarTextView();
                 //Toast.makeText(LogIn.this, "La contraseña no es válida o el usuario no tiene contraseña.", Toast.LENGTH_LONG).show();
                 //edtPassword.setError("la contraseña es incorrecta ");
                 edtPassword.requestFocus();
@@ -178,8 +181,9 @@ public class LogIn extends AppCompatActivity {
                 break;
 
             case "ERROR_USER_NOT_FOUND":
-                alerta.setText("No hay ninguna cuenta asociada a este usuario");
+                alerta.setText(getString(R.string.correoNingunaCuenta));
                 alerta.setTextColor(ContextCompat.getColor(this,R.color.rojo));
+                quitarTextView();
                 //Toast.makeText(LogIn.this, "No hay ningún registro de usuario que corresponda a este identificador. Es posible que se haya eliminado al usuario.", Toast.LENGTH_LONG).show();
                 break;
 
@@ -199,6 +203,21 @@ public class LogIn extends AppCompatActivity {
 
         }
 
+    }
+
+    private void quitarTextView(){
+        CountDownTimer countDownTimer = new CountDownTimer(4000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
+
+            @Override
+            public void onFinish() {
+                alerta.setText("");
+            }
+        };
+
+        countDownTimer.start();
     }
 
     private boolean isNetworkAvailable() {

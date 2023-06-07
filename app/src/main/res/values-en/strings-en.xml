@@ -12,7 +12,7 @@
     <!-- strings de validación -->
     <string name="invalid_mail">Wrong e-mail</string>
     <string name="invalid_password">No valid password. At least 8 characters.</string>
-    <string name="invalid_username">Invalid username</string>
+    <string name="invalid_username">Max 3 a 15 characters</string>
     <string name="invalid_passwordLogin">Insert a password</string>
     <string name="invalid_usernameLogin">Insert an e-mail</string>
     <string name="invalid_currentPassword">Insert your current password</string>
@@ -42,7 +42,7 @@
     <string name="detalles_sala">Location details:</string>
 
     <!-- strings log in   -->
-    <string name="text_usuario">Username</string>
+    <string name="text_usuario">Email</string>
     <string name="text_contrasenia">Password</string>
     <string name="btn_is">Log in!</string>
     <string name="btn_rg">Register here!</string>
@@ -93,6 +93,28 @@
     <string name="menu_social">Social</string>
     <string name="menu_buscar">Search</string>
     <string name="menu_perfil">Profile</string>
+
+    <!-- alertas -->
+    <string name="correoEnviado">The mail has been sent</string>
+    <string name="correoNingunaCuenta">This email is not associated with any account</string>
+    <string name="contraseñaActual">Enter current password</string>
+    <string name="emailInvalido">invalid email</string>
+    <string name="contraIncorrecta">Incorrect password</string>
+    <string name="nombreActualizado">Updated username</string>
+    <string name="errorNombreActualizado">Failed to update username</string>
+    <string name="nombreExiste">Username already exist</string>
+    <string name="fotoEliminada">Profile picture deleted</string>
+    <string name="fotoActualizada">Updated profile photo</string>
+    <string name="errorFotoEliminada">ERROR while deleting profile photo</string>
+    <string name="contraActualizada">Password updated</string>
+    <string name="errorContraAct">Failed to update password</string>
+    <string name="mismaContraseña">The current password and the new password are the same. Choose a different password</string>
+    <string name="contraNoCoinciden">Passwords do not match</string>
+    <string name="contraActualIncorrecta">INCORRECT current password</string>
+
+
+
+
 
 
 
