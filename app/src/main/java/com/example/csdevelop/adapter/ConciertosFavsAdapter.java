@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.csdevelop.R;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +41,7 @@ public class ConciertosFavsAdapter extends RecyclerView.Adapter<ConciertosFavsAd
 
         // Set the data to the views
         holder.nombreHolder.setText(concierto);
-
+        getImageUrlFromConcierto(concierto, holder);
     }
 
     @NonNull
@@ -78,6 +81,29 @@ public class ConciertosFavsAdapter extends RecyclerView.Adapter<ConciertosFavsAd
 
             nombreHolder = itemView.findViewById(R.id.nombreConciertoRow1);
             fotoHolder = itemView.findViewById(R.id.imgFotoConciertoGrupo1);
+
         }
+    }
+
+    private void getImageUrlFromConcierto(String concierto, final ViewHolder holder) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference conciertosRef = db.collection("conciertos");
+        conciertosRef
+                .whereEqualTo("nombre", concierto)
+                .limit(1)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot querySnapshot = task.getResult();
+                        if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                            String imageUrl = querySnapshot.getDocuments().get(0).getString("imagen");
+                            if (imageUrl != null) {
+                                Glide.with(c).load(imageUrl).into(holder.fotoHolder);
+                            }
+                        }
+                    } else {
+                        // Handle the error
+                    }
+                });
     }
 }

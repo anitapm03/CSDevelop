@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="3dp"
+    android:layout_margin="5dp"
     android:layout_marginBottom="5dp"
-    android:backgroundTint="#FFFFFF"
+    android:backgroundTint="#ffffff"
     app:cardCornerRadius="10dp">
 
     <LinearLayout
@@ -20,7 +20,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgFotoConciertoGrupo1"
             android:layout_width="60dp"
-            android:layout_height="34dp"
+            android:layout_height="50dp"
             android:padding="10dp"
             android:scaleType="centerCrop"
             android:src="@drawable/foto_perfil" />
@@ -40,7 +40,6 @@
                 android:gravity="center_vertical|start"
                 android:text="nombre"
                 android:textSize="20dp"
-                android:textColor="@color/black"
                 android:textStyle="bold" />
 
 

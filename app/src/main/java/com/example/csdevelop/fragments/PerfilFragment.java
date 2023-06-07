@@ -112,16 +112,6 @@ public class PerfilFragment extends Fragment {
                         System.out.println(arrayField);
                         if (arrayField instanceof List) {
                             arrayValues = (List<Object>) arrayField;
-                            for (Object value : arrayValues) {
-                                String nombre = value.toString();
-                                listaConciertos.add(new Concierto(nombre));
-                            }
-                        }
-                    }
-
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
                             for (Object valor : arrayValues) {
                                 String nombre = valor.toString();
                                 listaConciertos1.add(nombre);
@@ -131,10 +121,12 @@ public class PerfilFragment extends Fragment {
                             adapter.notifyDataSetChanged();
                             rv.setAdapter(adapter);
                         }
-                    });
+                    }
                 }
             }
         });
+
+
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
