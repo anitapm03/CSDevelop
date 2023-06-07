@@ -70,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:textSize="25sp"
+                android:textColor="@color/black"
                 android:textStyle="bold" />
 
             <Button
@@ -93,6 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="@string/favoritos"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -127,24 +129,27 @@
                 android:id="@+id/twitterButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/twitter"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="#00BCD4"
                 android:drawablePadding="8dp"
-                android:layout_marginEnd="8dp" />
+                android:text="@string/twitter" />
 
             <Button
                 android:id="@+id/instagramButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/instagram"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="#E41065"
                 android:drawablePadding="8dp"
-                android:layout_marginEnd="8dp" />
+                android:text="@string/instagram" />
 
             <Button
                 android:id="@+id/webButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/web"
-                android:drawablePadding="8dp" />
+                android:backgroundTint="#3F51B5"
+                android:drawablePadding="8dp"
+                android:text="@string/web" />
 
         </LinearLayout>
 

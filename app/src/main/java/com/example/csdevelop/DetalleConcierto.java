@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.csdevelop.chat.ChatActivity;
 import com.example.csdevelop.model.Concierto;
 import com.example.csdevelop.perfil.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -142,6 +143,12 @@ public class DetalleConcierto extends AppCompatActivity {
         unirse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent(DetalleConcierto.this, ChatActivity.class);
+                i.putExtra("concierto", concierto);
+                startActivity(i);
+
+                finish();
+
                 conciertosGrupos();
             }
         });
