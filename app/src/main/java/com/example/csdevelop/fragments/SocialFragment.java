@@ -82,7 +82,6 @@ public class SocialFragment extends Fragment {
         layoutManager.setStackFromEnd(true);
         rvPublicaciones.setLayoutManager(layoutManager);
 
-        //rvPublicaciones.setLayoutManager(new LinearLayoutManager(getContext()));
         rvPublicaciones.setAdapter(adapter);
 
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -144,8 +143,6 @@ public class SocialFragment extends Fragment {
     private void setScrollbar(){
         rvPublicaciones.scrollToPosition(0);
     }
-
-    //para que termine el activity y no explote
     private PruebaFragment.FragmentListener fragmentListener;
     public interface FragmentListener{
         void onFragmentFinish();

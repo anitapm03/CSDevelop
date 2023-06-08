@@ -12,10 +12,8 @@ import com.example.csdevelop.R;
 
 public class HolderMensaje extends RecyclerView.ViewHolder {
 
-    private TextView enviadoMensaje; //cuerpo del mensaje que enviamos nosotros
+    private TextView enviadoMensaje;
     private ImageView mensajeFoto;
-    //private TextView horaMensajeEnviado;
-
     private ImageView entregando;
     private ImageView entregado;
 
@@ -28,10 +26,7 @@ public class HolderMensaje extends RecyclerView.ViewHolder {
 
     public HolderMensaje(View itemView) {
         super(itemView);
-        //mensajes propios
-        //enviadoMensaje = (TextView) itemView.findViewById(R.id.enviadoMensaje);
         mensajeFoto = (ImageView) itemView.findViewById(R.id.mensajeFoto);
-        //horaMensajeEnviado = (TextView) itemView.findViewById(R.id.horaMensajeEnviado);
         entregando = (ImageView) itemView.findViewById(R.id.entregando);
         entregado = (ImageView) itemView.findViewById(R.id.entregado);
 
@@ -74,16 +69,6 @@ public class HolderMensaje extends RecyclerView.ViewHolder {
         this.horaMensaje = horaMensaje;
     }
 
-
-    //getters y setters nuevos
-    /*public TextView getEnviadoMensaje() {
-        return enviadoMensaje;
-    }
-
-    public void setEnviadoMensaje(TextView enviadoMensaje) {
-        this.enviadoMensaje = enviadoMensaje;
-    }*/
-
     public ImageView getMensajeFoto() {
         return mensajeFoto;
     }
@@ -91,14 +76,6 @@ public class HolderMensaje extends RecyclerView.ViewHolder {
     public void setMensajeFoto(ImageView mensajeFoto) {
         this.mensajeFoto = mensajeFoto;
     }
-
-    /*public TextView getHoraMensajeEnviado() {
-        return horaMensajeEnviado;
-    }
-
-    public void setHoraMensajeEnviado(TextView horaMensajeEnviado) {
-        this.horaMensajeEnviado = horaMensajeEnviado;
-    }*/
 
     public ImageView getEntregando() {
         return entregando;

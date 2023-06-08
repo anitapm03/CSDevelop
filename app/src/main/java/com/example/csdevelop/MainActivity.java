@@ -80,8 +80,6 @@ public class MainActivity extends AppCompatActivity implements PruebaFragment.Fr
             binding.bottomNavigation.setBackground(null);
         }
 
-        //replaceFragment(new InicioFragment());
-        //replaceFragment(new PruebaFragment());
         binding.bottomNavigation.setBackground(null);
 
         binding.bottomNavigation.setOnItemSelectedListener(item ->{
@@ -104,9 +102,6 @@ public class MainActivity extends AppCompatActivity implements PruebaFragment.Fr
             return true;
         });
 
-
-
-
         btnGrupos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements PruebaFragment.Fr
             }
         });
     }
-
 
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();

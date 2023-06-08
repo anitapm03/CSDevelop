@@ -53,7 +53,6 @@ public class PerfilFragment extends Fragment {
     private ProgressBar progressBar;
     ArrayList<Concierto> favsList;
 
-    List<String> nombresFavs = new ArrayList<>();
     RecyclerView rv;
 
     ConciertosFavsAdapter adapter;
@@ -62,9 +61,7 @@ public class PerfilFragment extends Fragment {
 
     List<Object> arrayValues;
 
-    public PerfilFragment() {
-        // Required empty public constructor
-    }
+    public PerfilFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,7 +82,7 @@ public class PerfilFragment extends Fragment {
         progressBar = vista.findViewById(R.id.progressBar);
         rv = vista.findViewById(R.id.conciertosRecyclerView);
 
-        // Recogemos los datos del usuario
+
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         String id = mAuth.getCurrentUser().getUid(); // ID del usuario
@@ -100,8 +97,7 @@ public class PerfilFragment extends Fragment {
 
         CollectionReference collectionRef = firestore.collection("usuarios");
         Query q = collectionRef.whereEqualTo(FieldPath.documentId(), id);
-        List<Concierto> listaConciertos = new ArrayList<>();
-        List<String> listaConciertos1 = new ArrayList<>();
+        List<String> listaConciertos = new ArrayList<>();
 
         q.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -114,10 +110,10 @@ public class PerfilFragment extends Fragment {
                             arrayValues = (List<Object>) arrayField;
                             for (Object valor : arrayValues) {
                                 String nombre = valor.toString();
-                                listaConciertos1.add(nombre);
+                                listaConciertos.add(nombre);
                             }
 
-                            adapter.setConciertos(listaConciertos1);
+                            adapter.setConciertos(listaConciertos);
                             adapter.notifyDataSetChanged();
                             rv.setAdapter(adapter);
 
@@ -127,9 +123,6 @@ public class PerfilFragment extends Fragment {
                 }
             }
         });
-
-
-
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override

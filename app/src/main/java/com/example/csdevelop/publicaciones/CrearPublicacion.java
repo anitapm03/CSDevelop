@@ -63,7 +63,6 @@ public class CrearPublicacion extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference storageReference;
 
-    //sacar datos del usuario para indicar quien envia la publi
     FirebaseFirestore firestore;
     CollectionReference coleccionUsuarios;
     FirebaseAuth firebaseAuth;
@@ -126,8 +125,6 @@ public class CrearPublicacion extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //meter una condicion que me diga si tiene imagen o no
-
                 if (enlaceFoto.length() == 0){
                     //añadimos una publicacion nueva de texto porque no hay enlace
                     databaseReference.push().setValue(new Publicacion( nombreUsuario, txtPubli.getText().toString(), TYPE_TEXT, id));
@@ -135,14 +132,12 @@ public class CrearPublicacion extends AppCompatActivity {
                     databaseReference.push().setValue(new Publicacion(nombreUsuario,txtPubli.getText().toString(), uri.toString(),TYPE_PIC, id));
                 }
 
-                //cerramos el activity
                 Intent intent = new Intent(CrearPublicacion.this, MainActivity.class);
 
                 String fragment = "social";
                 intent.putExtra("fragment", fragment );
 
                 startActivity(intent);
-
                 finish();
             }
         });

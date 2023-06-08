@@ -2,6 +2,7 @@ package com.example.csdevelop.registro;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
@@ -23,10 +25,15 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.SignInMethodQueryResult;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import android.os.Handler;
 
 public class Registro extends AppCompatActivity {
     Button btnVolver,btnRG;
@@ -35,6 +42,7 @@ public class Registro extends AppCompatActivity {
     FirebaseFirestore firestore;
     TextView alerta;
     AwesomeValidation awesomeValidation;
+    boolean existe;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +79,14 @@ public class Registro extends AppCompatActivity {
                 String paswC = edtPasswordC.getText().toString();
                 String nombreUsuario = edtUsuario.getText().toString();
 
-                if(awesomeValidation.validate() && pasw.equals(paswC)){
-                    registrarUsuario(email, nombreUsuario, pasw);
+                if(awesomeValidation.validate()){
+                        if(pasw.equals(paswC)){
+                            registrarUsuario(email, nombreUsuario, pasw);
+                        }else{
+                            alerta.setText(getString(R.string.contraNoCoinciden));
+                            alerta.setTextColor(ContextCompat.getColor(Registro.this, R.color.rojo));
+                            quitarTextView();
+                        }
                 }
 
             }
@@ -86,45 +100,79 @@ public class Registro extends AppCompatActivity {
         });
     }
 
-    private void registrarUsuario(String email, String nombreUsuario, String pasw) {
-        firebaseAuth.createUserWithEmailAndPassword(email,pasw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    String id = firebaseAuth.getCurrentUser().getUid();
-                    Map<String, Object> map= new HashMap<>();
-                    map.put("nombre", nombreUsuario);
-                    map.put("id", id);
-                    map.put("email", email);
-                    map.put("contraseña",pasw);
+    public interface UsernameExistenceCallback {
+        void onUsernameExists(boolean exists);
+        void onUsernameExistenceCheckFailed(Exception exception);
+    }
 
-                    firestore.collection("usuarios").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            finish();
-                            Toast.makeText(Registro.this, "usuario registrado con éxito", Toast.LENGTH_LONG).show();
+    private void checkUsernameExistence(String username, UsernameExistenceCallback callback) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference usuariosRef = db.collection("usuarios");
 
+        usuariosRef.whereEqualTo("nombre", username)
+                .limit(1)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot querySnapshot = task.getResult();
+                        if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                            callback.onUsernameExists(true);
+                        } else {
+                            callback.onUsernameExists(false);
                         }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(Registro.this, "Error al guardar", Toast.LENGTH_LONG).show();
+                    } else {
+                        callback.onUsernameExistenceCheckFailed(task.getException());
+                    }
+                });
+    }
 
+    private void registrarUsuario(String email, String nombreUsuario, String pasw) {
+        checkUsernameExistence(nombreUsuario, new UsernameExistenceCallback() {
+            @Override
+            public void onUsernameExists(boolean exists) {
+                if (exists) {
+                    alerta.setText(getString(R.string.nombreNoDisponible));
+                    alerta.setTextColor(ContextCompat.getColor(Registro.this, R.color.rojo));
+                    quitarTextView();
+                } else {
+                    firebaseAuth.createUserWithEmailAndPassword(email, pasw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                String id = firebaseAuth.getCurrentUser().getUid();
+                                Map<String, Object> map = new HashMap<>();
+                                map.put("nombre", nombreUsuario);
+                                map.put("id", id);
+                                map.put("email", email);
+                                map.put("contraseña", pasw);
+
+                                firestore.collection("usuarios").document(id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        alerta.setText(getString(R.string.registroExitoso));
+                                        alerta.setTextColor(ContextCompat.getColor(Registro.this, R.color.verde));
+                                        esperarAntesDeFinalizar();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        alerta.setText(getString(R.string.errorRegistro));
+                                        alerta.setTextColor(ContextCompat.getColor(Registro.this, R.color.rojo));
+                                        quitarTextView();                                    }
+                                });
+                            } else {
+                                String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
+                                dameToastDeError(errorCode);
+                            }
                         }
                     });
-                }else{
-                    String errorCode=((FirebaseAuthException)task.getException()).getErrorCode();
-                    dameToastDeError(errorCode);
                 }
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Registro.this, "Error al registar", Toast.LENGTH_LONG).show();
 
+            @Override
+            public void onUsernameExistenceCheckFailed(Exception exception) {
             }
         });
-
     }
 
 
@@ -146,57 +194,32 @@ public class Registro extends AppCompatActivity {
 
             case "ERROR_INVALID_EMAIL":
                 Toast.makeText(Registro.this, "La dirección de correo electrónico está mal formateada.", Toast.LENGTH_LONG).show();
-                edtMail.setError("La dirección de correo electrónico es incorrecta.");
+                edtMail.setError("La dirección de correo electrónico está mal formateada.");
                 edtMail.requestFocus();
                 break;
 
             case "ERROR_WRONG_PASSWORD":
-                Toast.makeText(Registro.this, "La contraseña no es válida o el usuario no tiene contraseña.", Toast.LENGTH_LONG).show();
-                edtPassword.setError("la contraseña es incorrecta ");
-                edtPassword.requestFocus();
-                edtPassword.setText("");
-                break;
-
-            case "ERROR_USER_MISMATCH":
-                Toast.makeText(Registro.this, "Las credenciales proporcionadas no corresponden al usuario que inició sesión anteriormente..", Toast.LENGTH_LONG).show();
-                break;
-
-            case "ERROR_REQUIRES_RECENT_LOGIN":
-                Toast.makeText(Registro.this,"Esta operación es sensible y requiere autenticación reciente. Inicie sesión nuevamente antes de volver a intentar esta solicitud.", Toast.LENGTH_LONG).show();
-                break;
-
-            case "ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL":
-                Toast.makeText(Registro.this, "Ya existe una cuenta con la misma dirección de correo electrónico pero diferentes credenciales de inicio de sesión. Inicie sesión con un proveedor asociado a esta dirección de correo electrónico.", Toast.LENGTH_LONG).show();
+                alerta.setText(getString(R.string.contraIncorrecta));
+                alerta.setTextColor(ContextCompat.getColor(this,R.color.rojo));
+                quitarTextView();
                 break;
 
             case "ERROR_EMAIL_ALREADY_IN_USE":
-                Toast.makeText(Registro.this, "La dirección de correo electrónico ya está siendo utilizada por otra cuenta..   ", Toast.LENGTH_LONG).show();
-                edtMail.setError("La dirección de correo electrónico ya está siendo utilizada por otra cuenta.");
-                edtMail.requestFocus();
+                alerta.setText(getString(R.string.emailExiste));
+                alerta.setTextColor(ContextCompat.getColor(this,R.color.rojo));
+                quitarTextView();
                 break;
 
             case "ERROR_CREDENTIAL_ALREADY_IN_USE":
-                Toast.makeText(Registro.this, "Esta credencial ya está asociada con una cuenta de usuario diferente.", Toast.LENGTH_LONG).show();
+                alerta.setText(getString(R.string.emailExiste));
+                alerta.setTextColor(ContextCompat.getColor(this,R.color.rojo));
+                quitarTextView();
                 break;
 
             case "ERROR_USER_DISABLED":
-                Toast.makeText(Registro.this, "La cuenta de usuario ha sido inhabilitada por un administrador..", Toast.LENGTH_LONG).show();
-                break;
-
-            case "ERROR_USER_TOKEN_EXPIRED":
-                Toast.makeText(Registro.this, "La credencial del usuario ya no es válida. El usuario debe iniciar sesión nuevamente.", Toast.LENGTH_LONG).show();
-                break;
-
-            case "ERROR_USER_NOT_FOUND":
-                Toast.makeText(Registro.this, "No hay ningún registro de usuario que corresponda a este identificador. Es posible que se haya eliminado al usuario.", Toast.LENGTH_LONG).show();
-                break;
-
-            case "ERROR_INVALID_USER_TOKEN":
-                Toast.makeText(Registro.this, "La credencial del usuario ya no es válida. El usuario debe iniciar sesión nuevamente.", Toast.LENGTH_LONG).show();
-                break;
-
-            case "ERROR_OPERATION_NOT_ALLOWED":
-                Toast.makeText(Registro.this, "Esta operación no está permitida. Debes habilitar este servicio en la consola.", Toast.LENGTH_LONG).show();
+                alerta.setText(getString(R.string.cuentaInhabilitada));
+                alerta.setTextColor(ContextCompat.getColor(this,R.color.rojo));
+                quitarTextView();
                 break;
 
             case "ERROR_WEAK_PASSWORD":
@@ -206,6 +229,33 @@ public class Registro extends AppCompatActivity {
                 break;
 
         }
-
     }
+
+    private void quitarTextView(){
+        CountDownTimer countDownTimer = new CountDownTimer(4000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
+
+            @Override
+            public void onFinish() {
+                alerta.setText("");
+            }
+        };
+
+        countDownTimer.start();
+    }
+
+    private void esperarAntesDeFinalizar() {
+        Handler handler = new Handler();
+        int tiempoEspera = 2000;
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, tiempoEspera);
+    }
+
 }

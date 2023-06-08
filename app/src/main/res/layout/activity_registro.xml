@@ -119,7 +119,7 @@
             android:id="@+id/txtInputPasswordC"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="89dp"
             android:gravity="center"
             android:hint="@string/edt_confirmPas"
             app:startIconDrawable="@drawable/ic_password">
@@ -128,6 +128,7 @@
                 android:id="@+id/edtPasswordC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
                 android:fontFamily="@font/san_francisco"
                 android:inputType="textPassword"
                 android:textSize="15sp" />
@@ -136,7 +137,8 @@
                 android:id="@+id/alertaRegistro"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="center|center_horizontal" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
@@ -147,7 +149,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/LinearParte3"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="3dp"
         android:layout_marginEnd="10dp"
         android:gravity="end">
 

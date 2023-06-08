@@ -55,25 +55,29 @@ public class ConciertosFavsAdapter extends RecyclerView.Adapter<ConciertosFavsAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String nombreConcierto = listConci.get(position);
-
-        if (nombreConcierto.length()<MAX_LONG){
-            holder.nombreHolder.setText(nombreConcierto);
+        if (listConci.isEmpty()) {
+            holder.nombreHolder.setText(c.getString(R.string.noConciertosFavs));
+            holder.fotoHolder.setImageResource(View.GONE);
+            holder.btnBorrar.setVisibility(View.GONE);
         } else {
-            String nombreCorto= nombreConcierto.substring(0, MAX_LONG) + "...";
-            holder.nombreHolder.setText(nombreCorto);
-        }
-
-        getImageUrlFromConcierto(nombreConcierto, holder);
-
-        final int pos = position;
-        holder.btnBorrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeConcierto(pos);
-                removeFromFavorites(nombreConcierto);
+            String nombreConcierto = listConci.get(position);
+            if (nombreConcierto.length() < MAX_LONG) {
+                holder.nombreHolder.setText(nombreConcierto);
+            } else {
+                String nombreCorto = nombreConcierto.substring(0, MAX_LONG) + "...";
+                holder.nombreHolder.setText(nombreCorto);
             }
-        });
+            getImageUrlFromConcierto(nombreConcierto, holder);
+            holder.btnBorrar.setVisibility(View.VISIBLE);
+            final int pos = position;
+            holder.btnBorrar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    removeConcierto(pos);
+                    removeFromFavorites(nombreConcierto);
+                }
+            });
+        }
     }
 
     @NonNull
@@ -90,7 +94,11 @@ public class ConciertosFavsAdapter extends RecyclerView.Adapter<ConciertosFavsAd
 
 
     public int getItemCount() {
-        return listConci.size();
+        if (listConci.isEmpty()) {
+            return 1;
+        } else {
+            return listConci.size();
+        }
     }
 
     @Override

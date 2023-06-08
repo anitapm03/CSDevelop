@@ -130,8 +130,6 @@ public class MiPerfil extends AppCompatActivity {
             }
         });
 
-
-
         btonVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,7 +146,6 @@ public class MiPerfil extends AppCompatActivity {
                 }
             }
         });
-
 
         txtPassActual.setVisibility(View.GONE);
         txtPassNueva.setVisibility(View.GONE);

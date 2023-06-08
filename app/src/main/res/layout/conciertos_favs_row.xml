@@ -54,7 +54,7 @@
                     android:backgroundTint="@color/white"
                     android:padding="8dp"
                     android:text="x"
-                    android:textColor="#F10000"
+                    android:textColor="#000000"
                     android:textSize="15sp" />
             </LinearLayout>
 

@@ -62,10 +62,8 @@ public class MensajesAdapter extends RecyclerView.Adapter<HolderMensaje> {
     @Override
     public void onBindViewHolder(@NonNull HolderMensaje holder, int position) {
         if(soloMios){
-            //aqui iria el manejo del visto si se implementa
             holder.getEntregado().setVisibility(View.VISIBLE);
 
-            //para mostrar la fecha del mensaje tambien se puede hacer con una funcion del tutorial 11 minuto 34
             Long codigoHora = listMensaje.get(position).getHora();
             Date d = new Date(codigoHora);
             SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
@@ -76,7 +74,6 @@ public class MensajesAdapter extends RecyclerView.Adapter<HolderMensaje> {
         } else {
             holder.getRecibeMensaje().setText(listMensaje.get(position).getUsuarioEnvia());
         }
-
 
 
         // antiguo

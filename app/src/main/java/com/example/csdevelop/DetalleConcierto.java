@@ -41,7 +41,7 @@ public class DetalleConcierto extends AppCompatActivity {
     CollectionReference coleccionSalas;
 
     FirebaseAuth mAuth;
-    String userId, nombreConcierto;
+    String userId;
 
     DocumentReference conciertosRef;
     FirebaseFirestore db;

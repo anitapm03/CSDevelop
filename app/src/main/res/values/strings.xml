@@ -41,7 +41,7 @@
     <string name="detalles_sala">Detalles de la sala:</string>
 
     <!-- strings log in   -->
-    <string name="text_usuario">Email</string>
+    <string name="text_usuario">Usuario</string>
     <string name="text_contrasenia">Contraseña</string>
     <string name="btn_is">Iniciar sesión</string>
     <string name="btn_rg">Registrarme!</string>
@@ -111,7 +111,14 @@
     <string name="mismaContraseña">La contraseña actual y la nueva contraseña son iguales. Elija una contraseña diferente</string>
     <string name="contraNoCoinciden">Las contraseñas no coinciden</string>
     <string name="contraActualIncorrecta">Contraseña actual INCORRECTA</string>
+    <string name="emailExiste">Este email ya tiene una cuenta asociada. Inicie sesión</string>
+    <string name="cuentaInhabilitada">La cuenta de usuario ha sido inhabilitada</string>
+    <string name="nombreNoDisponible">Nombre de usuario no disponible</string>
+    <string name="registroExitoso">Usuario registrado con éxito</string>
+    <string name="errorRegistro">Error al registrarse</string>
 
+
+    <string name="noConciertosFavs">No hay conciertos favoritos</string>
 
 
 </resources>

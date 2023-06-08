@@ -42,7 +42,7 @@
     <string name="detalles_sala">Location details:</string>
 
     <!-- strings log in   -->
-    <string name="text_usuario">Email</string>
+    <string name="text_usuario">User</string>
     <string name="text_contrasenia">Password</string>
     <string name="btn_is">Log in!</string>
     <string name="btn_rg">Register here!</string>
@@ -54,6 +54,7 @@
     <string name="edt_confirmPas">Confirm Password</string>
     <string name="btn_rguser">Register user</string>
     <string name="btn_tengoCuenta">I already have an account!</string>
+
 
     <!-- strings perfil -->
     <string name="label_perfil">Profile</string>
@@ -111,9 +112,13 @@
     <string name="mismaContraseña">The current password and the new password are the same. Choose a different password</string>
     <string name="contraNoCoinciden">Passwords do not match</string>
     <string name="contraActualIncorrecta">INCORRECT current password</string>
+    <string name="emailExiste">This email already has an associated account.</string>
+    <string name="cuentaInhabilitada">User account has been disabled</string>
+    <string name="nombreNoDisponible">Username not available</string>
+    <string name="registroExitoso">Registered user successfully</string>
+    <string name="errorRegistro">Failed to register</string>
 
-
-
+    <string name="noConciertosFavs">There are no favorite concerts</string>
 
 
 

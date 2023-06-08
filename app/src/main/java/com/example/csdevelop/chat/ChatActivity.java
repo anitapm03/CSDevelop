@@ -57,14 +57,10 @@ import java.util.Map;
 //import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatActivity extends AppCompatActivity {
-    //tipos de mensaje
     private static final String TYPE_TEXT="1";
     private static final String TYPE_PIC="2";
-    //ID CHAT GLOBAL
-    String id_chat_global;
 
     Uri uri;
-   // CircleImageView fotoConciertoChat;
     EditText eText;
     TextView nombreEventoChat;
     Button volver;
@@ -79,10 +75,8 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private FirebaseStorage storage;
-
-    //sacar datos del usuario para indicar quien envia el msg
     FirebaseFirestore firestore;
-    CollectionReference coleccionUsuarios, coleccionConciertos;
+    CollectionReference coleccionUsuarios;
     FirebaseAuth firebaseAuth;
     String id;
     String nombreUsuario, referencia;
@@ -105,16 +99,14 @@ public class ChatActivity extends AppCompatActivity {
                 .applyDefaultRequestOptions(RequestOptions.overrideOf(250, 250));
 
         volver=findViewById(R.id.volver);
-        //fotoConciertoChat=findViewById(R.id.fotoConciertoChat);
         eText=findViewById(R.id.eText);
         nombreEventoChat=findViewById(R.id.nombreEventoChat);
         enviarMensaje=findViewById(R.id.enviarMensaje);
         rvMensajes=findViewById(R.id.rvMensajes);
         addImagen=findViewById(R.id.addImagen);
 
-        //hacer un metodo que identifique el nombre del concierto
-        //y cree una referencia chats/nombreEvento para acceder a los distintos chats
         referencia = "chats/";
+
         //recogemos el evento
         Concierto concierto = (Concierto) getIntent().getSerializableExtra("concierto");
         nombreEventoChat.setText(concierto.getNombre());
@@ -155,10 +147,8 @@ public class ChatActivity extends AppCompatActivity {
 
         adapter = new MensajesAdapter(this);
         LinearLayoutManager layout = new LinearLayoutManager(this);
-        //layout.setStackFromEnd(true);
         rvMensajes.setLayoutManager(layout);
         rvMensajes.setAdapter(adapter);
-
 
 
         enviarMensaje.setOnClickListener(new View.OnClickListener() {
@@ -188,7 +178,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        //para que se añada autom
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -218,7 +207,6 @@ public class ChatActivity extends AppCompatActivity {
         });
 
 
-
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -233,9 +221,8 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-    }//fin oncreate
+    }
 
-    //para que baje autom cuando la pantalla se llene de msgs
     private void setScrollbar(){
         rvMensajes.scrollToPosition(adapter.getItemCount()-1);
     }
@@ -280,9 +267,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         }
     }
-
-
-
 
     public void onBackPressed(){
         Intent intent = new Intent(this, MainActivity.class);
