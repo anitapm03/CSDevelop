@@ -38,14 +38,12 @@ public class PruebaFragment extends Fragment {
     ConciertoAdapter adapter;
     FirebaseFirestore firestore;
 
-
-
     public PruebaFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //creamos una vista con lo que habia en el return y ya podemos programar
+
         View vista=inflater.inflate(R.layout.fragment_prueba, container, false);
 
         if(!Internet.isNetworkAvailable(getContext())){
@@ -57,37 +55,11 @@ public class PruebaFragment extends Fragment {
 
         rv=vista.findViewById(R.id.rvConciertos);
 
-        //rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setLayoutManager(new GridLayoutManager(getContext(),2));
         Query query = firestore.collection("conciertos");//.limit(6)
 
-        /*intento de paginacion
-        query.get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot documentSnapshots) {
-                        // ...
-
-                        // Get the last visible document
-                        DocumentSnapshot lastVisible = documentSnapshots.getDocuments()
-                                .get(documentSnapshots.size() -1);
-
-
-                        Query next = firestore.collection("conciertos")
-                                .startAfter(lastVisible)
-                                .limit(6);
-
-                        // Use the query for pagination
-                        // ...
-                    }
-                });
-
-
-        //fin nuevo*/
         FirestoreRecyclerOptions<Concierto> firestoreRecyclerOptions =
                 new FirestoreRecyclerOptions.Builder<Concierto>().setQuery(query, Concierto.class).build();
-
-        List<Concierto> listaConciertos = new ArrayList<>();
 
 
         adapter = new ConciertoAdapter(firestoreRecyclerOptions);
@@ -133,7 +105,6 @@ public class PruebaFragment extends Fragment {
 
     }
 
-    //para que termine el activity y no explote
     private FragmentListener fragmentListener;
     public interface FragmentListener{
         void onFragmentFinish();
@@ -149,16 +120,5 @@ public class PruebaFragment extends Fragment {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 

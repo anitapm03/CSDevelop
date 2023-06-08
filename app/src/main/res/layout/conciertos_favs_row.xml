@@ -30,18 +30,33 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
-            <TextView
-                android:id="@+id/nombreConciertoRow1"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/san_francisco"
-                android:gravity="center_vertical|start"
-                android:text="nombre"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
+                <TextView
+                    android:id="@+id/nombreConciertoRow1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/san_francisco"
+                    android:gravity="center_vertical|start"
+                    android:text="nombre"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnBorrar"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:padding="8dp"
+                    android:text="x"
+                    android:textColor="#F10000"
+                    android:textSize="15sp" />
+            </LinearLayout>
 
         </LinearLayout>
 
