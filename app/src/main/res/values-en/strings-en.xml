@@ -117,6 +117,8 @@
     <string name="nombreNoDisponible">Username not available</string>
     <string name="registroExitoso">Registered user successfully</string>
     <string name="errorRegistro">Failed to register</string>
+    <string name="anadirTexto">Add text to your post</string>
+
 
     <string name="noConciertosFavs">There are no favorite concerts</string>
 

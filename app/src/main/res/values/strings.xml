@@ -116,6 +116,7 @@
     <string name="nombreNoDisponible">Nombre de usuario no disponible</string>
     <string name="registroExitoso">Usuario registrado con éxito</string>
     <string name="errorRegistro">Error al registrarse</string>
+    <string name="anadirTexto">Añade texto a tu publicacion</string>
 
 
     <string name="noConciertosFavs">No hay conciertos favoritos</string>

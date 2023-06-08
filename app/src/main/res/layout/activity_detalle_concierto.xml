@@ -61,7 +61,7 @@
                 android:id="@+id/nombreEvento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="nombre evento"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -70,7 +70,7 @@
                 android:id="@+id/fechaEvento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="fecha evento"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 android:textStyle="bold" />
@@ -79,7 +79,7 @@
                 android:id="@+id/horaEvento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="hora evento"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 android:textStyle="bold" />
@@ -95,7 +95,7 @@
                 android:id="@+id/nombreSala"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="aqui va el nombre de la sala"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="20sp"/>
 
@@ -103,7 +103,7 @@
                 android:id="@+id/direccionSala"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="aqui direccion o mapa de la sala"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="20sp"/>
 

@@ -104,6 +104,13 @@
             android:padding="10dp"
             android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/alerta8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:gravity="center" />
+
         <Button
             android:id="@+id/publicar"
             android:layout_width="wrap_content"

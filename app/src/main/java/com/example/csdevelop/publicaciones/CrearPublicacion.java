@@ -3,17 +3,20 @@ package com.example.csdevelop.publicaciones;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -54,6 +57,7 @@ public class CrearPublicacion extends AppCompatActivity {
     Button addImg, publicar, volver;
     ImageView fotoPubli;
     Uri uri;
+    TextView alerta;
     final int CODIGO_RESPUESTA_GALERIA = 3;
 
     private FirebaseDatabase database;
@@ -92,6 +96,7 @@ public class CrearPublicacion extends AppCompatActivity {
         addImg = findViewById(R.id.addFoto);
         fotoPubli = findViewById(R.id.fotoPubli);
         fotoSeleccionada = findViewById(R.id.imageView);
+        alerta = findViewById(R.id.alerta8);
 
         //instanciamos lo de la base de datos
         database = FirebaseDatabase.getInstance();
@@ -125,20 +130,27 @@ public class CrearPublicacion extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (enlaceFoto.length() == 0){
-                    //añadimos una publicacion nueva de texto porque no hay enlace
-                    databaseReference.push().setValue(new Publicacion( nombreUsuario, txtPubli.getText().toString(), TYPE_TEXT, id));
-                } else {
-                    databaseReference.push().setValue(new Publicacion(nombreUsuario,txtPubli.getText().toString(), uri.toString(),TYPE_PIC, id));
+                if(!txtPubli.toString().isEmpty()){
+                    if (enlaceFoto.length() == 0){
+                        //añadimos una publicacion nueva de texto porque no hay enlace
+                        databaseReference.push().setValue(new Publicacion( nombreUsuario, txtPubli.getText().toString(), TYPE_TEXT, id));
+                    } else {
+                        databaseReference.push().setValue(new Publicacion(nombreUsuario,txtPubli.getText().toString(), enlaceFoto,TYPE_PIC, id));
+                    }
+
+                    Intent intent = new Intent(CrearPublicacion.this, MainActivity.class);
+
+                    String fragment = "social";
+                    intent.putExtra("fragment", fragment );
+
+                    startActivity(intent);
+                    finish();
+
+                }else{
+                    alerta.setText(getString(R.string.anadirTexto));
+                    alerta.setTextColor(ContextCompat.getColor(CrearPublicacion.this,R.color.rojo));
+                    quitarTextView();
                 }
-
-                Intent intent = new Intent(CrearPublicacion.this, MainActivity.class);
-
-                String fragment = "social";
-                intent.putExtra("fragment", fragment );
-
-                startActivity(intent);
-                finish();
             }
         });
 
@@ -207,7 +219,20 @@ public class CrearPublicacion extends AppCompatActivity {
         }
     }
 
+    private void quitarTextView(){
+        CountDownTimer countDownTimer = new CountDownTimer(4000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
 
+            @Override
+            public void onFinish() {
+                alerta.setText("");
+            }
+        };
+
+        countDownTimer.start();
+    }
 
     public void onBackPressed(){
         Intent intent = new Intent(this, MainActivity.class);
