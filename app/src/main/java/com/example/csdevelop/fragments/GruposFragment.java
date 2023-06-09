@@ -45,17 +45,13 @@ public class GruposFragment extends Fragment {
     GruposAdapter adapter;
     FirebaseFirestore firestore;
 
-
     CollectionReference coleccionUsuarios;
 
-    public GruposFragment() {
-        // Required empty public constructor
-    }
+    public GruposFragment() {}
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        //creamos una vista con lo que habia en el return y ya podemos programar
         View vista=inflater.inflate(R.layout.fragment_grupos, container, false);
 
         if(!Internet.isNetworkAvailable(getContext())){
@@ -70,8 +66,6 @@ public class GruposFragment extends Fragment {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         String id = mAuth.getCurrentUser().getUid();//id del usuario
-
-
 
 
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -114,26 +108,5 @@ public class GruposFragment extends Fragment {
         Intent intent = new Intent(getContext(), ChatActivity.class);
         intent.putExtra("concierto", concierto);
         startActivity(intent );
-
-        /*if (fragmentListener!= null){
-            fragmentListener.onFragmentFinish();
-        }*/
-
     }
-
-    /*para que termine el activity y no explote
-    private FragmentListener fragmentListener;
-    public interface FragmentListener{
-        void onFragmentFinish();
-    }
-
-    public void onAttach(Context context){
-        super.onAttach(context);
-        try{
-            fragmentListener = (FragmentListener) context;
-
-        } catch (ClassCastException e){
-            throw new ClassCastException(context.toString() + " debe implementar Fragment Listener");
-        }
-    }*/
 }

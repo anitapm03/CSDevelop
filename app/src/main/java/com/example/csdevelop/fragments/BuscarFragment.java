@@ -28,9 +28,7 @@ public class BuscarFragment extends Fragment {
     ConciertoAdapter adapter;
     FirebaseFirestore firestore;
 
-    public BuscarFragment() {
-        // Required empty public constructor
-    }
+    public BuscarFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

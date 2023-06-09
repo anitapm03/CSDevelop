@@ -130,10 +130,7 @@ public class CrearPublicacion extends AppCompatActivity {
 
                 if (enlaceFoto.length() == 0){
                     //añadimos una publicacion nueva de texto porque no hay enlace
-                    if (!txtPubli.getText().toString().equals("")){
-                        databaseReference.push().setValue(new Publicacion( nombreUsuario, txtPubli.getText().toString(), TYPE_TEXT, id));
-                    }
-
+                    databaseReference.push().setValue(new Publicacion( nombreUsuario, txtPubli.getText().toString(), TYPE_TEXT, id));
                 } else {
                     databaseReference.push().setValue(new Publicacion(nombreUsuario,txtPubli.getText().toString(), uri.toString(),TYPE_PIC, id));
                 }

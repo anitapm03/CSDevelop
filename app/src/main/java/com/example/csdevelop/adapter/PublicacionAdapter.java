@@ -27,7 +27,7 @@ import java.util.List;
 public class PublicacionAdapter extends RecyclerView.Adapter<HolderPublicacion> {
     FirebaseUser fUser;
     private static final String TIPO_TEXTO="1";
-    private static final String TIPO_IMAGEN="2";
+    private static final String TYPE_PIC="2";
 
 
     private List<Publicacion> listPublicaciones = new ArrayList<>();
@@ -82,7 +82,7 @@ public class PublicacionAdapter extends RecyclerView.Adapter<HolderPublicacion> 
                     });
         }
 
-        if (listPublicaciones.get(position).getTipoPublicacion().equals(TIPO_IMAGEN)) {
+        if (listPublicaciones.get(position).getTipoPublicacion().equals(TYPE_PIC)) {
             String enlaceFoto = listPublicaciones.get(position).getUrlFotoPublicacion();
             if (enlaceFoto != null && !enlaceFoto.isEmpty()) {
                 holder.getFotoPublicacion().setVisibility(View.VISIBLE);

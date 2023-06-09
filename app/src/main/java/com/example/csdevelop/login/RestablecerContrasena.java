@@ -38,10 +38,6 @@ public class RestablecerContrasena extends AppCompatActivity {
     FirebaseAuth mAuth;
     private String email;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    FirebaseUser currentUser;
-
-    DocumentReference userRef;
-
     AwesomeValidation awesomeValidation;
 
     private AlertDialog mDialog;

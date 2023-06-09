@@ -16,9 +16,9 @@ public class Internet {
 
     public static void showNoInternetAlert(Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("No hay conexión a internet");
-        builder.setMessage("Por favor, asegúrese de tener una conexión a internet activa.");
-        builder.setPositiveButton("Aceptar", (dialog, which) -> {
+        builder.setTitle(context.getString(R.string.noInternet));
+        builder.setMessage(context.getString(R.string.conexion));
+        builder.setPositiveButton(context.getString(R.string.aceptar), (dialog, which) -> {
             if (context instanceof Activity) {
                 ((Activity) context).finishAffinity(); // Cerrar la aplicación
             }

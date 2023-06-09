@@ -19,7 +19,6 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 public class ConciertoAdapter extends FirestoreRecyclerAdapter<Concierto, ConciertoAdapter.ViewHolder> implements View.OnClickListener{//nuevo
 
     private View.OnClickListener listener1;
-    //longitud maxima del titulo para no descuadrar el rv
     private static final int MAX_LONG=13;
 
 
@@ -30,8 +29,6 @@ public class ConciertoAdapter extends FirestoreRecyclerAdapter<Concierto, Concie
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Concierto concierto) {
-        //una vez hecho link en el oncreate y despues en el viewHolder hacemos esto
-        //para recuperar los datos
         if (concierto.getNombre().length()<MAX_LONG){
             holder.nombre.setText(concierto.getNombre());
         } else {
@@ -51,7 +48,6 @@ public class ConciertoAdapter extends FirestoreRecyclerAdapter<Concierto, Concie
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //aqui conectamos el adapter con la vista de un solo registro: concierto row
        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.concierto_row, parent, false);
        v.setOnClickListener(this);
 
@@ -71,15 +67,12 @@ public class ConciertoAdapter extends FirestoreRecyclerAdapter<Concierto, Concie
         }
     }
 
-    //creamos esto para que no se ralle y despues generamos el constructor para que no se ralle
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView nombre, fecha, hora;
         ImageView foto;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            //declaramos los elementos de la vista del registro para manipularlos
             nombre = itemView.findViewById(R.id.nombreConcierto);
             fecha = itemView.findViewById(R.id.fechaConcierto);
             hora = itemView.findViewById(R.id.horaConcierto);

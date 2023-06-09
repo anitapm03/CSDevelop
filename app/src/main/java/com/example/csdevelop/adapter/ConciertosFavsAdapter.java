@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,8 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.csdevelop.R;
 import com.example.csdevelop.model.Concierto;
+import com.example.csdevelop.perfil.Usuario;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -27,6 +30,8 @@ public class ConciertosFavsAdapter extends RecyclerView.Adapter<ConciertosFavsAd
     private View.OnClickListener listener;
     private List<String> listConci = new ArrayList<>();
     private Context c;
+    private static final int MAX_LONG=23;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public ConciertosFavsAdapter(Context c) {
         this.c = c;
@@ -38,13 +43,41 @@ public class ConciertosFavsAdapter extends RecyclerView.Adapter<ConciertosFavsAd
         notifyItemInserted(listConci.size());
     }
 
+    public void setFavoritos(List<String> favoritos) {
+        this.listConci = favoritos;
+        notifyDataSetChanged();
+    }
+
+    public void removeConcierto(int position) {
+        listConci.remove(position);
+        notifyItemRemoved(position);
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String concierto = listConci.get(position);
-
-        // Set the data to the views
-        holder.nombreHolder.setText(concierto);
-        getImageUrlFromConcierto(concierto, holder);
+        if (listConci.isEmpty()) {
+            holder.nombreHolder.setText(c.getString(R.string.noConciertosFavs));
+            holder.fotoHolder.setImageResource(View.GONE);
+            holder.btnBorrar.setVisibility(View.GONE);
+        } else {
+            String nombreConcierto = listConci.get(position);
+            if (nombreConcierto.length() < MAX_LONG) {
+                holder.nombreHolder.setText(nombreConcierto);
+            } else {
+                String nombreCorto = nombreConcierto.substring(0, MAX_LONG) + "...";
+                holder.nombreHolder.setText(nombreCorto);
+            }
+            getImageUrlFromConcierto(nombreConcierto, holder);
+            holder.btnBorrar.setVisibility(View.VISIBLE);
+            final int pos = position;
+            holder.btnBorrar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    removeConcierto(pos);
+                    removeFromFavorites(nombreConcierto);
+                }
+            });
+        }
     }
 
     @NonNull
@@ -61,7 +94,11 @@ public class ConciertosFavsAdapter extends RecyclerView.Adapter<ConciertosFavsAd
 
 
     public int getItemCount() {
-        return listConci.size();
+        if (listConci.isEmpty()) {
+            return 1;
+        } else {
+            return listConci.size();
+        }
     }
 
     @Override
@@ -79,12 +116,14 @@ public class ConciertosFavsAdapter extends RecyclerView.Adapter<ConciertosFavsAd
 
         private TextView nombreHolder;
         private ImageView fotoHolder;
+        private Button btnBorrar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             nombreHolder = itemView.findViewById(R.id.nombreConciertoRow1);
             fotoHolder = itemView.findViewById(R.id.imgFotoConciertoGrupo1);
+            btnBorrar = itemView.findViewById(R.id.btnBorrar);
 
         }
     }
@@ -106,8 +145,35 @@ public class ConciertosFavsAdapter extends RecyclerView.Adapter<ConciertosFavsAd
                             }
                         }
                     } else {
-                        // Handle the error
                     }
                 });
     }
+
+    private void removeFromFavorites(String concierto) {
+        CollectionReference usuariosRef = db.collection("usuarios");
+
+        usuariosRef.whereArrayContains("misFavoritos", concierto)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    List<DocumentSnapshot> usuarios = queryDocumentSnapshots.getDocuments();
+                    for (DocumentSnapshot usuario : usuarios) {
+                        String usuarioId = usuario.getId();
+
+                        List<String> misFavoritos = usuario.toObject(Usuario.class).getMisFavoritos();
+
+                        misFavoritos.remove(concierto);
+
+                        usuariosRef.document(usuarioId)
+                                .update("misFavoritos", misFavoritos)
+                                .addOnSuccessListener(aVoid -> {
+                                    setFavoritos(misFavoritos);
+                                })
+                                .addOnFailureListener(e -> {
+                                });
+                    }
+                })
+                .addOnFailureListener(e -> {
+                });
+    }
+
 }

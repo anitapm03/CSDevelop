@@ -32,9 +32,7 @@ public class GruposAdapter extends FirestoreRecyclerAdapter<Concierto, GruposAda
 
     @Override
     protected void onBindViewHolder(@NonNull GruposAdapter.ViewHolder holder, int position, @NonNull Concierto concierto) {
-        //una vez hecho link en el oncreate y despues en el viewHolder hacemos esto
-        //para recuperar los datos
-        holder.nombre.setText(concierto.getNombre());
+       holder.nombre.setText(concierto.getNombre());
 
         String img = concierto.getImagen();
         Glide.with(holder.itemView.getContext()).load(img).into(holder.foto);
@@ -44,7 +42,6 @@ public class GruposAdapter extends FirestoreRecyclerAdapter<Concierto, GruposAda
     @NonNull
     @Override
     public GruposAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //aqui conectamos el adapter con la vista de un solo registro: chats row
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.chats_row, parent, false);
         v.setOnClickListener(this);
 
@@ -63,26 +60,18 @@ public class GruposAdapter extends FirestoreRecyclerAdapter<Concierto, GruposAda
         }
     }
 
-    //creamos esto para que no se ralle y despues generamos el constructor para que no se ralle
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView nombre;
         ImageView foto;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            //declaramos los elementos de la vista del registro para manipularlos
             nombre = itemView.findViewById(R.id.nombreConciertoRow);
 
             foto = itemView.findViewById(R.id.imgFotoConciertoGrupo);
 
 
         }
-
     }
 
 }
-/*
-
-
- */

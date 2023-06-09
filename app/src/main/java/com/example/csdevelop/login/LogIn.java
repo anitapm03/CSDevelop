@@ -114,7 +114,6 @@ public class LogIn extends AppCompatActivity {
 
     public void iniciarSesion(){
         Intent is =new Intent(this, MainActivity.class);
-        //para no ejecutar actividades innecesarias
         is.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(is);
     }
@@ -145,8 +144,6 @@ public class LogIn extends AppCompatActivity {
                 alerta.setText(getString(R.string.emailInvalido));
                 alerta.setTextColor(ContextCompat.getColor(this,R.color.rojo));
                 quitarTextView();
-                //Toast.makeText(LogIn.this, "La dirección de correo electrónico está mal formateada.", Toast.LENGTH_LONG).show();
-                //edtMail.setError("La dirección de correo electrónico está mal formateada.");
                 edtMail.requestFocus();
                 break;
 
@@ -154,8 +151,6 @@ public class LogIn extends AppCompatActivity {
                 alerta.setText(getString(R.string.contraIncorrecta));
                 alerta.setTextColor(ContextCompat.getColor(this,R.color.rojo));
                 quitarTextView();
-                //Toast.makeText(LogIn.this, "La contraseña no es válida o el usuario no tiene contraseña.", Toast.LENGTH_LONG).show();
-                //edtPassword.setError("la contraseña es incorrecta ");
                 edtPassword.requestFocus();
                 edtPassword.setText("");
                 break;
@@ -184,11 +179,6 @@ public class LogIn extends AppCompatActivity {
                 alerta.setText(getString(R.string.correoNingunaCuenta));
                 alerta.setTextColor(ContextCompat.getColor(this,R.color.rojo));
                 quitarTextView();
-                //Toast.makeText(LogIn.this, "No hay ningún registro de usuario que corresponda a este identificador. Es posible que se haya eliminado al usuario.", Toast.LENGTH_LONG).show();
-                break;
-
-            case "ERROR_INVALID_USER_TOKEN":
-                Toast.makeText(LogIn.this, "La credencial del usuario ya no es válida. El usuario debe iniciar sesión nuevamente.", Toast.LENGTH_LONG).show();
                 break;
 
             case "ERROR_OPERATION_NOT_ALLOWED":

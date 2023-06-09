@@ -41,7 +41,7 @@ public class DetalleConcierto extends AppCompatActivity {
     CollectionReference coleccionSalas;
 
     FirebaseAuth mAuth;
-    String userId, nombreConcierto;
+    String userId;
 
     DocumentReference conciertosRef;
     FirebaseFirestore db;
@@ -201,7 +201,7 @@ public class DetalleConcierto extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(DetalleConcierto.this, "Error al agregar el concierto a favoritos", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(DetalleConcierto.this, "Error al agregar el concierto a favoritos", Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -209,7 +209,6 @@ public class DetalleConcierto extends AppCompatActivity {
             Map<String, Object> actualizaciones = new HashMap<>();
             actualizaciones.put("misFavoritos", FieldValue.arrayRemove(concierto.getNombre()));
 
-            // Actualizar el documento en Firestore
             conciertosRef.update(actualizaciones)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -219,7 +218,7 @@ public class DetalleConcierto extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(DetalleConcierto.this, "Error al eliminar el concierto de favoritos", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(DetalleConcierto.this, "Error al eliminar el concierto de favoritos", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
