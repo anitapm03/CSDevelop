@@ -72,7 +72,9 @@ public class SocialFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("publicaciones/");
 
-        rvPublicaciones.setHasFixedSize(true);
+        //APM: comentado 8/6/2023
+        // rvPublicaciones.setHasFixedSize(true);
+
         publicacionesArr =new ArrayList<>();
         adapter = new PublicacionAdapter(getContext());
 

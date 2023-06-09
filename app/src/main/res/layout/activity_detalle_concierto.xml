@@ -118,31 +118,35 @@
                     android:id="@+id/enlace"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="2.5dp"
-                    android:layout_marginRight="2.5dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
                     android:backgroundTint="@color/white"
                     android:text="@string/btn_enlace"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/unirse"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="2.5dp"
-                    android:layout_marginRight="2.5dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
                     android:backgroundTint="@color/white"
                     android:text="@string/btn_accesoGrupo"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/favorito"
                     android:layout_width="53dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="2.5dp"
+                    android:layout_marginLeft="2dp"
                     android:layout_marginRight="2.5dp"
                     android:backgroundTint="@color/white"
                     android:drawableLeft="@drawable/ic_no_fav"
-                    android:drawableTint="@color/black" />
+                    android:drawableTint="@color/black"
+                    android:textSize="12sp"
+                    app:iconSize="12sp" />
             </LinearLayout>
 
         </LinearLayout>

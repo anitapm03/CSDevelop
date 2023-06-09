@@ -45,6 +45,8 @@
                 android:id="@+id/rvConciertos"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginRight="1dp"
+                android:layout_marginLeft="1dp"
                 android:layout_marginBottom="50dp"/>
 
         </LinearLayout>

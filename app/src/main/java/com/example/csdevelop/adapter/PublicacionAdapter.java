@@ -37,8 +37,10 @@ public class PublicacionAdapter extends RecyclerView.Adapter<HolderPublicacion> 
     public PublicacionAdapter (Context c){this.c = c;}
 
     public void addPublicacion(Publicacion p){
+        //añadimos al array un nuevo elemento y notificampos para que lo pinte
         listPublicaciones.add(p);
-        notifyItemInserted(listPublicaciones.size());
+        //notifyItemInserted(listPublicaciones.size());
+        notifyDataSetChanged();
     }
 
     public void setEnlaceFoto(String enlaceFoto) {
