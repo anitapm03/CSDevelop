@@ -121,7 +121,7 @@ public class CrearPublicacion extends AppCompatActivity {
 
                     }
                 } else {
-                    Toast.makeText(CrearPublicacion.this, "Error con el Usuario", Toast.LENGTH_SHORT).show();
+                    alerta.setText(getString(R.string.errorGeneral));
                 }
             }
         });

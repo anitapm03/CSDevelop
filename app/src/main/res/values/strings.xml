@@ -10,7 +10,7 @@
 
     <!-- strings de validación -->
     <string name="invalid_mail">E-mail incorrecto</string>
-    <string name="invalid_password">Contraseña no, valida. Min 8 dígitos.</string>
+    <string name="invalid_password">Contraseña no, válida. Min 8 dígitos.</string>
     <string name="invalid_username">Max 3 a 15 caracteres</string>
     <string name="invalid_passwordLogin">Introduzca una contraseña</string>
     <string name="invalid_usernameLogin">Introduzca un email</string>
@@ -98,14 +98,14 @@
     <string name="correoEnviado">El correo ha sido enviado</string>
     <string name="correoNingunaCuenta">Este correo no está asociado a ninguna cuenta</string>
     <string name="contraseñaActual">Introduce la contraseña actual</string>
-    <string name="emailInvalido">Email Invalido</string>
+    <string name="emailInvalido">Email Inválido</string>
     <string name="contraIncorrecta">Contraseña Incorrecta</string>
     <string name="nombreActualizado">Nombre de usuario actualizado</string>
     <string name="errorNombreActualizado">Error al actualizar el nombre de usuario</string>
     <string name="nombreExiste">El nombre de usuario ya existe</string>
     <string name="fotoEliminada">Foto de perfil eliminada</string>
     <string name="fotoActualizada">Foto de perfil actualizada</string>
-    <string name="errorFotoEliminada">Foto de perfil eliminada</string>
+    <string name="errorFotoEliminada">Error al eliminar la foto</string>
     <string name="contraActualizada">Contraseña actualizada</string>
     <string name="errorContraAct">Error al actualizar la contraseña</string>
     <string name="mismaContraseña">La contraseña actual y la nueva contraseña son iguales. Elija una contraseña diferente</string>
@@ -117,9 +117,15 @@
     <string name="registroExitoso">Usuario registrado con éxito</string>
     <string name="errorRegistro">Error al registrarse</string>
     <string name="anadirTexto">Añade texto a tu publicacion</string>
+    <string name= "errorGeneral">ERROR</string>
 
+    <string name="noInternet">No hay conexión a internet</string>
+    <string name= "conexion">Por favor, asegúrese de tener una conexión a internet activa</string>
+    <string name= "aceptar">Aceptar</string>
 
     <string name="noConciertosFavs">No hay conciertos favoritos</string>
+    <string name="no_results_message">No se encontraron resultados</string>
+
 
 
 </resources>
