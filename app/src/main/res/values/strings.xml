@@ -26,7 +26,7 @@
     <string name="aviso_foto">La subida de la imagen es opcional</string>
     <string name="aviso_ig">Las imágenes compartidas podrán aparecer en el IG oficial de Conciertos Solo</string>
     <string name="titulo_nuevaPubli">Nueva publicacion</string>
-    <string name="titulo_hint_publi">Comparte tú experiencia con nosotros!</string>
+    <string name="titulo_hint_publi">Comparte tu experiencia con nosotros!</string>
     <string name="hint_publi">Escribe aquí tú comentario...</string>
     <string name="btn_img">Añadir imagen!</string>
     <string name="btn_publicar">Publicar!</string>
