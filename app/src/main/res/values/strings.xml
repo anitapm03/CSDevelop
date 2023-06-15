@@ -98,6 +98,7 @@
     <string name="correoEnviado">El correo ha sido enviado</string>
     <string name="correoNingunaCuenta">Este correo no está asociado a ninguna cuenta</string>
     <string name="contraseñaActual">Introduce la contraseña actual</string>
+    <string name="contraseñaNoValida">Contraseña nueva no valida. Min 8 caracteres</string>
     <string name="emailInvalido">Email Inválido</string>
     <string name="contraIncorrecta">Contraseña Incorrecta</string>
     <string name="nombreActualizado">Nombre de usuario actualizado</string>

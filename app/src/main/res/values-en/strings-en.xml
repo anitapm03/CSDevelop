@@ -99,6 +99,7 @@
     <string name="correoEnviado">The mail has been sent</string>
     <string name="correoNingunaCuenta">This email is not associated with any account</string>
     <string name="contraseñaActual">Enter current password</string>
+    <string name="contraseñaNoValida">New password invalid. Min 8 characters</string>
     <string name="emailInvalido">invalid email</string>
     <string name="contraIncorrecta">Incorrect password</string>
     <string name="nombreActualizado">Updated username</string>

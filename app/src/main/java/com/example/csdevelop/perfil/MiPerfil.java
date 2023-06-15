@@ -101,7 +101,7 @@ public class MiPerfil extends AppCompatActivity {
 
         // estilo basico de validacion
         awesomeValidation= new AwesomeValidation(ValidationStyle.BASIC);
-        awesomeValidation.addValidation(this,R.id.edtContrasenaNueva, ".{8,}",R.string.invalid_password);
+        //awesomeValidation.addValidation(this,R.id.edtContrasenaNueva, ".{8,}",R.string.invalid_password);
         awesomeValidation.addValidation(this,R.id.edtUsuario, ".{3,15}",R.string.invalid_username );
 
 
@@ -168,7 +168,11 @@ public class MiPerfil extends AppCompatActivity {
                     txtAlerta.setText(getString(R.string.contraseñaActual));
                     txtAlerta.setTextColor(Color.RED);
                     quitarTextView();
-                }else if(awesomeValidation.validate()) {
+                }else if(txtPassNueva.getText().toString().length()<8) {
+                    txtAlerta.setText(getString(R.string.contraseñaNoValida));
+                    txtAlerta.setTextColor(Color.RED);
+                    quitarTextView();
+                }else{
                     cambiarContraseña();
                 }
             }
