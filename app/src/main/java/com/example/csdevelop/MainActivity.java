@@ -121,4 +121,13 @@ public class MainActivity extends AppCompatActivity implements PruebaFragment.Fr
     public void onFragmentFinish() {
         finish();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+
+        replaceFragment(new PruebaFragment());
+        binding.bottomNavigation.setBackground(null);
+
+    }
 }
