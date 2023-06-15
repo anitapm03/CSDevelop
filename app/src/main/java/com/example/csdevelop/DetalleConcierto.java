@@ -97,7 +97,7 @@ public class DetalleConcierto extends AppCompatActivity {
                         direccionSala.setText(direccionSalaString);
                     }
                 } else {
-                    Toast.makeText(DetalleConcierto.this, "Error con la sala", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(DetalleConcierto.this, "Error con la sala", Toast.LENGTH_SHORT).show();
                 }
             }
         });

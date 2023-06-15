@@ -126,8 +126,52 @@ public class MainActivity extends AppCompatActivity implements PruebaFragment.Fr
     public void onResume() {
         super.onResume();  // Always call the superclass method first
 
-        replaceFragment(new PruebaFragment());
-        binding.bottomNavigation.setBackground(null);
+        //replaceFragment(new PruebaFragment());
+        //binding.bottomNavigation.setBackground(null);
+
+
+        //intent de inicio de sesion recibido
+        Intent isR= getIntent();
+        btnGrupos=findViewById(R.id.btnGrupos);
+
+        //recogemos el fragment del que veniamos
+
+        f=getIntent().getStringExtra("fragment");
+        if (f == null){
+            f="inicio";
+        }
+        System.out.println(f);
+
+        if (f.equals("social")){
+
+            replaceFragment(new SocialFragment());
+            binding.bottomNavigation.setBackground(null);
+            binding.bottomNavigation.getMenu().getItem(1).setChecked(true);
+
+
+        } else if (f.equals("grupos")){
+
+            replaceFragment(new GruposFragment());
+            binding.bottomNavigation.setBackground(null);
+
+
+        } else if (f.equals("perfil")) {
+
+            replaceFragment(new PerfilFragment());
+            binding.bottomNavigation.setBackground(null);
+
+
+        } else if (f.equals("inicio")) {
+
+            replaceFragment(new PruebaFragment());
+            binding.bottomNavigation.setBackground(null);
+
+
+        } else {
+
+            replaceFragment(new PruebaFragment());
+            binding.bottomNavigation.setBackground(null);
+        }
 
     }
 }
