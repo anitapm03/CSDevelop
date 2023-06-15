@@ -58,34 +58,50 @@ public class BuscarFragment extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 String searchTerm = newText.toLowerCase();
 
-
-                Query newQuery;
-                if (isNumeric(searchTerm)) {
-                    newQuery = firestore.collection("conciertos")
+                if (searchTerm.startsWith("/")) {
+                    // Modo de búsqueda por fecha
+                    String date = searchTerm.substring(1); // Eliminar el carácter "/" del inicio
+                    Query newQuery = firestore.collection("conciertos")
                             .orderBy("fecha")
-                            .startAt(searchTerm)
-                            .endAt(searchTerm + "\uf8ff");
+                            .startAt(date)
+                            .endAt(date + "\uf8ff");
+
+                    FirestoreRecyclerOptions<Concierto> newOptions =
+                            new FirestoreRecyclerOptions.Builder<Concierto>()
+                                    .setQuery(newQuery, Concierto.class)
+                                    .build();
+
+                    adapter.updateOptions(newOptions);
+                    adapter.notifyDataSetChanged();
+
                 } else {
+                    // Modo de búsqueda por nombre de artista o grupo
+                    Query newQuery;
                     if (!searchTerm.isEmpty()) {
-                        searchTerm = searchTerm.substring(0, 1).toUpperCase() + searchTerm.substring(1);
+                            searchTerm = searchTerm.substring(0, 1).toUpperCase() + searchTerm.substring(1);
+                        }
+
+                        newQuery = firestore.collection("conciertos")
+                                .orderBy("nombre")
+                                .startAt(searchTerm)
+                                .endAt(searchTerm + "\uf8ff");
+                    FirestoreRecyclerOptions<Concierto> newOptions =
+                            new FirestoreRecyclerOptions.Builder<Concierto>()
+                                    .setQuery(newQuery, Concierto.class)
+                                    .build();
+                    adapter.updateOptions(newOptions);
+                    adapter.notifyDataSetChanged();
                     }
 
-                    newQuery = firestore.collection("conciertos")
-                            .orderBy("nombre")
-                            .startAt(searchTerm)
-                            .endAt(searchTerm + "\uf8ff");
-                }
 
-                FirestoreRecyclerOptions<Concierto> newOptions =
-                        new FirestoreRecyclerOptions.Builder<Concierto>()
-                                .setQuery(newQuery, Concierto.class)
-                                .build();
 
-                adapter.updateOptions(newOptions);
-                adapter.notifyDataSetChanged();
                 return true;
             }
+
+
+
         });
+
 
         return vista;
     }

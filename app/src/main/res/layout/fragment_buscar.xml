@@ -13,10 +13,24 @@
         android:layout_height="?attr/actionBarSize"
         android:layout_margin="20dp"
         android:hint="@string/edt_buscar" />
+
+    <TextView
+        android:id="@+id/instructions_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="-20dp"
+        android:layout_marginBottom="0dp"
+        android:text="Para buscar por fecha, introduzca / seguido de la fecha (ejemplo: /04/04/2023)"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="15sp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:layout_marginBottom="60dp"/>
+        android:layout_marginBottom="60dp" />
+
 </LinearLayout>
